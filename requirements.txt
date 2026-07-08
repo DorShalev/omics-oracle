@@ -1,0 +1,18 @@
+# Core (engine runs on these)
+requests>=2.28
+numpy>=1.23
+pandas>=1.5
+scipy>=1.9
+statsmodels>=0.13
+pydeseq2>=0.5
+anndata>=0.9
+
+# Optional: LLM spec-parsing + narrative (engine falls back to heuristics without a key)
+litellm>=1.40
+
+# Optional: ARCHS4 reprocessed counts (needs a local >30GB H5; metadata-only without it)
+archs4py>=0.2
+h5py>=3.8
+
+# Dev
+pytest>=7

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omics-oracle"
+version = "0.1.0"
+description = "Evidence-based projections that sanity-check a planned omics experiment against public data."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.28",
+    "numpy>=1.23",
+    "pandas>=1.5",
+    "scipy>=1.9",
+    "statsmodels>=0.13",
+    "pydeseq2>=0.5",
+    "anndata>=0.9",
+]
+
+[project.optional-dependencies]
+llm = ["litellm>=1.40"]
+archs4 = ["archs4py>=0.2", "h5py>=3.8"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+omics-oracle = "omics_oracle.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["omics_oracle*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
