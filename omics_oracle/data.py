@@ -123,8 +123,11 @@ def download_archs4_h5(species: str = "human", dest_dir: str = "data/archs4",
     if not size or connections <= 1 or not _supports_range(url):
         _download_stream(url, dest, have, size, on_log)
     else:
-        _download_parallel(url, dest, size, connections, on_log)
-    on_log(f"done: {dest} ({os.path.getsize(dest)/1e9:.1f} GB)")
+        _download_parallel_resumable(url, dest, size, connections, on_log)
+    final = os.path.getsize(dest)
+    if size and final != size:
+        raise RuntimeError(f"size mismatch after download: got {final}, expected {size}")
+    on_log(f"done: {dest} ({final/1e9:.1f} GB)")
     return dest
 
 
@@ -151,35 +154,62 @@ def _download_stream(url: str, dest: str, have: int, size: Optional[int], on_log
                     on_log(f"  {done/1e9:.1f}/{size/1e9:.1f} GB ({100*done/size:.0f}%)")
 
 
-def _download_parallel(url: str, dest: str, size: int, connections: int, on_log) -> None:
-    # preallocate the file, then fill disjoint ranges with a thread each
-    with open(dest, "wb") as fh:
-        fh.truncate(size)
-    seg = size // connections
-    ranges = [(i * seg, (size - 1 if i == connections - 1 else (i + 1) * seg - 1))
-              for i in range(connections)]
-    errors: list[BaseException] = []
-    progress = {"done": 0}
-    lock = threading.Lock()
+def _download_parallel_resumable(url: str, dest: str, size: int, connections: int,
+                                 on_log) -> None:
+    """Download `size` bytes in N segments, each to its own resumable .partK file.
 
-    def worker(lo, hi):
+    A segment resumes from whatever it already has (Range from its current length), so an
+    interrupted run continues instead of restarting. Segments are concatenated into `dest`
+    once all are complete.
+    """
+    seg = size // connections
+    bounds = [(i * seg, (size - 1 if i == connections - 1 else (i + 1) * seg - 1))
+              for i in range(connections)]
+    parts = [f"{dest}.part{i}" for i in range(connections)]
+    errors: list[BaseException] = []
+    lock = threading.Lock()
+    total_have = sum(os.path.getsize(p) for p in parts if os.path.exists(p))
+    on_log(f"parallel: {connections} segments"
+           + (f", resuming ({total_have/1e9:.1f} GB already present)" if total_have else ""))
+
+    def worker(i, lo, hi):
+        part = parts[i]
+        target = hi - lo + 1
+        have = os.path.getsize(part) if os.path.exists(part) else 0
+        if have >= target:
+            return
         try:
-            with requests.get(url, headers={"Range": f"bytes={lo}-{hi}"}, stream=True,
+            with requests.get(url, headers={"Range": f"bytes={lo+have}-{hi}"}, stream=True,
                               timeout=120, allow_redirects=True) as r:
                 r.raise_for_status()
-                with open(dest, "r+b") as fh:
-                    fh.seek(lo)
+                with open(part, "ab") as fh:
                     for chunk in r.iter_content(chunk_size=1024 * 1024):
                         fh.write(chunk)
-                        with lock:
-                            progress["done"] += len(chunk)
         except BaseException as e:  # noqa: BLE001
-            errors.append(e)
+            with lock:
+                errors.append(e)
 
-    threads = [threading.Thread(target=worker, args=r, daemon=True) for r in ranges]
+    threads = [threading.Thread(target=worker, args=(i, lo, hi), daemon=True)
+               for i, (lo, hi) in enumerate(bounds)]
     for t in threads:
         t.start()
     for t in threads:
         t.join()
     if errors:
-        raise RuntimeError(f"parallel download failed: {errors[0]}")
+        raise RuntimeError(f"parallel download failed ({len(errors)} segment error(s)): "
+                           f"{errors[0]}; re-run to resume the incomplete segments")
+    # verify each segment, then concatenate
+    for i, (lo, hi) in enumerate(bounds):
+        got = os.path.getsize(parts[i])
+        if got != hi - lo + 1:
+            raise RuntimeError(f"segment {i} incomplete ({got}/{hi-lo+1}); re-run to resume")
+    with open(dest, "wb") as out:
+        for p in parts:
+            with open(p, "rb") as pf:
+                while True:
+                    buf = pf.read(8 * 1024 * 1024)
+                    if not buf:
+                        break
+                    out.write(buf)
+    for p in parts:
+        os.remove(p)
