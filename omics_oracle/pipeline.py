@@ -34,9 +34,12 @@ def project_experiment(prompt: str,
     """Run the full prompt -> projection pipeline and return a serializable OracleReport."""
     warnings: list[str] = []
     llm = LLM(model=llm_model) if llm_model else LLM()
-    if not llm.available:
-        warnings.append("No LLM key configured — using the heuristic spec parser and a "
-                        "templated narrative (numbers are unaffected).")
+    if llm.available:
+        warnings.append(f"LLM backend: {llm.backend_name} (spec parsing + narrative phrasing only; "
+                        "numbers come from data, not the model).")
+    else:
+        warnings.append("No LLM backend available (no Claude CLI, no API key) — using the "
+                        "heuristic spec parser and a templated narrative (numbers are unaffected).")
 
     # 1. spec
     spec = parse_spec(prompt, llm=llm)

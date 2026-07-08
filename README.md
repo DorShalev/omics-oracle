@@ -52,10 +52,22 @@ Lower-level stages are individually importable and swappable: `parse_spec`, `fin
 `reanalyze`, `aggregate`, `project`. New databases plug in by implementing the
 `DatasetSource` protocol (`omics_oracle/sources/base.py`).
 
+## LLM backend
+The LLM is used only for spec parsing and narrative phrasing — **never to produce numbers**.
+Backends are auto-selected (override with `OMICS_ORACLE_LLM` = `auto`|`claude-cli`|`litellm`|`none`):
+
+1. **Claude CLI** — if the local `claude` binary is present (Claude Code subscription, **no API
+   key, no per-token cost**). This is the default when no API key is set.
+2. **LiteLLM / OpenRouter** — used when `OPENROUTER_API_KEY` (or `OPENAI_API_KEY`) is set.
+3. **none** — no model available → deterministic heuristic parser + templated narrative. The
+   engine still runs end-to-end; the numbers are identical because they come from data.
+
 ## Configuration (all optional)
 | Env var | Purpose |
 |---|---|
-| `OPENROUTER_API_KEY` | enable the LLM spec parser + narrative (else heuristic) |
+| `OMICS_ORACLE_LLM` | backend: `auto` (default), `claude-cli`, `litellm`, `none` |
+| `OMICS_ORACLE_CLAUDE_MODEL` | Claude CLI model alias/id (e.g. `sonnet`, `opus`; else CLI default) |
+| `OPENROUTER_API_KEY` / `OPENAI_API_KEY` | switch to the LiteLLM backend |
 | `OMICS_ORACLE_MODEL` | LiteLLM model id (default `openrouter/anthropic/claude-3.5-sonnet`) |
 | `ARCHS4_H5` | path to a local ARCHS4 H5 for reprocessed counts (>30 GB; else metadata-only) |
 | `NCBI_API_KEY`, `NCBI_EMAIL` | raise NCBI E-utilities rate limits |
