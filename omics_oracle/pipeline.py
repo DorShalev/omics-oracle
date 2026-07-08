@@ -29,6 +29,8 @@ def project_experiment(prompt: str,
                        reanalyze_top: int = 3,
                        h5_path: Optional[str] = None,
                        llm_model: Optional[str] = None,
+                       judge: bool = True,
+                       judge_top: int = 5,
                        finder_sources: Optional[Sequence[DatasetSource]] = None,
                        counts_sources: Optional[Sequence[DatasetSource]] = None) -> OracleReport:
     """Run the full prompt -> projection pipeline and return a serializable OracleReport."""
@@ -57,16 +59,42 @@ def project_experiment(prompt: str,
         matches = []
         warnings.append(f"Dataset finder failed ({type(e).__name__}: {e}); no matches.")
 
-    # 3-4. fetch reprocessed counts + reanalyze the top non-blocking matches
-    archs4 = ARCHS4Source(h5_path=h5_path)
-    counts_srcs = list(counts_sources) if counts_sources is not None else [archs4]
+    # 2b. LLM relevance judge — semantic anti-fabrication check on the top matches.
+    if judge and llm.available and matches:
+        from .judge import judge_matches
+        try:
+            verdicts = judge_matches(spec, matches, llm=llm, limit=judge_top)
+            for m in matches:
+                v = verdicts.get(m.accession)
+                if v is not None:
+                    m.judge = v.to_dict()
+        except Exception as e:
+            warnings.append(f"Relevance judge failed ({type(e).__name__}); matches shown unjudged.")
+    elif judge and not llm.available:
+        warnings.append("Relevance judge skipped (no LLM backend) — matches are ranked by the "
+                        "deterministic mismatch model only, not semantically verified.")
+
+    # 3-4. fetch reprocessed counts + reanalyze the top non-blocking matches.
+    # Default counts backend: local ARCHS4 H5 if a path is given, else remote streaming
+    # (only the needed sample columns — no 58 GB download) when its index is cached.
+    if counts_sources is not None:
+        counts_srcs = list(counts_sources)
+    elif h5_path:
+        counts_srcs = [ARCHS4Source(h5_path=h5_path)]
+    else:
+        from .sources.archs4_remote import ARCHS4RemoteSource
+        counts_srcs = [ARCHS4RemoteSource()]
     counts_available = any(_supports(s) for s in counts_srcs)
     if not counts_available:
-        warnings.append("No counts source available (ARCHS4 H5 not set/found) — reanalysis is "
-                        "metadata-only; DE and concordance are not computed from counts.")
+        warnings.append("No counts source available — reanalysis is metadata-only (DE and "
+                        "concordance not computed). Enable counts by either passing --h5 to a "
+                        "local ARCHS4 file, or building the remote index once "
+                        "(python scripts/build_archs4_index.py) to stream counts without the "
+                        "58 GB download.")
 
     de_results: list[DEResult] = []
-    usable = [m for m in matches if not m.blocking]
+    # reanalyze only matches that clear BOTH the structural filter and the judge
+    usable = [m for m in matches if not m.blocking and not m.judged_irrelevant]
     for m in usable[:reanalyze_top]:
         if not counts_available:
             break

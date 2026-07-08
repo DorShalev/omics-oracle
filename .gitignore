@@ -8,3 +8,8 @@ dist/
 *.h5
 .pipinstall.log
 .env
+
+# ARCHS4 data (large / machine-specific)
+data/archs4/*.h5
+data/archs4/*.log
+data/archs4/index/

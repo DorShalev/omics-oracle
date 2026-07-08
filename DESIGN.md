@@ -72,7 +72,21 @@ prompt ─▶ (1) spec parser ─▶ (2) dataset finder ─▶ (3) fetcher ─�
 | Source | Role | Access in this build |
 |---|---|---|
 | **NCBI GEO** (E-utilities `esearch`/`esummary`, db=`gds`) | dataset finder (RNA-seq & others) | **remote, live** — the default finder. Rich metadata: accession, taxon, dataset type, platform (GPL), sample count, summary. |
-| **ARCHS4** (uniformly reprocessed RNA-seq counts) | fetcher / reanalysis | via `archs4py` against a **local H5** (`ARCHS4_H5` / `--h5`). The full human H5 is >30 GB, so it is *not* bundled; when absent, reanalysis degrades to metadata-only and says so. |
+| **ARCHS4** (uniformly reprocessed RNA-seq counts) | fetcher / reanalysis | two interchangeable backends: **remote streaming** (`sources/archs4_remote.py`) reads only the sample columns of a matched series over HTTP range requests using a one-time cached sample index — no 58 GB download; or a **local H5** (`sources/archs4.py`, `--h5`) via `archs4py`. When neither is available, reanalysis degrades to metadata-only and says so. |
+
+### Why remote streaming works
+ARCHS4's `/data/expression` is chunked `(2000 genes × 1 sample)`, so any single sample is a
+few small HDF5 chunks. A one-time cached index (`series_id`/`geo_accession`/gene symbols) maps a
+GEO series → its sample columns; the fetcher then pulls only those columns (tens of MB per
+dataset) instead of the whole matrix. Trade-off: opening the remote 58 GB H5 has a fixed
+latency cost, so a persistent service opens once and reuses the handle.
+
+### Relevance judge (anti-fabrication)
+The deterministic ranker catches *structural* mismatches (organism/assay/missing tokens). A
+separate **LLM judge** (`judge.py`) reads each top match's real metadata and returns a grounded
+verdict (`relevant`/`partial`/`irrelevant`/`uncertain` + reason) for *semantic* fit. It can only
+lower trust in a match, answers `uncertain` on thin metadata, and excludes `irrelevant` datasets
+from reanalysis.
 | pysradb / SRA | finder enrichment (later) | optional |
 | Expression Atlas, PRIDE (proteomics), ENCODE | later omics/DBs | interface-ready, not wired in v0.1 |
 

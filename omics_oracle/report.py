@@ -111,14 +111,32 @@ def render_markdown(report: OracleReport) -> str:
     if not report.matches:
         L.append("_No candidate datasets returned by the finder._")
     else:
-        L.append("| Rank | Accession | Sim | Organism | Omics | N | Blocking? | Mismatches |")
-        L.append("|---|---|---|---|---|---|---|---|")
+        judged = any(m.judge for m in report.matches)
+        head = "| Rank | Accession | Sim | Organism | Omics | N | Blocking? |"
+        sep = "|---|---|---|---|---|---|---|"
+        if judged:
+            head += " Judge |"; sep += "---|"
+        head += " Mismatches |"; sep += "---|"
+        L.append(head); L.append(sep)
         for i, m in enumerate(report.matches, 1):
             mm = "; ".join(f"{x.field}({x.severity})" for x in m.mismatches) or "—"
-            L.append(f"| {i} | [{m.accession}]({m.url}) | {m.similarity} | {m.organism or '—'} | "
-                     f"{m.omics_type} | {m.n_samples if m.n_samples is not None else '—'} | "
-                     f"{'⛔' if m.blocking else '—'} | {mm} |")
+            row = (f"| {i} | [{m.accession}]({m.url}) | {m.similarity} | {m.organism or '—'} | "
+                   f"{m.omics_type} | {m.n_samples if m.n_samples is not None else '—'} | "
+                   f"{'⛔' if m.blocking else '—'} |")
+            if judged:
+                jv = (m.judge or {}).get("verdict", "—")
+                row += f" {jv} |"
+            row += f" {mm} |"
+            L.append(row)
         L.append("")
+        # judge reasons for anything not cleanly relevant — the anti-fabrication trail
+        jnotes = [(m.accession, m.judge) for m in report.matches
+                  if m.judge and m.judge.get("verdict") in ("partial", "irrelevant", "uncertain")]
+        if jnotes:
+            L.append("**Relevance verification (LLM judge):**")
+            for acc, j in jnotes:
+                L.append(f"- {acc}: **{j.get('verdict')}** (conf {j.get('confidence')}) — {j.get('reason')}")
+            L.append("")
         # spell out the most important mismatch notes (the 'HEK293 not colorectal' caveats)
         notes = [x.note for m in report.matches for x in m.mismatches
                  if x.severity in ("blocking", "major") and x.note]

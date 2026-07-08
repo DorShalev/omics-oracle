@@ -31,8 +31,24 @@ pip install -e ".[archs4]"   # ARCHS4 reprocessed counts (needs a local H5)
 ```bash
 python -m omics_oracle "RNA-seq of human colorectal tumor vs adjacent normal, Illumina, 20/arm"
 python -m omics_oracle "RNA-seq of mouse liver, high-fat diet vs chow, n=8" --json
-python -m omics_oracle "<prompt>" --h5 /path/to/human_matrix.h5   # enables counts + DE + concordance
+python -m omics_oracle "<prompt>" --no-judge      # skip the LLM relevance judge
 ```
+
+### Enabling reprocessed counts (DE + concordance)
+Two ways to give the engine ARCHS4 counts — **you do not need the 58 GB file**:
+
+```bash
+# (a) Remote streaming — recommended. Cache the sample index ONCE (~1.1M records over HTTP),
+#     then the engine streams only the samples of each matched dataset (tens of MB each).
+python -m omics_oracle --build-index
+
+# (b) Full local file — only for offline/heavy use. One large H5 (~58 GB human), resumable,
+#     parallel, size-disclosed; refuses to start without --yes or if disk is short.
+python -m omics_oracle --download-h5 human --yes
+python -m omics_oracle "<prompt>" --h5 data/archs4/human_gene_v2.latest.h5
+```
+Without either, the engine runs **metadata-only** (finds/ranks/flags datasets, projects
+pitfalls) and says so — it never fabricates DE numbers.
 
 ## Use — importable API (the stable boundary for embedding in another app)
 ```python
@@ -74,8 +90,33 @@ Backends are auto-selected (override with `OMICS_ORACLE_LLM` = `auto`|`claude-cl
 
 ## Data sources
 - **NCBI GEO** (E-utilities) — the live, key-free dataset finder (RNA-seq & more).
-- **ARCHS4** — uniformly-reprocessed RNA-seq counts via a local H5 (for DE + concordance).
+- **ARCHS4** — uniformly-reprocessed RNA-seq counts, either **streamed remotely** (only the
+  samples you need — no 58 GB download) or from a **local H5**.
 - Expression Atlas, PRIDE (proteomics), ENCODE, pysradb — interface-ready, on the roadmap.
+
+## Relevance judge (anti-fabrication)
+On top of the deterministic mismatch flags, an **LLM judge** reads each top match's real
+metadata and rules whether it *genuinely* fits the question — `relevant` / `partial` /
+`irrelevant` / `uncertain`, with a reason. It catches semantic mismatches the keyword ranker
+misses (disease mentioned only in passing, wrong contrast axis, cell line vs tissue), can only
+*lower* trust in a match (never invent one), and answers `uncertain` when metadata is thin.
+A dataset judged `irrelevant` is excluded from reanalysis. Disable with `--no-judge`.
+
+## Does the sequencing platform matter?
+For finding comparable RNA-seq, **no** — the specific Illumina instrument (NovaSeq / HiSeq /
+NextSeq) does not gate or penalize matches. ARCHS4 reprocesses all Illumina RNA-seq uniformly,
+so we gather every relevant RNA-seq regardless of model. Platform is recorded only as an
+informational note, and flagged solely when a genuinely different *technology* (e.g. a
+non-Illumina platform) is named. The real assay boundary — sequencing vs microarray vs
+proteomics — is enforced by the omics-type check, not the platform.
+
+## Download-size safeguards
+- The only large asset is a **single** ARCHS4 H5 (~58 GB), and you usually skip it entirely
+  via remote streaming (tens of MB per dataset). It is never "many files".
+- `--download-h5` discloses the size, requires `--yes`, checks free disk (+5 GB headroom), and
+  resumes partial downloads.
+- The number of datasets reanalyzed is capped (`--reanalyze-top`, default 3), and each remote
+  fetch is capped at `ARCHS4_MAX_SAMPLES` (default 200) samples.
 
 ## Tests
 ```bash

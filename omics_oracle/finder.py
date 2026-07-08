@@ -19,7 +19,6 @@ _PENALTY = {
     "omics_type": (0.40, "blocking"),
     "tissue": (0.25, "major"),
     "contrast": (0.20, "major"),
-    "platform": (0.05, "minor"),
     "n": (0.05, "minor"),
 }
 
@@ -95,14 +94,16 @@ def score_match(spec: ExperimentSpec, match: DatasetMatch) -> DatasetMatch:
             mismatches.append(Mismatch("contrast", contrast_terms, None, sev,
                                        f"contrast terms '{contrast_terms}' not evident in {match.accession} metadata"))
 
-    # platform (minor)
-    if spec.platform and match.platform:
-        # GEO gives GPL ids; we can only weakly compare, so only flag on explicit instrument text
-        if spec.platform.lower() not in haystack and not match.platform.lower().startswith("gpl"):
-            pen, sev = _PENALTY["platform"]
-            score -= pen
-            mismatches.append(Mismatch("platform", spec.platform, match.platform, sev,
-                                       "platform could not be confirmed to match"))
+    # platform: informational only. The specific Illumina instrument (NovaSeq/HiSeq/NextSeq)
+    # does not affect comparability — ARCHS4 reprocesses all of them uniformly — so we do NOT
+    # penalize or filter on it. A genuine cross-technology gap (array vs seq) is already caught
+    # by the omics_type check above. We record a note only when a non-Illumina platform is
+    # explicitly named, as a heads-up, without touching the score.
+    if spec.platform and "illumina" not in spec.platform.lower():
+        mismatches.append(Mismatch("platform", spec.platform, match.platform, "minor",
+                                   f"planned platform '{spec.platform}' is non-Illumina; most public "
+                                   "RNA-seq (and ARCHS4) is Illumina — comparability is usually fine "
+                                   "but library chemistry may differ"))
 
     # sample-size adequacy (minor)
     if spec.n_per_group and match.n_samples is not None:

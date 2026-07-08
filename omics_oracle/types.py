@@ -72,10 +72,15 @@ class DatasetMatch:
     url: str = ""
     similarity: float = 0.0                  # 0..1, explainable (see finder.py)
     mismatches: list[Mismatch] = field(default_factory=list)
+    judge: Optional[dict] = None             # LLM relevance verdict (see judge.py), or None
 
     @property
     def blocking(self) -> bool:
         return any(m.severity == "blocking" for m in self.mismatches)
+
+    @property
+    def judged_irrelevant(self) -> bool:
+        return bool(self.judge) and self.judge.get("verdict") == "irrelevant"
 
     def to_dict(self) -> dict:
         d = asdict(self)
