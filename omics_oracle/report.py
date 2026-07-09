@@ -151,7 +151,8 @@ def render_markdown(report: OracleReport) -> str:
         L.append("_No datasets were reanalyzed._")
     else:
         for d in report.de_results:
-            L.append(f"- **{d.accession}** — {d.status.upper()}: {d.note}")
+            label = f" _[{d.tier}: {d.source_db}]_" if getattr(d, "source_db", None) else ""
+            L.append(f"- **{d.accession}**{label} — {d.status.upper()}: {d.note}")
             if d.qc:
                 L.append(f"  - QC: {d.qc.n_samples} samples, median lib size "
                          f"{d.qc.median_library_size:,.0f}, median zero-fraction {d.qc.median_zero_fraction}."

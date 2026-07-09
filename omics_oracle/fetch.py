@@ -9,13 +9,25 @@ from .sources.base import DatasetSource
 
 def fetch_counts(match: DatasetMatch,
                  sources: Iterable[DatasetSource]) -> Optional[CountMatrix]:
-    """Try each counts-capable source for this match; return the first CountMatrix."""
+    """Try counts-capable sources for this match, PREFERRING raw counts.
+
+    Sources are tried in order (e.g. GEO per-study first, then ARCHS4/clinical). A raw-count
+    matrix wins immediately; if only normalized/unknown matrices are found, the first of those
+    is returned so the study is still reported honestly (DE will be skipped downstream). This is
+    what lets ARCHS4 (raw) rescue a study for which GEO deposited only a TPM table.
+    """
+    fallback: Optional[CountMatrix] = None
     for src in sources:
         try:
-            if src.supports_counts():
-                cm = src.fetch_counts(match)
-                if cm is not None:
-                    return cm
+            if not src.supports_counts():
+                continue
+            cm = src.fetch_counts(match)
         except Exception:
             continue
-    return None
+        if cm is None:
+            continue
+        if getattr(cm, "data_type", "raw") == "raw":
+            return cm
+        if fallback is None:
+            fallback = cm
+    return fallback

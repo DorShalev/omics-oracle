@@ -116,7 +116,7 @@ class ARCHS4RemoteSource:
         df = df[~df.index.duplicated(keep="first")]
         return CountMatrix(
             accession=match.accession, genes=list(df.index), samples=gsm, counts=df,
-            sample_meta=meta,
+            sample_meta=meta, source_db="ARCHS4", tier="clinical",
             provenance=f"ARCHS4 v2 remote stream ({len(gsm)} samples, {os.path.basename(self.url)})",
         )
 

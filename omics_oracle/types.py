@@ -104,6 +104,8 @@ class CountMatrix:
     provenance: str = ""
     data_type: str = "raw"                   # "raw" | "normalized" | "unknown"
     source_file: str = ""                    # the supplementary filename it came from
+    source_db: str = "GEO"                   # which repository the counts came from
+    tier: str = "primary"                    # "primary" (GEO per-study) | "clinical" (Maayan/ARCHS4)
 
     def to_dict(self) -> dict:
         return {
@@ -112,6 +114,8 @@ class CountMatrix:
             "n_samples": len(self.samples),
             "data_type": self.data_type,
             "source_file": self.source_file,
+            "source_db": self.source_db,
+            "tier": self.tier,
             "provenance": self.provenance,
         }
 
@@ -138,6 +142,8 @@ class DEResult:
     qc: Optional[QCSummary] = None
     status: str = "ok"                       # "ok" | "skipped" | "error"
     note: str = ""
+    source_db: str = "GEO"                   # repository the counts came from
+    tier: str = "primary"                    # "primary" | "clinical"
 
     def n_de(self, padj: float = 0.05, lfc: float = 1.0) -> int:
         if self.table is None or len(self.table) == 0:
@@ -153,6 +159,8 @@ class DEResult:
             "n_control": self.n_control,
             "status": self.status,
             "note": self.note,
+            "source_db": self.source_db,
+            "tier": self.tier,
             "n_de_padj05_lfc1": self.n_de(),
             "qc": self.qc.to_dict() if self.qc else None,
         }

@@ -65,6 +65,7 @@ class ARCHS4Source:
             samples=list(df.columns),
             counts=df,
             sample_meta=None,
+            source_db="ARCHS4", tier="clinical",
             provenance=f"ARCHS4 local H5 ({os.path.basename(self.h5_path)}), series {match.accession}",
         )
 

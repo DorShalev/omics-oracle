@@ -84,11 +84,16 @@ def project_experiment(prompt: str,
     # (small per-study download). A local ARCHS4 H5 is an explicit opt-in override via --h5.
     if counts_sources is not None:
         counts_srcs = list(counts_sources)
-    elif h5_path:
-        counts_srcs = [ARCHS4Source(h5_path=h5_path)]
     else:
         from .sources.geo_suppl import GeoSupplSource
+        # primary = each study's own GEO table; clinical = ARCHS4 raw counts (Maayan),
+        # used as a raw-counts fallback when GEO deposited only a normalized table.
         counts_srcs = [GeoSupplSource()]
+        clinical = ARCHS4Source(h5_path=h5_path)   # honors ARCHS4_H5 env when h5_path is None
+        if clinical.supports_counts():
+            counts_srcs.append(clinical)
+            warnings.append("Clinical source active: ARCHS4 (Maayan) raw counts will be used where "
+                            "a GEO study deposited only normalized data.")
 
     de_results: list[DEResult] = []
     # Auto-expand: walk DOWN the ranked pool attempting reanalysis until we collect

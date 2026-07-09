@@ -42,7 +42,18 @@ def reanalyze(counts: CountMatrix, spec: ExperimentSpec,
     ``groups`` maps sample id -> "case"|"control". If None, we try to derive it from
     ``counts.sample_meta`` using the spec's contrast terms; if that fails and an LLM is
     provided, we ask it to label samples (labeling only — it never invents samples).
+
+    The DE result inherits the counts' repository labels (source_db / tier) so the report can
+    show whether a study's DE came from the GEO per-study table (primary) or ARCHS4 (clinical).
     """
+    res = _reanalyze_impl(counts, spec, groups, min_group, llm)
+    res.source_db = getattr(counts, "source_db", "GEO")
+    res.tier = getattr(counts, "tier", "primary")
+    return res
+
+
+def _reanalyze_impl(counts: CountMatrix, spec: ExperimentSpec,
+                    groups: Optional[dict[str, str]], min_group: int, llm) -> DEResult:
     qc = compute_qc(counts)
 
     # P0 honesty gate: pydeseq2 is only valid on raw counts. Normalized (TPM/FPKM/log) or

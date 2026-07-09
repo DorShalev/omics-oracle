@@ -105,6 +105,7 @@ class GeoSupplSource:
         return CountMatrix(
             accession=acc, genes=list(counts.index), samples=list(counts.columns),
             counts=counts, sample_meta=meta, data_type=dtype, source_file=", ".join(used),
+            source_db="GEO", tier="primary",
             provenance=f"GEO supplementary file(s): {', '.join(used)}",
         )
 
