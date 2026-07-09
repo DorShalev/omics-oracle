@@ -218,6 +218,7 @@ class OracleReport:
     concordance: Optional[Concordance]
     projection: Projection
     narrative: str = ""
+    comparison: Optional[dict] = None        # cross-dataset Venn/gene-search data (see compare.py)
     schema_version: str = SCHEMA_VERSION
     warnings: list[str] = field(default_factory=list)
 
@@ -228,6 +229,7 @@ class OracleReport:
             "matches": [m.to_dict() for m in self.matches],
             "de_results": [d.to_dict() for d in self.de_results],
             "concordance": self.concordance.to_dict() if self.concordance else None,
+            "comparison": self.comparison,
             "projection": self.projection.to_dict(),
             "narrative": self.narrative,
             "warnings": self.warnings,

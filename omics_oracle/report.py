@@ -15,10 +15,11 @@ from .types import (Concordance, DatasetMatch, DEResult, ExperimentSpec, OracleR
 
 def build_report(spec: ExperimentSpec, matches: list[DatasetMatch], de_results: list[DEResult],
                  concordance: Optional[Concordance], projection: Projection,
-                 llm: Optional[LLM] = None, warnings: Optional[list[str]] = None) -> OracleReport:
+                 llm: Optional[LLM] = None, warnings: Optional[list[str]] = None,
+                 comparison: Optional[dict] = None) -> OracleReport:
     report = OracleReport(spec=spec, matches=matches, de_results=de_results,
                           concordance=concordance, projection=projection,
-                          warnings=warnings or [])
+                          comparison=comparison, warnings=warnings or [])
     report.narrative = _narrative(report, llm)
     return report
 
@@ -172,6 +173,32 @@ def render_markdown(report: OracleReport) -> str:
             for g in report.concordance.genes[:20]:
                 L.append(f"| {g.gene} | {g.n_datasets} | {g.n_up} | {g.n_down} | "
                          f"{g.direction_agreement} | {g.mean_log2fc} |")
+        L.append("")
+
+    if report.comparison:
+        c = report.comparison
+        L.append("## Cross-dataset comparison (Venn + gene search)")
+        L.append("Reanalyzed studies: " + ", ".join(
+            f"{d['accession']} [{d['tier']}] ({d['n_de']} DE)" for d in c["datasets"]))
+        if c.get("pairwise"):
+            L.append("")
+            L.append("**Pairwise DE-gene overlap:**")
+            for p in sorted(c["pairwise"], key=lambda x: x["shared"], reverse=True)[:10]:
+                L.append(f"- {p['a']} ∩ {p['b']}: **{p['shared']}** shared "
+                         f"(Jaccard {p['jaccard']}; {p['a_only']}/{p['b_only']} unique)")
+        top = [g for g in c["genes"] if g["n_datasets"] >= 2][:15]
+        if top:
+            L.append("")
+            L.append("**Genes DE across the most studies** (search by gene in the JSON `comparison.genes`):")
+            L.append("| Gene | #datasets | up/down | mean log2FC |")
+            L.append("|---|---|---|---|")
+            for g in top:
+                L.append(f"| {g['gene']} | {g['n_datasets']} | {g['up']}/{g['down']} | {g['mean_log2fc']} |")
+        if c.get("user"):
+            u = c["user"]
+            L.append("")
+            L.append(f"**Your gene list ({u['n_genes']} genes) overlap:** " + "; ".join(
+                f"{v['accession']} {v['shared']} shared (J={v['jaccard']})" for v in u["vs_datasets"]))
         L.append("")
 
     L.append("## Projection")

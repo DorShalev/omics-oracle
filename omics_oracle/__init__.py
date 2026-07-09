@@ -19,6 +19,7 @@ from .spec import parse_spec
 from .finder import find_datasets, score_match
 from .reanalyze import reanalyze, compute_qc
 from .aggregate import aggregate
+from .compare import build_comparison
 from .project import project
 from .judge import judge_match, judge_matches, Verdict
 from .data import download_archs4_h5, build_remote_index
@@ -29,6 +30,7 @@ __all__ = [
     "project_experiment", "OracleReport", "ExperimentSpec", "DatasetMatch", "Mismatch",
     "CountMatrix", "DEResult", "Concordance", "GeneConcordance", "Projection", "QCSummary",
     "SCHEMA_VERSION", "parse_spec", "find_datasets", "score_match", "reanalyze",
-    "compute_qc", "aggregate", "project", "judge_match", "judge_matches", "Verdict",
+    "compute_qc", "aggregate", "build_comparison", "project", "judge_match", "judge_matches",
+    "Verdict",
     "download_archs4_h5", "build_remote_index", "__version__",
 ]

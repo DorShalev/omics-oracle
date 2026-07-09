@@ -32,6 +32,7 @@ def project_experiment(prompt: str,
                        llm_model: Optional[str] = None,
                        judge: bool = True,
                        judge_top: int = 5,
+                       user_genes: Optional[list[str]] = None,
                        finder_sources: Optional[Sequence[DatasetSource]] = None,
                        counts_sources: Optional[Sequence[DatasetSource]] = None) -> OracleReport:
     """Run the full prompt -> projection pipeline and return a serializable OracleReport."""
@@ -132,12 +133,16 @@ def project_experiment(prompt: str,
     concordance = (aggregate(de_results, species=species)
                    if any(d.status == "ok" for d in de_results) else None)
 
+    # 5b. cross-dataset comparison (Venn + gene-search data; optional user gene list)
+    from .compare import build_comparison
+    comparison = build_comparison(de_results, user_genes=user_genes, species=species)
+
     # 6. projection
     projection = project(spec, matches, de_results, concordance)
 
     # 7. report
     return build_report(spec, matches, de_results, concordance, projection,
-                        llm=llm, warnings=warnings)
+                        llm=llm, warnings=warnings, comparison=comparison)
 
 
 def _supports(src: DatasetSource) -> bool:
