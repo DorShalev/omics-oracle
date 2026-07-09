@@ -16,10 +16,11 @@ from .types import (Concordance, DatasetMatch, DEResult, ExperimentSpec, OracleR
 def build_report(spec: ExperimentSpec, matches: list[DatasetMatch], de_results: list[DEResult],
                  concordance: Optional[Concordance], projection: Projection,
                  llm: Optional[LLM] = None, warnings: Optional[list[str]] = None,
-                 comparison: Optional[dict] = None) -> OracleReport:
+                 comparison: Optional[dict] = None,
+                 enrichment: Optional[dict] = None) -> OracleReport:
     report = OracleReport(spec=spec, matches=matches, de_results=de_results,
                           concordance=concordance, projection=projection,
-                          comparison=comparison, warnings=warnings or [])
+                          comparison=comparison, enrichment=enrichment, warnings=warnings or [])
     report.narrative = _narrative(report, llm)
     return report
 
@@ -199,6 +200,26 @@ def render_markdown(report: OracleReport) -> str:
             L.append("")
             L.append(f"**Your gene list ({u['n_genes']} genes) overlap:** " + "; ".join(
                 f"{v['accession']} {v['shared']} shared (J={v['jaccard']})" for v in u["vs_datasets"]))
+        L.append("")
+
+    if report.enrichment and report.enrichment.get("sources"):
+        e = report.enrichment
+        L.append(f"## Pathway enrichment ({e['library']})")
+        if e.get("shared_pathways"):
+            L.append("**Shared pathways** (enriched across studies):")
+            for p in e["shared_pathways"][:10]:
+                L.append(f"- **{p['term']}** — significant in {p['n_significant']} "
+                         f"({', '.join(p['sources_significant'])})")
+        if e.get("surfaced"):
+            L.append("")
+            L.append("**Worth a look — strong in some studies, sub-threshold (but genes moving) in others:**")
+            for p in e["surfaced"][:8]:
+                subs = ", ".join(f"{s['source']}({s['overlap_n']} genes)" for s in p["subthreshold_in"])
+                L.append(f"- **{p['term']}** — significant in {', '.join(p['significant_in'])}; "
+                         f"sub-threshold in {subs}")
+        if e.get("note"):
+            L.append("")
+            L.append(f"_{e['note']}_")
         L.append("")
 
     L.append("## Projection")

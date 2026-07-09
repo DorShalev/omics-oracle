@@ -32,6 +32,7 @@ def project_experiment(prompt: str,
                        llm_model: Optional[str] = None,
                        judge: bool = True,
                        judge_top: int = 5,
+                       enrich: bool = True,
                        user_genes: Optional[list[str]] = None,
                        finder_sources: Optional[Sequence[DatasetSource]] = None,
                        counts_sources: Optional[Sequence[DatasetSource]] = None) -> OracleReport:
@@ -137,12 +138,21 @@ def project_experiment(prompt: str,
     from .compare import build_comparison
     comparison = build_comparison(de_results, user_genes=user_genes, species=species)
 
+    # 5c. pathway enrichment per dataset + shared pathways (incl. sub-threshold-here/strong-there)
+    enrichment = None
+    if enrich and any(d.status == "ok" for d in de_results):
+        from .enrich import enrich_across_datasets
+        try:
+            enrichment = enrich_across_datasets(de_results, user_genes=user_genes, species=species)
+        except Exception as e:
+            warnings.append(f"Enrichment skipped ({type(e).__name__}).")
+
     # 6. projection
     projection = project(spec, matches, de_results, concordance)
 
     # 7. report
     return build_report(spec, matches, de_results, concordance, projection,
-                        llm=llm, warnings=warnings, comparison=comparison)
+                        llm=llm, warnings=warnings, comparison=comparison, enrichment=enrichment)
 
 
 def _supports(src: DatasetSource) -> bool:
