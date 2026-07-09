@@ -70,9 +70,22 @@ def project(spec: ExperimentSpec, matches: list[DatasetMatch],
         proj.expected_n_de = (lo, hi)
         proj.effect_size_prior = _effect_prior(de_results)
     else:
-        proj.caveats.append("No prior study could be reanalyzed for counts (ARCHS4 H5 not "
-                            "available or no assignable contrast); DE-count and effect-size "
-                            "priors are not estimated.")
+        # explain WHY no study yielded DE, from what actually happened per dataset
+        reasons = []
+        norm = sum(1 for d in de_results if "normalized" in (d.note or ""))
+        notab = sum(1 for d in de_results if "no usable per-study counts" in (d.note or ""))
+        nogrp = sum(1 for d in de_results if "grouping" in (d.note or "").lower()
+                    or "replicates" in (d.note or "").lower())
+        if norm:
+            reasons.append(f"{norm} had only normalized tables (TPM/FPKM/log), unusable for pydeseq2")
+        if notab:
+            reasons.append(f"{notab} had no usable per-study counts table")
+        if nogrp:
+            reasons.append(f"{nogrp} had no assignable case/control grouping")
+        detail = ("; ".join(reasons)) if reasons else "no reanalyzable raw-count table was found"
+        proj.caveats.append(f"No prior study yielded raw counts for DE ({detail}); DE-count and "
+                            "effect-size priors are not estimated. Try raising --reanalyze-top to "
+                            "reach studies deeper in the ranking that may deposit raw counts.")
 
     # --- power / feasibility read ---
     proj.power_read = _power_read(spec, de_results)
