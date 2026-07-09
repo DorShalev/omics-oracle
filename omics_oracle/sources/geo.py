@@ -94,19 +94,36 @@ class GEOSource:
             return " AND ".join(parts) if parts else None
 
         seen = set()
-        # most specific -> least: shrink free tokens, then drop dataset-type, then organism
+
+        def emit(tokens, with_org, with_gds):
+            t = build(tokens, with_org, with_gds)
+            if t and t not in seen:
+                seen.add(t)
+                return t
+            return None
+
+        # When the assay maps to a sequencing DataSet Type, that filter is a HARD constraint —
+        # never relax it, or wrong-assay studies (e.g. microarray) leak in. Relax only the
+        # free-text breadth, then the organism.
+        if gds_clause:
+            for k in (3, 2, 1):
+                r = emit(self._free_tokens(spec, k), with_org=True, with_gds=True)
+                if r:
+                    yield r
+            for k in (2, 1):
+                r = emit(self._free_tokens(spec, k), with_org=False, with_gds=True)
+                if r:
+                    yield r
+            return
+        # No dataset-type filter available (unknown omics): relax freely.
         for k in (3, 2):
-            for wg in (True, False):
-                t = build(self._free_tokens(spec, k), with_org=True, with_gds=wg)
-                if t and t not in seen:
-                    seen.add(t); yield t
-        t = build(self._free_tokens(spec, 2), with_org=False, with_gds=True)
-        if t and t not in seen:
-            seen.add(t); yield t
-        # last resort: raw prompt words, organism only
-        t = build(self._free_tokens(spec, 3), with_org=False, with_gds=False)
-        if t and t not in seen:
-            seen.add(t); yield t
+            for wg in (False,):
+                r = emit(self._free_tokens(spec, k), with_org=True, with_gds=wg)
+                if r:
+                    yield r
+        r = emit(self._free_tokens(spec, 3), with_org=False, with_gds=False)
+        if r:
+            yield r
 
     def _params(self, **kw) -> dict:
         p = {"retmode": "json", **kw}
