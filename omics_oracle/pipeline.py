@@ -122,8 +122,10 @@ def project_experiment(prompt: str,
     matches = matches + [m for m in pool if m.accession in {d.accession for d in de_results}
                          and m.accession not in shown]
 
-    # 5. concordance
-    concordance = aggregate(de_results) if any(d.status == "ok" for d in de_results) else None
+    # 5. concordance (genes harmonized to HGNC symbols so cross-id-type studies overlap)
+    species = "mouse" if (spec.organism or "").lower().startswith("mus") else "human"
+    concordance = (aggregate(de_results, species=species)
+                   if any(d.status == "ok" for d in de_results) else None)
 
     # 6. projection
     projection = project(spec, matches, de_results, concordance)
