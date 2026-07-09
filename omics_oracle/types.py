@@ -90,19 +90,28 @@ class DatasetMatch:
 
 @dataclass
 class CountMatrix:
-    """Genes x samples reprocessed counts plus per-sample metadata."""
+    """Genes x samples expression matrix plus per-sample metadata.
+
+    ``data_type`` records what the values actually are, because it decides which DE method is
+    valid: only ``raw`` counts may go to pydeseq2. Per-study supplementary tables are frequently
+    normalized (TPM/FPKM/log), so this must be detected and honored, never assumed.
+    """
     accession: str
     genes: list[str]
     samples: list[str]
     counts: Any                              # pandas.DataFrame (genes x samples)
     sample_meta: Any = None                  # pandas.DataFrame (samples x fields) or None
     provenance: str = ""
+    data_type: str = "raw"                   # "raw" | "normalized" | "unknown"
+    source_file: str = ""                    # the supplementary filename it came from
 
     def to_dict(self) -> dict:
         return {
             "accession": self.accession,
             "n_genes": len(self.genes),
             "n_samples": len(self.samples),
+            "data_type": self.data_type,
+            "source_file": self.source_file,
             "provenance": self.provenance,
         }
 

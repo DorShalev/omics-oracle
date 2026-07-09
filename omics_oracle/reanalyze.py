@@ -36,16 +36,29 @@ def compute_qc(counts: CountMatrix) -> QCSummary:
 
 def reanalyze(counts: CountMatrix, spec: ExperimentSpec,
               groups: Optional[dict[str, str]] = None,
-              min_group: int = 2) -> DEResult:
+              min_group: int = 2, llm=None) -> DEResult:
     """QC always; DE when a case/control grouping is available.
 
     ``groups`` maps sample id -> "case"|"control". If None, we try to derive it from
-    ``counts.sample_meta`` using the spec's contrast terms.
+    ``counts.sample_meta`` using the spec's contrast terms; if that fails and an LLM is
+    provided, we ask it to label samples (labeling only — it never invents samples).
     """
     qc = compute_qc(counts)
 
+    # P0 honesty gate: pydeseq2 is only valid on raw counts. Normalized (TPM/FPKM/log) or
+    # unconfirmed tables must NOT be rounded-and-DESeq'd — report QC and skip DE honestly.
+    dtype = getattr(counts, "data_type", "raw")
+    if dtype != "raw":
+        return DEResult(accession=counts.accession, contrast="(none)", n_case=0, n_control=0,
+                        qc=qc, status="skipped",
+                        note=f"{counts.accession} supplementary table is {dtype} "
+                             f"({counts.source_file or 'source n/a'}); pydeseq2 requires raw counts, "
+                             "so DE was skipped rather than run on invalid input")
+
     if groups is None:
         groups = _derive_groups(counts, spec)
+    if not groups and llm is not None and getattr(llm, "available", False):
+        groups = _llm_group_samples(counts, spec, llm)
 
     if not groups:
         return DEResult(accession=counts.accession, contrast="(none)", n_case=0, n_control=0,
@@ -123,3 +136,38 @@ def _derive_groups(counts: CountMatrix, spec: ExperimentSpec) -> Optional[dict[s
 
 def _terms(s: str) -> list[str]:
     return [t for t in s.lower().replace("/", " ").split() if len(t) > 2]
+
+
+def _llm_group_samples(counts: CountMatrix, spec: ExperimentSpec, llm) -> Optional[dict[str, str]]:
+    """Ask the LLM to assign each sample column to case/control/exclude for this contrast.
+
+    Labeling only: the model chooses among the EXACT sample ids we pass; it cannot add samples.
+    Anything it doesn't return, or returns as 'exclude', is dropped.
+    """
+    samples = [str(c) for c in counts.counts.columns]
+    if not samples or spec.contrast_case is None or spec.contrast_control is None:
+        return None
+    meta = counts.sample_meta
+    hints = {}
+    if meta is not None:
+        for s in samples:
+            if s in meta.index:
+                hints[s] = " ".join(str(v) for v in meta.loc[s].values)
+    system = (
+        "You assign RNA-seq sample columns to two groups for a differential-expression contrast. "
+        "Use ONLY the provided sample identifiers. Return ONLY a JSON object mapping each sample id "
+        "to one of: \"case\", \"control\", \"exclude\". Assign by what the sample names imply; use "
+        "\"exclude\" when a sample clearly belongs to neither arm or is ambiguous. Do not invent ids."
+    )
+    user = (f"Contrast: case = {spec.contrast_case!r} vs control = {spec.contrast_control!r}\n"
+            f"Tissue/context: {spec.tissue}\n"
+            f"Sample ids (and any hints): {hints or samples}")
+    obj = llm.complete_json(system, user)
+    if not obj:
+        return None
+    groups = {}
+    for s in samples:
+        v = str(obj.get(s, "")).lower()
+        if v in ("case", "control"):
+            groups[s] = v
+    return groups or None

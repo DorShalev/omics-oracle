@@ -75,5 +75,6 @@ def test_metadata_only_when_no_counts_source():
     )
     assert all(r.status != "ok" for r in report.de_results)
     assert report.concordance is None
-    assert any("metadata-only" in w for w in report.warnings)
+    # with no counts source, each dataset is honestly skipped (not faked)
+    assert all(r.status == "skipped" for r in report.de_results)
     assert report.projection.feasibility in ("cautionary", "thin-evidence")

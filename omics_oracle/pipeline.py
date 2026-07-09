@@ -74,37 +74,33 @@ def project_experiment(prompt: str,
         warnings.append("Relevance judge skipped (no LLM backend) — matches are ranked by the "
                         "deterministic mismatch model only, not semantically verified.")
 
-    # 3-4. fetch reprocessed counts + reanalyze the top non-blocking matches.
-    # Default counts backend: local ARCHS4 H5 if a path is given, else remote streaming
-    # (only the needed sample columns — no 58 GB download) when its index is cached.
+    # 3-4. fetch per-study counts + reanalyze the top non-blocking matches.
+    # Default counts backend: each matched study's OWN supplementary expression table from GEO
+    # (small per-study download). A local ARCHS4 H5 is an explicit opt-in override via --h5.
     if counts_sources is not None:
         counts_srcs = list(counts_sources)
     elif h5_path:
         counts_srcs = [ARCHS4Source(h5_path=h5_path)]
     else:
-        from .sources.archs4_remote import ARCHS4RemoteSource
-        counts_srcs = [ARCHS4RemoteSource()]
-    counts_available = any(_supports(s) for s in counts_srcs)
-    if not counts_available:
-        warnings.append("No counts source available — reanalysis is metadata-only (DE and "
-                        "concordance not computed). Enable counts by either passing --h5 to a "
-                        "local ARCHS4 file, or building the remote index once "
-                        "(python scripts/build_archs4_index.py) to stream counts without the "
-                        "58 GB download.")
+        from .sources.geo_suppl import GeoSupplSource
+        counts_srcs = [GeoSupplSource()]
 
     de_results: list[DEResult] = []
     # reanalyze only matches that clear BOTH the structural filter and the judge
     usable = [m for m in matches if not m.blocking and not m.judged_irrelevant]
     for m in usable[:reanalyze_top]:
-        if not counts_available:
-            break
         cm = fetch_counts(m, counts_srcs)
+        # surface each source's honest refusal reasons (no silent skips)
+        for s in counts_srcs:
+            for w in getattr(s, "last_warnings", None) or []:
+                if w not in warnings:
+                    warnings.append(w)
         if cm is None:
             de_results.append(DEResult(accession=m.accession, contrast="(none)", n_case=0,
                                        n_control=0, status="skipped",
-                                       note="reprocessed counts not available for this accession"))
+                                       note="no usable per-study counts table for this dataset"))
             continue
-        de_results.append(reanalyze(cm, spec))
+        de_results.append(reanalyze(cm, spec, llm=llm))
 
     # 5. concordance
     concordance = aggregate(de_results) if any(d.status == "ok" for d in de_results) else None

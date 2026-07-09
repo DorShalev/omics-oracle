@@ -34,21 +34,22 @@ python -m omics_oracle "RNA-seq of mouse liver, high-fat diet vs chow, n=8" --js
 python -m omics_oracle "<prompt>" --no-judge      # skip the LLM relevance judge
 ```
 
-### Enabling reprocessed counts (DE + concordance)
-Two ways to give the engine ARCHS4 counts — **you do not need the 58 GB file**:
+### How counts work (DE + concordance)
+By default, for each matched study the engine downloads **that study's own supplementary
+expression table** from GEO (`*_counts.tsv.gz`, `*_TPM.txt.gz`, etc. — a few MB each), parses
+it, and reanalyzes it. **No bulk database download.** It:
+- prefers a **raw-counts** table over a normalized one, and **refuses to run DE on normalized
+  data** (TPM/FPKM/log) — reporting it honestly instead of rounding-and-faking;
+- groups samples into case/control from column names / clinical files, with an **LLM fallback**
+  (via the configured backend) for messy naming;
+- caps each download (`GEO_SUPPL_MAX_BYTES`, default 50 MB) and caches under `data/geo_suppl/`.
 
+An ARCHS4 whole-database backend remains available as an explicit opt-in (uniformly reprocessed
+counts, for heavy/offline use), but it is no longer the default:
 ```bash
-# (a) Remote streaming — recommended. Cache the sample index ONCE (~1.1M records over HTTP),
-#     then the engine streams only the samples of each matched dataset (tens of MB each).
-python -m omics_oracle --build-index
-
-# (b) Full local file — only for offline/heavy use. One large H5 (~58 GB human), resumable,
-#     parallel, size-disclosed; refuses to start without --yes or if disk is short.
-python -m omics_oracle --download-h5 human --yes
 python -m omics_oracle "<prompt>" --h5 data/archs4/human_gene_v2.latest.h5
+python -m omics_oracle --download-h5 human --yes   # one 58 GB file, resumable
 ```
-Without either, the engine runs **metadata-only** (finds/ranks/flags datasets, projects
-pitfalls) and says so — it never fabricates DE numbers.
 
 ## Use — importable API (the stable boundary for embedding in another app)
 ```python
@@ -90,8 +91,9 @@ Backends are auto-selected (override with `OMICS_ORACLE_LLM` = `auto`|`claude-cl
 
 ## Data sources
 - **NCBI GEO** (E-utilities) — the live, key-free dataset finder (RNA-seq & more).
-- **ARCHS4** — uniformly-reprocessed RNA-seq counts, either **streamed remotely** (only the
-  samples you need — no 58 GB download) or from a **local H5**.
+- **GEO supplementary tables** — each matched study's own expression table (the default counts
+  path; small per-study downloads, raw-counts-aware, no bulk data).
+- **ARCHS4** (opt-in) — uniformly-reprocessed RNA-seq counts from a local H5, for heavy/offline use.
 - Expression Atlas, PRIDE (proteomics), ENCODE, pysradb — interface-ready, on the roadmap.
 
 ## Relevance judge (anti-fabrication)
