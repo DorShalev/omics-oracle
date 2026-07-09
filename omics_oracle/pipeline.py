@@ -27,6 +27,7 @@ from .types import OracleReport, DEResult
 def project_experiment(prompt: str,
                        max_datasets: int = 5,
                        reanalyze_top: int = 3,
+                       reanalyze_pool: int = 15,
                        h5_path: Optional[str] = None,
                        llm_model: Optional[str] = None,
                        judge: bool = True,
@@ -53,11 +54,15 @@ def project_experiment(prompt: str,
         warnings.append(f"GEO is not the authoritative index for {spec.omics_type}; matches may "
                         "be off-assay. PRIDE (proteomics) / MetaboLights are the right sources "
                         "(not wired in v0.1) — treat these results as weak.")
+    # Pull a larger candidate POOL than we display, so reanalysis can keep walking down the
+    # ranking until it finds studies that actually deposit raw counts (many deposit only TPM).
+    pool_limit = max(max_datasets, reanalyze_pool)
     try:
-        matches = find_datasets(spec, sources=finders, limit=max_datasets)
+        pool = find_datasets(spec, sources=finders, limit=pool_limit)
     except Exception as e:
-        matches = []
+        pool = []
         warnings.append(f"Dataset finder failed ({type(e).__name__}: {e}); no matches.")
+    matches = pool[:max_datasets]   # what the report displays + what the judge scores
 
     # 2b. LLM relevance judge — semantic anti-fabrication check on the top matches.
     if judge and llm.available and matches:
@@ -86,12 +91,20 @@ def project_experiment(prompt: str,
         counts_srcs = [GeoSupplSource()]
 
     de_results: list[DEResult] = []
-    # reanalyze only matches that clear BOTH the structural filter and the judge
-    usable = [m for m in matches if not m.blocking and not m.judged_irrelevant]
-    for m in usable[:reanalyze_top]:
+    # Auto-expand: walk DOWN the ranked pool attempting reanalysis until we collect
+    # `reanalyze_top` studies that actually yield DE (many deposit only normalized tables),
+    # capped so we never hammer the network. Blocking/judged-irrelevant matches are skipped.
+    ok = 0
+    attempts = 0
+    max_attempts = min(len(pool), max(reanalyze_top * 4, 8))
+    for m in pool:
+        if ok >= reanalyze_top or attempts >= max_attempts:
+            break
+        if m.blocking or m.judged_irrelevant:
+            continue
+        attempts += 1
         cm = fetch_counts(m, counts_srcs)
-        # surface each source's honest refusal reasons (no silent skips)
-        for s in counts_srcs:
+        for s in counts_srcs:                       # surface honest refusal reasons
             for w in getattr(s, "last_warnings", None) or []:
                 if w not in warnings:
                     warnings.append(w)
@@ -100,7 +113,14 @@ def project_experiment(prompt: str,
                                        n_control=0, status="skipped",
                                        note="no usable per-study counts table for this dataset"))
             continue
-        de_results.append(reanalyze(cm, spec, llm=llm))
+        res = reanalyze(cm, spec, llm=llm)
+        de_results.append(res)
+        if res.status == "ok":
+            ok += 1
+    # make sure every reanalyzed study is shown in the report, even if below the display cut
+    shown = {m.accession for m in matches}
+    matches = matches + [m for m in pool if m.accession in {d.accession for d in de_results}
+                         and m.accession not in shown]
 
     # 5. concordance
     concordance = aggregate(de_results) if any(d.status == "ok" for d in de_results) else None
