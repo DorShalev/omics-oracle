@@ -1,0 +1,531 @@
+{
+  "schema_version": "0.1.0",
+  "spec": {
+    "raw_prompt": "RNA-seq of human colorectal cancer tumor vs adjacent normal tissue, ~10 per group, to find differentially expressed genes",
+    "organism": "Homo sapiens",
+    "tissue": "colorectal (tumor and adjacent normal)",
+    "contrast_case": "colorectal cancer tumor",
+    "contrast_control": "adjacent normal tissue",
+    "omics_type": "rna-seq",
+    "platform": null,
+    "n_per_group": 10,
+    "parser": "llm",
+    "keywords": [
+      "colorectal cancer",
+      "tumor vs adjacent normal",
+      "RNA-seq",
+      "differential expression",
+      "human",
+      "colorectal tumor",
+      "gene expression"
+    ]
+  },
+  "matches": [
+    {
+      "accession": "GSE261033",
+      "source": "GEO",
+      "title": "Epigenetic landscape, key transcriptional regulators, and in vivo identification of human Tr1 cells [scMultiome]",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 28,
+      "summary": "Type 1 regulatory T (Tr1) cells are CD4+ T cells with immunoregulatory function, which are induced from mature peripheral CD4+ T cells in response to persistent extra-thymic antigens. The role of human Tr1 cells in disease is not completely understood, because transcription factors that regulate their antigen-driven differentiation are not known, and there is lack of consensus on how to best identify them in the tissue, where antigen interactions occur. Here, we leveraged comprehensive bulk and single-cell (sc) transcriptomic, epigenomic, and TCR repertoire profiling of human antigen-induced Tr1 cells, complemented with CRISPR-based functional genomics, to uncover the role of transcription factors IRF4, BATF and MAF in human Tr1 cell differentiation and function. In addition, we identify a Tr1 cell transcriptional signature that can reveal Tr1-like cells in sc-RNA-seq datasets of peripheral blood CD4+ T cells of patients treated with Tr1 therapy, and within tumor-resident CD4+ T cells in patients with clear-cell renal cell carcinoma, triple-negative breast cancer, and colorectal cancer. These data enable further development of Tr1 therapies and Tr1-targeting treatments, and provide new insights into human Tr1 cell biology.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE261033",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE261033",
+        "verdict": "irrelevant",
+        "confidence": 0.94,
+        "reason": "This dataset studies human Tr1 regulatory CD4+ T-cell differentiation (scMultiome/epigenomic profiling of antigen-induced T cells, focus on IRF4/BATF/MAF). Colorectal cancer is mentioned only in passing as one of several tumor types where a Tr1 signature was detected in tumor-resident CD4+ T cells. There is no tumor-vs-adjacent-normal colorectal tissue contrast, no bulk colorectal tumor/normal RNA",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE319664",
+      "source": "GEO",
+      "title": "RNA-seq analysis of tumors derived from a xenograft model treated with the KDM5B inhibitors JB-157 or JB-161.",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL34284",
+      "n_samples": 29,
+      "summary": "KDM5B, a member of the KDM5 family of histone demethylases, functions as a key epigenetic regulator by removing di- and trimethyl groups from H3K4 (H3K4me2/3), thereby promoting transcriptional repression. It is involved in fundamental biological processes, including development, stem cell maintenance, and tumorigenesis, and its dysregulation has been associated with multiple cancer types. Given its critical role in cancer biology, KDM5B has emerged as an attractive target for therapeutic intervention. Therefore, we conducted a screening campaign to identify novel KDM5B inhibitors. In this study, we investigated whether the KDM5B inhibitors JB-157 and JB-161, identified through our screening, exert antitumor effects.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE319664",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE319664",
+        "verdict": "irrelevant",
+        "confidence": 0.9,
+        "reason": "Both are human RNA-seq, but the dataset profiles tumors from a xenograft model treated with KDM5B inhibitors (JB-157/JB-161) \u2014 a drug-treatment vs vehicle contrast in a xenograft, not colorectal tumor vs adjacent normal tissue. No indication the tumors are colorectal or that adjacent-normal tissue is included; the biological system and contrast axis do not match the plan.",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE333496",
+      "source": "GEO",
+      "title": "Epigenetic landscape, key transcriptional regulators, and in vivo identification of human Tr1 cells [RNA-Seq]",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL20301",
+      "n_samples": 11,
+      "summary": "Type 1 regulatory T (Tr1) cells are CD4+ T cells with immunoregulatory function, which are induced from mature peripheral CD4+ T cells in response to persistent extra-thymic antigens. The role of human Tr1 cells in disease is not completely understood, because transcription factors that regulate their antigen-driven differentiation are not known, and there is lack of consensus on how to best identify them in the tissue, where antigen interactions occur. Here, we leveraged comprehensive bulk and single-cell (sc) transcriptomic, epigenomic, and TCR repertoire profiling of human antigen-induced Tr1 cells, complemented with CRISPR-based functional genomics, to uncover the role of transcription factors IRF4, BATF and MAF in human Tr1 cell differentiation and function. In addition, we identify a Tr1 cell transcriptional signature that can reveal Tr1-like cells in sc-RNA-seq datasets of peripheral blood CD4+ T cells of patients treated with Tr1 therapy, and within tumor-resident CD4+ T cells in patients with clear-cell renal cell carcinoma, triple-negative breast cancer, and colorectal cancer. These data enable further development of Tr1 therapies and Tr1-targeting treatments, and provide new insights into human Tr1 cell biology.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE333496",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 20",
+          "found": 11,
+          "severity": "minor",
+          "note": "GSE333496 has 11 samples; smaller than the planned design"
+        }
+      ],
+      "judge": {
+        "accession": "GSE333496",
+        "verdict": "irrelevant",
+        "confidence": 0.95,
+        "reason": "Despite RNA-seq/Homo sapiens/keyword match, the actual system is human Tr1 regulatory CD4+ T cells and IRF4/BATF/MAF-driven Tr1 differentiation. Colorectal cancer is mentioned only in passing as one tissue where a Tr1 signature was projected onto external scRNA-seq. There is no CRC tumor-vs-adjacent-normal contrast, no colorectal tissue samples, and a different biological system/assay focus, so it",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE245885",
+      "source": "GEO",
+      "title": "Comprehensive Expression Profiles of mRNAs, LncRNAs, and CircRNAs in Colon Specimens of Patients with Slow Transit Constipation",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL20301",
+      "n_samples": 10,
+      "summary": "Slow transit constipation (STC) is a complication of depression, which can be commonly seen, that can have a negative impact on STC patients\u2019 prognosis and quality of life. Nonetheless, the pathogenesis of STC is principally uncertain. In this work, colon tissues from STC and non-STC patients were utilized to identify transcriptome expression patterns (mRNAs, lncRNAs, and circRNAs) by high-throughput sequencing.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE245885",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 20",
+          "found": 10,
+          "severity": "minor",
+          "note": "GSE245885 has 10 samples; smaller than the planned design"
+        }
+      ],
+      "judge": {
+        "accession": "GSE245885",
+        "verdict": "irrelevant",
+        "confidence": 0.9,
+        "reason": "Same organism (human), same assay (RNA-seq), and same organ region (colon), but the biological system and contrast are entirely different: the dataset compares slow transit constipation (STC) vs non-STC colon tissue, with no cancer/tumor component. There is no tumor-vs-adjacent-normal contrast, so it cannot serve as prior evidence for colorectal cancer DEGs. Overlap is limited to tissue keyword on",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE312260",
+      "source": "GEO",
+      "title": "Gene expression profile at single cell level of Irinotecan-sensitive and Irinotecan-resistant organoids for colorectal cancer",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 2,
+      "summary": "Organoids derived from both patients contained only epithelial cells.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE312260",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 20",
+          "found": 2,
+          "severity": "minor",
+          "note": "GSE312260 has 2 samples; smaller than the planned design"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE289055",
+      "source": "GEO",
+      "title": "P2RY2 fuelled by eATP drives cancer immune evasion and therapy resistance",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 18,
+      "summary": "In this study, we identify P2RY2 as a pivotal upstream driver of both PGE2 accumulation and B7-H3 upregulation in the TME. This process is fuelled by extracellular ATP (eATP), a cognate ligand for P2RY2 that is commonly and markedly elevated in the TME and rises further under immunotherapies. Genetic or pharmacological disruption of P2RY2 substantially reduces intratumoural PGE2 and B7-H3, increasing T cell infiltration, effector functions, proliferation, and persistence within the TME. Consequently, targeting P2RY2 substantially improves the efficacy of TCR-engineered T cells, CAR-T cells, and immune checkpoint blockade (ICB) in multiple syngeneic and humanized mouse tumour models, and potentiates patient-derived tumour-infiltrating lymphocytes (TILs) against paired primary tumour cells. By establishing P2RY2 as the crucial link between eATP and tumour-induced immunosuppression, our study reveals how a receptor typically associated with innate \u201cdanger\u201d signalling can be hijacked to undermine adaptive immunity, thereby providing a promising therapeutic avenue to overcome a common immune resistance mechanism in cancer and advance T cell\u2013based cancer therapies.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE289055",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 20",
+          "found": 18,
+          "severity": "minor",
+          "note": "GSE289055 has 18 samples; smaller than the planned design"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE285319",
+      "source": "GEO",
+      "title": "The high expression of siglec10 in tumor macrophages may promote the progression of colorectal cancer",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 6,
+      "summary": "SIGLEC10, also known as sialic-binding immunoglobulin-like lectin 10, is a member of the SIGLEC family. SIGLEC10 is expressed on the surface of immune cells and is involved in the regulation of immune responses by recognizing microorganisms or cells with specific sialic acids. Among other cancer types, SIGLEC10 has been identified as a novel tumor-associated macrophage-associated immune checkpoint. This study suggests that siglec10 is an independent prognostic factor in patients with CRC and may be a promising immunotherapeutic target for CRC in the future.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE285319",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 20",
+          "found": 6,
+          "severity": "minor",
+          "note": "GSE285319 has 6 samples; smaller than the planned design"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE335811",
+      "source": "GEO",
+      "title": "Macrophage-Induced Senescent Cancer-Associated Fibroblasts Promote SASP-Mediated Chemoresistance in Colorectal Cancer",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 12,
+      "summary": "Cancer-associated fibroblasts (CAFs) play a crucial role in the tumor microenvironment (TME) by influencing tumor progression and therapy resistance. Accumulating evidence suggests that CAFs undergo senescence, which can impact their effects on the TME. In this study, we integrated single-cell RNA sequencing (scRNA-seq), spatial transcriptomics, and multiple preclinical models to explore the mechanisms underlying CAF senescence and its impact on chemotherapy resistance in colorectal cancer (CRC). First, we developed a machine learning-based prediction model, the Cellular Senescence Prediction Model (CSPM), to accurately identify senescent CAFs based on single-cell RNA sequencing data. We used publicly available CRC single-cell cohorts and in-house CRC single-cell data to demonstrate the reliability of the model. By combining in silico analysis and preclinical models, we demonstrated that senescent CAFs induced by IL1B-IL1R1 signaling mediated by macrophages secrete components of the Senescence-Associated Secretory Phenotype (SASP) that impair chemotherapy responsiveness in CRC, suggesting that stromal senescence could be a therapeutic target.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE335811",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 20",
+          "found": 12,
+          "severity": "minor",
+          "note": "GSE335811 has 12 samples; smaller than the planned design"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE337988",
+      "source": "GEO",
+      "title": "Joint analysis of multiply perturbed cells improves statistical power and cost efficiency in Perturb-seq screens",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676;34284",
+      "n_samples": 48,
+      "summary": "Perturb-seq measures transcriptomic responses to genetic perturbations at scale, but standard low-MOI designs remain resource-intensive. Conventional designs aim to recover one guide RNA per cell and often discard cells carrying multiple guides during analysis. Here, we characterize how overloading cells with guides affects signal recovery, information loss, and cost reduction. Increasing guide RNA dosage eventually induced cellular stress and suppressed cell-cycle progression. Among multiplets, cells carrying two or three guides recovered perturbation responses better than higher-order guide multiplets. In a 5000-gene Perturb-seq screen across MOI levels, high MOI reduced per-cell costs by 81% while keeping information loss within 1.5-fold of a low-MOI baseline. In existing genome-wide Perturb-seq data, incorporating previously discarded multiplets increased usable cell numbers and improved statistical power. Compared with a singlet-only holdout set, adding multiplets moved signal recovery closer to the theoretical reproducibility limit. Together, these results provide an experimental and computational framework for designing cost-efficient Perturb-seq screens at scale.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE337988",
+      "similarity": 0.8,
+      "mismatches": [
+        {
+          "field": "contrast",
+          "expected": "colorectal cancer tumor adjacent normal tissue",
+          "found": null,
+          "severity": "major",
+          "note": "contrast terms 'colorectal cancer tumor adjacent normal tissue' not evident in GSE337988 metadata"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE324345",
+      "source": "GEO",
+      "title": "Analysis of ER stress-induced three-dimensional enhancer network in wild-type and transcription facotr-knockout HCT116 cells [RNA-Seq]",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676;20795",
+      "n_samples": 66,
+      "summary": "Integrative analysis of transcriptome, enhancer landscape and transcription factor binding, and three-dimensional genome structure in wild-type and transcription factor-knockout cells folloowing tunicamycin treatment",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE324345",
+      "similarity": 0.8,
+      "mismatches": [
+        {
+          "field": "contrast",
+          "expected": "colorectal cancer tumor adjacent normal tissue",
+          "found": null,
+          "severity": "major",
+          "note": "contrast terms 'colorectal cancer tumor adjacent normal tissue' not evident in GSE324345 metadata"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    }
+  ],
+  "de_results": [
+    {
+      "accession": "GSE312260",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE289055",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set is empty (0 samples) \u2014 no colorectal cancer tumor tissue samples exist here.; Control set is empty (0 samples) \u2014 no adjacent normal tissue samples exist here.; All 18 samples are cultured cell lines from a gene-knockout experiment (BxPC3 pancreatic, SW480 CRC, KBM7 leukemia), not patient tissue; the tumor-vs-adjacent-normal design does not exist in this data; Individual exclusion reasons are correct, but the net result is a non-runnable DE contrast \u2014 this dataset cannot answer the stated research question and should be flagged as no valid samples rather th",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 18,
+          "assignments": [
+            {
+              "sample": "BxPC3_Ctrl_1",
+              "label": "exclude",
+              "reason": "BxPC3 pancreatic cancer cell line, KO-experiment control arm; not colorectal tumor or adjacent normal tissue.",
+              "votes": 1
+            },
+            {
+              "sample": "BxPC3_Ctrl_2",
+              "label": "exclude",
+              "reason": "BxPC3 pancreatic cancer cell line, KO-experiment control arm; not colorectal tumor or adjacent normal tissue.",
+              "votes": 1
+            },
+            {
+              "sample": "BxPC3_Ctrl_3",
+              "label": "exclude",
+              "reason": "BxPC3 pancreatic cancer cell line, KO-experiment control arm; not colorectal tumor or adjacent normal tissue.",
+              "votes": 1
+            },
+            {
+              "sample": "BxPC3_KO_1",
+              "label": "exclude",
+              "reason": "BxPC3 pancreatic cancer cell line, gene knockout condition; unrelated to tumor-vs-adjacent-normal CRC tissue contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "BxPC3_KO_2",
+              "label": "exclude",
+              "reason": "BxPC3 pancreatic cancer cell line, gene knockout condition; unrelated to tumor-vs-adjacent-normal CRC tissue contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "BxPC3_KO_3",
+              "label": "exclude",
+              "reason": "BxPC3 pancreatic cancer cell line, gene knockout condition; unrelated to tumor-vs-adjacent-normal CRC tissue contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "SW480_Ctrl_1",
+              "label": "exclude",
+              "reason": "SW480 is a CRC cell line but used as a KO-experiment control, not adjacent normal tissue; wrong design for this contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "SW480_Ctrl_2",
+              "label": "exclude",
+              "reason": "SW480 is a CRC cell line but used as a KO-experiment control, not adjacent normal tissue; wrong design for this contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "SW480_Ctrl_3",
+              "label": "exclude",
+              "reason": "SW480 is a CRC cell line but used as a KO-experiment control, not adjacent normal tissue; wrong design for this contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "SW480_KO_1",
+              "label": "exclude",
+              "reason": "SW480 CRC cell line under gene knockout; a cultured line, not patient tumor tissue, and part of a KO design.",
+              "votes": 1
+            },
+            {
+              "sample": "SW480_KO_2",
+              "label": "exclude",
+              "reason": "SW480 CRC cell line under gene knockout; a cultured line, not patient tumor tissue, and part of a KO design.",
+              "votes": 1
+            },
+            {
+              "sample": "SW480_KO_3",
+              "label": "exclude",
+              "reason": "SW480 CRC cell line under gene knockout; a cultured line, not patient tumor tissue, and part of a KO design.",
+              "votes": 1
+            },
+            {
+              "sample": "KBM7_Ctrl_1",
+              "label": "exclude",
+              "reason": "KBM7 chronic myeloid leukemia cell line, KO-experiment control; not colorectal tumor or adjacent normal tissue.",
+              "votes": 1
+            },
+            {
+              "sample": "KBM7_Ctrl_2",
+              "label": "exclude",
+              "reason": "KBM7 chronic myeloid leukemia cell line, KO-experiment control; not colorectal tumor or adjacent normal tissue.",
+              "votes": 1
+            },
+            {
+              "sample": "KBM7_Ctrl_3",
+              "label": "exclude",
+              "reason": "KBM7 chronic myeloid leukemia cell line, KO-experiment control; not colorectal tumor or adjacent normal tissue.",
+              "votes": 1
+            },
+            {
+              "sample": "KBM7_KO_1",
+              "label": "exclude",
+              "reason": "KBM7 leukemia cell line under gene knockout; unrelated tissue and design to the CRC tumor-vs-normal contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "KBM7_KO_2",
+              "label": "exclude",
+              "reason": "KBM7 leukemia cell line under gene knockout; unrelated tissue and design to the CRC tumor-vs-normal contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "KBM7_KO_3",
+              "label": "exclude",
+              "reason": "KBM7 leukemia cell line under gene knockout; unrelated tissue and design to the CRC tumor-vs-normal contrast.",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty; the requested colorectal tumor vs adjacent-normal-tissue contrast is not present in any of these samples.",
+          "concerns": [
+            "Case set is empty (0 samples) \u2014 no colorectal cancer tumor tissue samples exist here.",
+            "Control set is empty (0 samples) \u2014 no adjacent normal tissue samples exist here.",
+            "All 18 samples are cultured cell lines from a gene-knockout experiment (BxPC3 pancreatic, SW480 CRC, KBM7 leukemia), not patient tissue; the tumor-vs-adjacent-normal design does not exist in this data",
+            "Individual exclusion reasons are correct, but the net result is a non-runnable DE contrast \u2014 this dataset cannot answer the stated research question and should be flagged as no valid samples rather th"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
+      "n_de_padj05_lfc1": 0,
+      "qc": {
+        "n_samples": 18,
+        "n_genes_detected": 36043,
+        "median_library_size": 43187570.5,
+        "median_zero_fraction": 0.639,
+        "flags": []
+      }
+    },
+    {
+      "accession": "GSE285319",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE335811",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE337988",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE324345",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    }
+  ],
+  "concordance": null,
+  "comparison": null,
+  "enrichment": null,
+  "heatmap": null,
+  "projection": {
+    "expected_n_de": null,
+    "effect_size_prior": null,
+    "qc_pitfalls": [
+      "Check for rRNA / globin carryover, especially in blood/plasma inputs.",
+      "Verify library size and 3' bias; low-input EV/exosome RNA often yields shallow, high-duplication libraries.",
+      "Normalization choice (median-of-ratios vs TMM vs CPM) changes DE calls \u2014 fix one and report it.",
+      "Batch/lane confounding with condition is the most common false-signal source; block or randomize."
+    ],
+    "power_read": "Planned N = 10 per group. Reasonable for moderate effects in bulk RNA-seq.",
+    "feasibility": "cautionary",
+    "caveats": [
+      "No prior study yielded raw counts for DE (5 had no usable per-study counts table; 1 had no assignable case/control grouping); DE-count and effect-size priors are not estimated. Try raising --reanalyze-top to reach studies deeper in the ranking that may deposit raw counts."
+    ]
+  },
+  "narrative": "Prior public data offers only partial, unconfirmed support for this plan: several human RNA-seq datasets match the colorectal tumor-versus-adjacent-normal design by metadata similarity, but none could be reanalyzed to actually confirm differential-expression yields. The closest datasets by accession are GSE261033 and GSE319664 (highest metadata similarity) and GSE245885, a colon-specimen expression-profiling study whose ~10-sample size mirrors your planned design; GSE333496 is also a near match. The main caveat is that no candidate study produced a usable per-study counts table \u2014 five were skipped for lacking raw counts, and one (GSE289055) was dropped because it contained only cultured cell lines from a knockout experiment rather than patient tumor/normal tissue, so no expected DE-gene count or effect-size prior could be estimated. Note too that one top-similarity hit (GSE319664) is a xenograft/drug-treatment study, which does not match a straightforward tumor-versus-normal tissue contrast. On the general RNA-seq caveats, watch for batch/lane confounding with condition, and fix and report a single normalization choice, since these are common sources of false signal. Your planned N of 10 per group is reasonable for detecting moderate effects in bulk RNA-seq. Overall feasibility is cautionary: the design is plausible and metadata-similar studies exist, but because no prior dataset could be reanalyzed into usable DE estimates, this should be treated as unvalidated \u2014 consider searching deeper in the ranking for studies that deposit raw counts before relying on any quantitative prior.",
+  "warnings": [
+    "LLM backend: claude-cli (spec parsing + narrative phrasing only; numbers come from data, not the model).",
+    "GSE312260: no supplementary expression table found (files: GSE312260_RAW.tar, filelist.txt)",
+    "GSE335811: no supplementary expression table found (files: GSE335811_RAW.tar, filelist.txt)",
+    "GSE324345: no supplementary expression table found (files: GSE324345_RAW.tar, filelist.txt)"
+  ]
+}

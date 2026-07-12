@@ -1,0 +1,547 @@
+{
+  "schema_version": "0.1.0",
+  "spec": {
+    "raw_prompt": "Human pancreatic islet RNA-seq, type 2 diabetes vs non-diabetic donors",
+    "organism": "Homo sapiens",
+    "tissue": "pancreatic islet",
+    "contrast_case": "type 2 diabetes donors",
+    "contrast_control": "non-diabetic donors",
+    "omics_type": "rna-seq",
+    "platform": null,
+    "n_per_group": null,
+    "parser": "llm",
+    "keywords": [
+      "pancreatic islet",
+      "type 2 diabetes",
+      "RNA-seq",
+      "beta cell",
+      "insulin secretion",
+      "glucose homeostasis",
+      "differential expression"
+    ]
+  },
+  "matches": [
+    {
+      "accession": "GSE335464",
+      "source": "GEO",
+      "title": "Integrative single-cell multi-omics profiling of human pancreatic islets identifies T1D-associated genes and regulatory signals  [single cell]",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 28,
+      "summary": "Genome-wide association studies (GWAS) have identified over 100 signals associated with type 1 diabetes (T1D). However, it has been challenging to translate any given T1D GWAS signal into mechanistic insights, such as causal variants, their target genes, and the specific cell types involved. Here, we present a comprehensive multi-omic integrative analysis of single-cell/nucleus resolution profiles of gene expression and chromatin accessibility in human pancreatic islets under baseline and T1D-stimulating conditions. We nominate effector cell types for all T1D GWAS signals and the regulatory elements and genes for three independent T1D signals acting through beta cells at the DLK1/MEG3, RASGRP1, and TOX loci. We validated the functional impact of these genes and regulatory regions using isogenic human embryonic stem cells (hESCs). Loss of RASGRP1 or DLK1, as well as disruption of their corresponding regulatory regions, led to increased beta cell apoptosis, and beta cells derived from isogenic hESCs carrying the T1D risk allele of rs3783355 showed elevated beta cell death. Through additional RNA-seq and ATAC-seq analyses, we identified five genes upregulated in both RASGRP1-/- and DLK1-/- beta-like cells, four of which are near T1D GWAS signals.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE335464",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE335464",
+        "verdict": "irrelevant",
+        "confidence": 0.82,
+        "reason": "Organism (human), tissue (pancreatic islet), and assay (RNA-seq) match, but the dataset studies type 1 diabetes (T1D GWAS mechanisms, baseline vs T1D-stimulating conditions, and hESC-derived beta-like knockout cells), not type 2 diabetes. There is no T2D-vs-non-diabetic donor contrast; the biological question and contrast axis differ entirely, and much of the RNA-seq is on isogenic hESC-derived ce",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE308718",
+      "source": "GEO",
+      "title": "Regenerative macrophages enhance stem cell-derived beta-cell function and engraftment",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 6,
+      "summary": "The generation of insulin-producing beta cells from human embryonic stem cells (SC-\u03b2 cells) holds promise for treating type 1 diabetes. Transplantation of SC-\u03b2 cells is already in clinical testing, but generating mature cells with insulin-secreting properties similar to endogenous cells has been challenging. Since macrophages are essential for islet development, we hypothesized they could enhance SC-\u03b2-cell differentiation and function. We co-aggregated SC-macrophages which were either unpolarized (SC-MUnp), or polarized to inflammatory (SC-MInf) or regenerative (SC-MReg) states during stage 7 of SC-\u03b2-cell differentiation. SC-MRegs improved maturity marker expression, glucose-stimulated insulin secretion, and metabolic activity in SC-\u03b2 cells. Transplantation of SC-\u03b2 cells co-aggregated with SC-MRegs into diabetic mice normalized glycemia significantly faster than transplantation of SC-\u03b2 cells alone. The finding that addition of macrophages during SC-\u03b2 differentiation accelerates functional maturation represents a significant advance in the production of SC-\u03b2 cells as a regenerative cell therapy for type 1 diabetes.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE308718",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE308718",
+        "verdict": "irrelevant",
+        "confidence": 0.9,
+        "reason": "Both are human RNA-seq mentioning beta cells/diabetes, but the actual system and contrast don't match: this dataset studies stem cell-derived beta cells (SC-\u03b2) co-aggregated with macrophages in different polarization states, aimed at type 1 diabetes cell therapy \u2014 not primary pancreatic islet tissue. The contrast is macrophage polarization (SC-MReg/Inf/Unp), not T2D vs non-diabetic donors. Wrong b",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE312607",
+      "source": "GEO",
+      "title": "Effect of HNF1A-MODY on stem cell islets",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL34284",
+      "n_samples": 12,
+      "summary": "This project investigates the impact of the hotspot mutation P291fsinsC in HNF1A-MODY (Maturity-Onset Diabetes of the Young) on stem cell-derived islets. RNA sequencing (RNA-seq) was performed on islets differentiated from mutant and control HNF1A-MODY stem cells to study the mutation's effect on gene expression. By comparing the transcriptomic profiles of these islets, the study aims to uncover molecular mechanisms underlying the dysfunction caused by the P291fsinsC mutation during islet development and maturation.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE312607",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE312607",
+        "verdict": "irrelevant",
+        "confidence": 0.72,
+        "reason": "Same organism/assay (human RNA-seq) and islet/diabetes theme, but the actual biology and contrast diverge on every axis that matters: it studies HNF1A-MODY (monogenic diabetes), not type 2 diabetes; the contrast is mutant-vs-control genotype during development, not diabetic-vs-non-diabetic donor state; and the samples are stem-cell-derived islets, not primary donor pancreatic islet tissue. Keyword",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE285253",
+      "source": "GEO",
+      "title": "Effect of HNF1A-MODY on stem cell islets [PGP-1]",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL34284",
+      "n_samples": 12,
+      "summary": "This project investigates the impact of the hotspot mutation P291fsinsC in HNF1A-MODY (Maturity-Onset Diabetes of the Young) on stem cell-derived islets. RNA sequencing (RNA-seq) was performed on islets differentiated from mutant and control HNF1A-MODY stem cells to study the mutation's effect on gene expression. By comparing the transcriptomic profiles of these islets, the study aims to uncover molecular mechanisms underlying the dysfunction caused by the P291fsinsC mutation during islet development and maturation.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE285253",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE285253",
+        "verdict": "partial",
+        "confidence": 0.8,
+        "reason": "Matches organism (human), assay (RNA-seq), and islet cell-type, but diverges on both key axes: the contrast is an isogenic HNF1A-MODY mutation (monogenic diabetes) vs control, not T2D-vs-nondiabetic donors, and the system is stem-cell-derived islets rather than primary donor pancreatic islet tissue. Related islet/diabetes biology but wrong contrast and model system, so only weak prior evidence.",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "proxy",
+      "match_tier_reason": "partial metadata match (judge: partial)",
+      "blocking": false
+    },
+    {
+      "accession": "GSE333721",
+      "source": "GEO",
+      "title": "A dish-to-biobank framework links \u03b2-cell nutrient-stress programs to genetic and dietary risk for Type 2 Diabetes",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 6,
+      "summary": "Type 2 diabetes (T2D) arises from genetic susceptibility and chronic metabolic stress, but whether these converge on shared molecular programs in human populations remains unclear. Here, we develop a dish-to-biobank framework linking controlled \u03b2-cell perturbation to population-scale disease genetics through the circulating plasma proteome, and apply it to T2D. scRNA-seq of human stem cell\u2013derived islets under factorial glucose and palmitate exposure identifies their combination (glucolipotoxicity) as the condition eliciting the strongest SC-\u03b2 cell transcriptional response, with glucolipotoxicity-upregulated genes uniquely enriched for T2D heritability, monogenic diabetes genes, and rare-variant burden signals. CRISPR knockout of \u03b2-cell identity regulators PAX6 and PDX1 aligns with this program, establishing convergence of environmental and genetic perturbations on a shared disease-relevant state. We then used the plasma proteome as an accessible population-scale readout of these experimentally defined \u03b2-cell stress programs, scoring 45,956 UK Biobank White British participants. We define heritable stress signatures that associate with refined carbohydrate and saturated fat intake, and undergo trans-tissue genetic regulation, with a subset of variants showing diet-dependent effects. Together, these findings establish glucolipotoxicity as a genetically anchored model of \u03b2-cell dysfunction and provide a generalizable framework for linking controlled cellular perturbations to human disease genetics at population scale.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE333721",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE305932",
+      "source": "GEO",
+      "title": "CRISPR Screening to Investigate Stem Cell-Derived Islets",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL34284",
+      "n_samples": 2,
+      "summary": "Genetically engineering human pluripotent stem cell (hPSC)-derived islets is a promising strategy for improving transplantation for diabetes cell therapy. However, genetic perturbations for improving transplantation efficacy have yet to be elucidated. To identify potential targets, we performed an unbiased whole-genome CRISPR-activation screen in transplanted stem cell-derived islets (SC-islets). We first created a stem cell line with CRISPR-activation components (HUES8-VPR). We transduced the HUES8-VPR stem cells with a lentiviral guide RNA library targeting the whole human genome. These transduced stem cells were differentiated into SC-islets, transplanted into NOD.Cg-PrkdcscidIl2rgtm1Wjl/SzJ (NSG) immunodeficient mice, and then extracted for next-generation sequencing. The screen identified multiple candidates, including the Fc alpha/mu receptor (FCAMR). In vitro characterization revealed that FCAMR overexpression did not negatively affect SC-islet function or transcriptomic identity. Mice transplanted with SC-islets overexpressing FCAMR had increased blood glucose levels and increased cpeptide compared to controls. Furthermore, mice receiving FCAMR-modified grafts maintained a higher body weight compared to controls in a diabetic setting. Our study utilizes a screening approach to identify potential candidates for improving SC-islet therapies.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE305932",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE310965",
+      "source": "GEO",
+      "title": "Islet-Intrinsic Sex Differences in Inflammatory Signaling Contribute to Autoimmune Diabetes Susceptibility",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL34281",
+      "n_samples": 60,
+      "summary": "Whereas  most autoimmune diseases exhibit female predominance, type 1 diabetes (T1D) occurs more frequently in males after puberty, suggesting a role for sex hormones in disease modification. Because islet \u03b2 cells actively shape local immune responses, we hypothesized that sex-specific islet responses to inflammation contribute to this disparity. Using transcriptomic and proteomic analyses of human islets from male and female donors, we found that male islets exhibited a more aggressive response to proinflammatory cytokines, characterized by greater induction of interferon signaling and suppression of developmental signaling compared to female islets. Treatment of human islets and mouse \u03b2 cells with the sex hormone 17\u03b2-estradiol (E2) suppressed inflammatory signaling and markers of \u03b2-cell maturity while enhancing developmental gene programs. Complementary studies in non-obese diabetic (NOD) mice showed that E2 treatment reduced diabetes incidence and limited progression to severe insulitis. Islet single-cell RNA sequencing revealed that E2 treatment of NOD mice suppressed interferon signaling, chemokine production, and antigen presentation in \u03b2 cells, while reducing activation and cytotoxicity pathways in immune cells. In an aggressive adoptive transfer model, E2 pretreatment of the recipient mice attenuated hyperglycemia. These findings support a model in which estradiol-mediated \u03b2-cell reprogramming reduces \u03b2-cell immunogenicity and promotes local immune tolerance, offering mechanistic insight into sex-biased T1D susceptibility.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE310965",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE307751",
+      "source": "GEO",
+      "title": "The effect of MYT1 and ST18 transcription factor down-regulation on gene expression in human islet cells",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 27,
+      "summary": "Genetic and environmental factors together cause islet beta-cell failure, leading to Type 2 diabetes (T2D). Here, we study how two members of the Myelin transcription factor family (MYT1, MYT1L, and ST18) prevent human beta-cell failure under obesity-related stress. We have reported that these factors are induced by high levels of obesity-related nutrients. They prevent beta-cell failure in mouse islets and human beta-cell lines. Their variants are all associated with human T2D, and their downregulation accompanies beta-cell dysfunction during T2D development. By knocking down MYT1 or ST18 separately in primary human donor islets, we show here that they have overlapping but distinct functions. Under normal culture conditions, MYT1-knockdown (KD) causes beta-cell death, while ST18-KD compromises glucose-stimulated insulin secretion. Under obesity-induced metabolic stress in vivo, ST18-KD also causes beta-cell death. These findings led us to explore the molecular mechanisms by which MUYT1/ST18 regulate beta cells. The data presented here are the RNAseq of human islets with knockdown of these factors.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE307751",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE332956",
+      "source": "GEO",
+      "title": "Transcriptional Programming of Adult Human Pancreas-Derived Progenitor Cells into Functional Islet-Like Organoids",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 8,
+      "summary": "This study investigates the transcriptional programming of adult human pancreas-derived progenitor cells into functional islet-like organoids using single-cell RNA sequencing. Progenitor cell-derived monolayers, clusters, islet-like organoids, and human islet comparator samples were profiled to define progenitor-associated transcriptional states, endocrine lineage progression, polyhormonal early endocrine-like populations, and beta- and alpha-lineage-associated differentiation programs.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE332956",
+      "similarity": 0.8,
+      "mismatches": [
+        {
+          "field": "contrast",
+          "expected": "type 2 diabetes donors non-diabetic donors",
+          "found": null,
+          "severity": "major",
+          "note": "contrast terms 'type 2 diabetes donors non-diabetic donors' not evident in GSE332956 metadata"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE301598",
+      "source": "GEO",
+      "title": "Comparative single-cell transcriptomic analysis of human primary and stem cell-derived islets under acute hypoxia",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 1,
+      "summary": "To understand the divergent responses of different islet sources to the hypoxic stress encountered post-transplantation, we performed a direct, comparative single-cell RNA sequencing analysis of human primary islets and stem cell-derived islets (SC-islets, HUES8 line) over an acute time course (0, 6, 24, and 48 hours) of hypoxic exposure (1% O2). Our data reveal that while both islet types activate conserved core stress pathways, they subsequently execute markedly divergent adaptive strategies. Primary \u03b2-cells navigate hypoxia through a profound suppression of their mature identity and a shift towards a quiescent, energy-conserving state. In contrast, SC-\u03b2 cells mount a highly plastic and metabolically dynamic response that is coupled with significant lineage instability and functional dysregulation. These findings highlight fundamental, source-specific differences in hypoxic adaptation, providing a rich resource for developing tailored strategies to improve islet transplantation success.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE301598",
+      "similarity": 0.8,
+      "mismatches": [
+        {
+          "field": "contrast",
+          "expected": "type 2 diabetes donors non-diabetic donors",
+          "found": null,
+          "severity": "major",
+          "note": "contrast terms 'type 2 diabetes donors non-diabetic donors' not evident in GSE301598 metadata"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    }
+  ],
+  "de_results": [
+    {
+      "accession": "GSE285253",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE333721",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE305932",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE310965",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE307751",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set (T2D donors) is empty and control set (non-diabetic donors) is empty; a DE contrast requires both arms to be non-empty.; The 26 samples are all gene-perturbation experiments (shMYT1/shMYT3 knockdowns and Sham knockdown controls across donors 8695, 9201-GG, 9508, 9994) \u2014 the dataset carries a knockdown-vs-Sham design, no; The T2D-vs-non-diabetic contrast is simply not present in these samples: donor diabetic status is not annotated, only perturbation arm. Excluding all 26 is defensible on its face, but it leaves nothin; Note: the Sham samples are perturbation controls, NOT 'non-diabetic donor' controls \u2014 so they correctly should not be repurposed as the control arm for this contrast; doing so would be an off-contrast",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 26,
+          "assignments": [
+            {
+              "sample": "1-shMYT1_1_8695",
+              "label": "exclude",
+              "reason": "shMYT1 knockdown (donor 8695); a gene-perturbation sample, not a T2D or non-diabetic donor label",
+              "votes": 1
+            },
+            {
+              "sample": "1-shMYT3_1_8695",
+              "label": "exclude",
+              "reason": "shMYT3 knockdown (donor 8695); perturbation arm, no donor diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "1-shMYT3_2_8695",
+              "label": "exclude",
+              "reason": "shMYT3 knockdown (donor 8695); perturbation arm, no donor diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "1-shMYT1_2_8695",
+              "label": "exclude",
+              "reason": "shMYT1 knockdown (donor 8695); perturbation arm, no donor diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "1-Sham_1_8695",
+              "label": "exclude",
+              "reason": "Sham knockdown control (donor 8695); not a non-diabetic-donor label, belongs to knockdown design",
+              "votes": 1
+            },
+            {
+              "sample": "1-Sham_2_8695",
+              "label": "exclude",
+              "reason": "Sham knockdown control (donor 8695); not a non-diabetic-donor label",
+              "votes": 1
+            },
+            {
+              "sample": "Sham_1_9201-GG",
+              "label": "exclude",
+              "reason": "Sham knockdown control (donor 9201-GG); knockdown design, no diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "Sham_2_9201-GG",
+              "label": "exclude",
+              "reason": "Sham knockdown control (donor 9201-GG); knockdown design, no diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "shMYT1_2_9201-GG",
+              "label": "exclude",
+              "reason": "shMYT1 knockdown (donor 9201-GG); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "shMYT1_1_9201-GG",
+              "label": "exclude",
+              "reason": "shMYT1 knockdown (donor 9201-GG); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "shMYT3_2_9201-GG",
+              "label": "exclude",
+              "reason": "shMYT3 knockdown (donor 9201-GG); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "shMYT3_1_9201-GG",
+              "label": "exclude",
+              "reason": "shMYT3 knockdown (donor 9201-GG); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "3-Sham1_9508",
+              "label": "exclude",
+              "reason": "Sham knockdown control (donor 9508); knockdown design, no diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "3-Sham2_9508",
+              "label": "exclude",
+              "reason": "Sham knockdown control (donor 9508); knockdown design, no diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "3-Sham3_9508",
+              "label": "exclude",
+              "reason": "Sham knockdown control (donor 9508); knockdown design, no diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "3-shMYT1_1_9508",
+              "label": "exclude",
+              "reason": "shMYT1 knockdown (donor 9508); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "3-shMYT1_2_9508",
+              "label": "exclude",
+              "reason": "shMYT1 knockdown (donor 9508); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "3-shMYT3_3_9508",
+              "label": "exclude",
+              "reason": "shMYT3 knockdown (donor 9508); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "3-shMYT3_2_9508",
+              "label": "exclude",
+              "reason": "shMYT3 knockdown (donor 9508); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "3-shMYT3_1_9508",
+              "label": "exclude",
+              "reason": "shMYT3 knockdown (donor 9508); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "4-Sham1_9994",
+              "label": "exclude",
+              "reason": "Sham knockdown control (donor 9994); knockdown design, no diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "4-Sham2_9994",
+              "label": "exclude",
+              "reason": "Sham knockdown control (donor 9994); knockdown design, no diabetic status",
+              "votes": 1
+            },
+            {
+              "sample": "4-shMYT1-1_9994",
+              "label": "exclude",
+              "reason": "shMYT1 knockdown (donor 9994); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "4-shMYT1-2_9994",
+              "label": "exclude",
+              "reason": "shMYT1 knockdown (donor 9994); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "4-shMYT3-1_9994",
+              "label": "exclude",
+              "reason": "shMYT3 knockdown (donor 9994); perturbation arm, not a donor status",
+              "votes": 1
+            },
+            {
+              "sample": "4-shMYT3-2_9994",
+              "label": "exclude",
+              "reason": "shMYT3 knockdown (donor 9994); perturbation arm, not a donor status",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty, so the requested T2D-vs-non-diabetic contrast cannot be tested at all \u2014 no differential expression is possible with 0 vs 0 samples.",
+          "concerns": [
+            "Case set (T2D donors) is empty and control set (non-diabetic donors) is empty; a DE contrast requires both arms to be non-empty.",
+            "The 26 samples are all gene-perturbation experiments (shMYT1/shMYT3 knockdowns and Sham knockdown controls across donors 8695, 9201-GG, 9508, 9994) \u2014 the dataset carries a knockdown-vs-Sham design, no",
+            "The T2D-vs-non-diabetic contrast is simply not present in these samples: donor diabetic status is not annotated, only perturbation arm. Excluding all 26 is defensible on its face, but it leaves nothin",
+            "Note: the Sham samples are perturbation controls, NOT 'non-diabetic donor' controls \u2014 so they correctly should not be repurposed as the control arm for this contrast; doing so would be an off-contrast"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
+      "n_de_padj05_lfc1": 0,
+      "qc": {
+        "n_samples": 26,
+        "n_genes_detected": 45018,
+        "median_library_size": 56412367.5,
+        "median_zero_fraction": 0.536,
+        "flags": []
+      }
+    },
+    {
+      "accession": "GSE332956",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE301598",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    }
+  ],
+  "concordance": null,
+  "comparison": null,
+  "enrichment": null,
+  "heatmap": null,
+  "projection": {
+    "expected_n_de": null,
+    "effect_size_prior": null,
+    "qc_pitfalls": [
+      "Check for rRNA / globin carryover, especially in blood/plasma inputs.",
+      "Verify library size and 3' bias; low-input EV/exosome RNA often yields shallow, high-duplication libraries.",
+      "Normalization choice (median-of-ratios vs TMM vs CPM) changes DE calls \u2014 fix one and report it.",
+      "Batch/lane confounding with condition is the most common false-signal source; block or randomize."
+    ],
+    "power_read": "Planned N per group not specified; specify it for a power read. As a rule of thumb, bulk RNA-seq needs \u22486\u201312 per group to detect moderate effects reliably.",
+    "feasibility": "cautionary",
+    "caveats": [
+      "No prior study yielded raw counts for DE (6 had no usable per-study counts table; 1 had no assignable case/control grouping); DE-count and effect-size priors are not estimated. Try raising --reanalyze-top to reach studies deeper in the ranking that may deposit raw counts."
+    ]
+  },
+  "narrative": "Prior public data offers only weak support for this plan as it stands: several human pancreatic-islet RNA-seq studies rank as close matches by keyword, but none could actually be reanalyzed for the requested type 2 diabetes vs non-diabetic contrast. The closest datasets by accession are GSE335464 (n=28), GSE312607 (n=12), GSE285253 (n=12), GSE308718 (n=6), and GSE333721 (n=6), all Homo sapiens RNA-seq. The main caveat is that six of the reanalyzed studies (including GSE285253 and GSE333721) had no usable per-study counts table, so no differential-expression numbers or effect-size priors could be estimated. A further mismatch: GSE307751's 26 samples were all shMYT1/shMYT3 knockdown-vs-Sham perturbation experiments with no donor diabetic status annotated, so the case and control arms came out empty and the contrast could not be run. Note too that no planned N per group was specified, and as a rough guide bulk RNA-seq typically needs about 6\u201312 samples per group to detect moderate effects. Because no prior study yielded raw counts for this contrast, the feasibility read is cautionary rather than confident. It may be worth reaching deeper into the ranking (e.g. raising the reanalysis depth) to find studies that deposit raw counts before committing to this design.",
+  "warnings": [
+    "LLM backend: claude-cli (spec parsing + narrative phrasing only; numbers come from data, not the model).",
+    "GSE285253: no supplementary expression table found (files: GSE285253_RAW.tar, filelist.txt)",
+    "GSE333721: no supplementary expression table found (files: GSE333721_stressor_screen_6conditions.rds)",
+    "GSE305932: no supplementary expression table found (files: GSE305932_RAW.tar, filelist.txt)",
+    "GSE332956: no supplementary expression table found (files: GSE332956_RAW.tar, filelist.txt)",
+    "GSE301598: no supplementary expression table found (files: GSE301598_RAW.tar, filelist.txt)"
+  ]
+}

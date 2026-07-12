@@ -1,0 +1,575 @@
+[
+  {
+    "id": "colorectal",
+    "prompt": "RNA-seq of human colorectal cancer tumor vs adjacent normal tissue, ~10 per group, to find differentially expressed genes",
+    "spec": {
+      "organism": "Homo sapiens",
+      "tissue": "colorectal (tumor and adjacent normal)",
+      "contrast": "colorectal cancer tumor vs adjacent normal tissue"
+    },
+    "n_matches": 10,
+    "tiers": {
+      "none": 4,
+      "proxy": 6
+    },
+    "reanalyzed": [
+      {
+        "acc": "GSE312260",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE289055",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": "dropped",
+        "excluded": 18,
+        "judge_agree": false
+      },
+      {
+        "acc": "GSE285319",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE335811",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE337988",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE324345",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      }
+    ],
+    "concordance": null,
+    "enrichment": {
+      "shared": 0,
+      "surfaced": 0
+    },
+    "heatmap": {
+      "genes": 0,
+      "datasets": 0
+    },
+    "warnings": [
+      "GSE312260: no supplementary expression table found (files: GSE312260_RAW.tar, filelist.txt)",
+      "GSE335811: no supplementary expression table found (files: GSE335811_RAW.tar, filelist.txt)",
+      "GSE324345: no supplementary expression table found (files: GSE324345_RAW.tar, filelist.txt)"
+    ],
+    "ok": true,
+    "seconds": 191.4
+  },
+  {
+    "id": "breast",
+    "prompt": "Human breast cancer tumor vs normal breast tissue RNA-seq, triple-negative, ~8 per group",
+    "spec": {
+      "organism": "Homo sapiens",
+      "tissue": "breast",
+      "contrast": "triple-negative breast cancer tumor vs normal breast tissue"
+    },
+    "n_matches": 9,
+    "tiers": {
+      "none": 2,
+      "proxy": 7
+    },
+    "reanalyzed": [
+      {
+        "acc": "GSE273078",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": "dropped",
+        "excluded": 49,
+        "judge_agree": false
+      },
+      {
+        "acc": "GSE337023",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": "dropped",
+        "excluded": 24,
+        "judge_agree": false
+      },
+      {
+        "acc": "GSE309543",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE303509",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE302168",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": "dropped",
+        "excluded": 12,
+        "judge_agree": false
+      },
+      {
+        "acc": "GSE312563",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE334884",
+        "status": "ok",
+        "method": "welch-log2",
+        "n_de": 23,
+        "case": 2,
+        "control": 2,
+        "sel_outcome": "used",
+        "excluded": 3,
+        "judge_agree": true
+      }
+    ],
+    "concordance": {
+      "n": 1,
+      "top": []
+    },
+    "enrichment": {
+      "shared": 0,
+      "surfaced": 0
+    },
+    "heatmap": {
+      "genes": 6,
+      "datasets": 1
+    },
+    "warnings": [
+      "GSE273078: supplementary table is normalized (GSE273078_DESeq2_output_26to30.csv.gz); DE requires raw counts and will be skipped (not faked)",
+      "GSE309543: no supplementary expression table found (files: GSE309543_RAW.tar, filelist.txt)",
+      "GSE303509: no supplementary expression table found (files: GSE303509_RAW.tar, filelist.txt)",
+      "GSE312563: no supplementary expression table found (files: GSE312563_Hs578_T_vehicle_vs_Hs578_T_24h_6403_DEG_by_DESeq2.csv.gz, GSE312563_MDA_231_vehicle_vs_MDA_231_24h_6403_DEG_by_DESeq2.csv.gz, GSE312563_MDA_436_vehicle_vs_MDA_436_24h_6403_DEG_by_DESeq2.csv.gz, GSE312563_RAW.tar, filelist.txt)",
+      "GSE334884: supplementary table is normalized (GSE334884_PSI_MDA-MB231_MCF10a_Stiffness.csv.gz); DE requires raw counts and will be skipped (not faked)",
+      "Narrative mentioned gene-like tokens not found in the analyzed data \u2014 verify: MDA, MCF"
+    ],
+    "ok": true,
+    "seconds": 557.6
+  },
+  {
+    "id": "alzheimer",
+    "prompt": "RNA-seq of human Alzheimer's disease prefrontal cortex vs cognitively normal controls, post-mortem brain",
+    "spec": {
+      "organism": "Homo sapiens",
+      "tissue": "prefrontal cortex (post-mortem brain)",
+      "contrast": "Alzheimer's disease vs cognitively normal controls"
+    },
+    "n_matches": 10,
+    "tiers": {
+      "direct": 2,
+      "none": 2,
+      "proxy": 6
+    },
+    "reanalyzed": [
+      {
+        "acc": "GSE313307",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": "dropped",
+        "excluded": 202,
+        "judge_agree": false
+      },
+      {
+        "acc": "GSE310554",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE291605",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE297551",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE296943",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE247416",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE212630",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE275676",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": "dropped",
+        "excluded": 39,
+        "judge_agree": false
+      }
+    ],
+    "concordance": null,
+    "enrichment": {
+      "shared": 0,
+      "surfaced": 0
+    },
+    "heatmap": {
+      "genes": 0,
+      "datasets": 0
+    },
+    "warnings": [
+      "GSE310554: GSE310554_raw_counts_matrix.tsv.gz is 1093 MB > cap 52 MB; skipped",
+      "GSE310554: found candidate table(s) but none parsed",
+      "GSE291605: no supplementary expression table found (files: GSE291605_RAW.tar, filelist.txt)",
+      "GSE297551: no supplementary expression table found (files: GSE297551_RAW.tar, GSE297551_WB_LJ_A10-WT_S29_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A11-WT_S30_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A12-WT_S31_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A13-WT_S32_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A15-WT_S34_Aligned.sortedByCoord.rm_dup.bed.gz)",
+      "GSE296943: no supplementary expression table found (files: GSE296943_Control1_filtered_feature_bc_matrix.h5, GSE296943_Control2_filtered_feature_bc_matrix.h5, GSE296943_Hand1_filtered_feature_bc_matrix.h5, GSE296943_Hand2_filtered_feature_bc_matrix.h5, GSE296943_RAW.tar, filelist.txt)",
+      "GSE212630: no supplementary expression table found (files: GSE212630_RAW.tar, filelist.txt)"
+    ],
+    "ok": true,
+    "seconds": 484.7
+  },
+  {
+    "id": "t2d_islet",
+    "prompt": "Human pancreatic islet RNA-seq, type 2 diabetes vs non-diabetic donors",
+    "spec": {
+      "organism": "Homo sapiens",
+      "tissue": "pancreatic islet",
+      "contrast": "type 2 diabetes donors vs non-diabetic donors"
+    },
+    "n_matches": 10,
+    "tiers": {
+      "none": 3,
+      "proxy": 7
+    },
+    "reanalyzed": [
+      {
+        "acc": "GSE285253",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE333721",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE305932",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE310965",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE307751",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": "dropped",
+        "excluded": 26,
+        "judge_agree": false
+      },
+      {
+        "acc": "GSE332956",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE301598",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      }
+    ],
+    "concordance": null,
+    "enrichment": {
+      "shared": 0,
+      "surfaced": 0
+    },
+    "heatmap": {
+      "genes": 0,
+      "datasets": 0
+    },
+    "warnings": [
+      "GSE285253: no supplementary expression table found (files: GSE285253_RAW.tar, filelist.txt)",
+      "GSE333721: no supplementary expression table found (files: GSE333721_stressor_screen_6conditions.rds)",
+      "GSE305932: no supplementary expression table found (files: GSE305932_RAW.tar, filelist.txt)",
+      "GSE332956: no supplementary expression table found (files: GSE332956_RAW.tar, filelist.txt)",
+      "GSE301598: no supplementary expression table found (files: GSE301598_RAW.tar, filelist.txt)"
+    ],
+    "ok": true,
+    "seconds": 241.1
+  },
+  {
+    "id": "mouse_nafld",
+    "prompt": "Mouse liver RNA-seq, high-fat diet vs normal chow, to study NAFLD/steatosis",
+    "spec": {
+      "organism": "Mus musculus",
+      "tissue": "liver",
+      "contrast": "high-fat diet vs normal chow"
+    },
+    "n_matches": 9,
+    "tiers": {
+      "none": 1,
+      "proxy": 8
+    },
+    "reanalyzed": [
+      {
+        "acc": "GSE289033",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE313258",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": "dropped",
+        "excluded": 54,
+        "judge_agree": false
+      },
+      {
+        "acc": "GSE302447",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE302445",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE302444",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE302442",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE302440",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
+      {
+        "acc": "GSE334406",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      }
+    ],
+    "concordance": null,
+    "enrichment": {
+      "shared": 0,
+      "surfaced": 0
+    },
+    "heatmap": {
+      "genes": 0,
+      "datasets": 0
+    },
+    "warnings": [
+      "GSE289033: no supplementary expression table found (files: GSE289033_RAW.tar, filelist.txt)",
+      "GSE313258: supplementary table is normalized (GSE313258_AllSamples_Countsmatrix_TPM.csv.gz); DE requires raw counts and will be skipped (not faked)",
+      "GSE302447: could not list supplementary files (HTTPError)",
+      "GSE302445: no supplementary expression table found (files: GSE302445_MUP_uPA_HFD_TOFA_liver_FPKM.tab.gz)",
+      "GSE302444: no supplementary expression table found (files: GSE302444_WT_CDAA-HFD_TOFA_liver_FPKM.tab.gz)",
+      "GSE302442: no supplementary expression table found (files: GSE302442_PPARa-KO_HFD_TOFA_liver_FPKM.tab.gz)",
+      "GSE302440: no supplementary expression table found (files: GSE302440_WT_HFD_TOFA_liver_FPKM.tab.gz)",
+      "GSE334406: no supplementary expression table found (files: GSE334406_RAW.tar, filelist.txt)"
+    ],
+    "ok": true,
+    "seconds": 236.4
+  }
+]

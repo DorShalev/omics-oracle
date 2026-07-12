@@ -1,0 +1,1873 @@
+{
+  "schema_version": "0.1.0",
+  "spec": {
+    "raw_prompt": "RNA-seq of human Alzheimer's disease prefrontal cortex vs cognitively normal controls, post-mortem brain",
+    "organism": "Homo sapiens",
+    "tissue": "prefrontal cortex (post-mortem brain)",
+    "contrast_case": "Alzheimer's disease",
+    "contrast_control": "cognitively normal controls",
+    "omics_type": "rna-seq",
+    "platform": null,
+    "n_per_group": null,
+    "parser": "llm",
+    "keywords": [
+      "Alzheimer's disease",
+      "prefrontal cortex",
+      "post-mortem brain",
+      "RNA-seq",
+      "cognitively normal",
+      "neurodegeneration",
+      "transcriptomics"
+    ]
+  },
+  "matches": [
+    {
+      "accession": "GSE313307",
+      "source": "GEO",
+      "title": "Systemic infections alter cortical transcriptional signatures in Alzheimer\u2032s disease",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 202,
+      "summary": "Alzheimer\u2032s disease (AD) is characterized by neuroinflammation, yet the impact of concurrent systemic infections on the AD brain remains poorly understood. We investigated the molecular mechanisms underlying the central nervous system response to systemic infections in AD by analyzing RNA sequencing data generated in the prefrontal cortex from 202 post-mortem donors (113 AD, 89 controls), where we stratified by the presence of a respiratory infection at the time of death. We identified 763 significantly differentially expressed genes (DEGs) between AD and controls without infection, which were enriched for oxidative phosphorylation and neurodegenerative pathways. In contrast, 122 DEGs distinguished AD from controls during infection, with 57 genes uniquely altered in AD in the presence of infection, including MAPK4 , VAV3 , and POU3F4 , implicating infection-dependent mechanisms of vascular and immune regulation. Pathway activity analysis revealed that infection in AD suppresses some immune and vascular pathways, while enhancing transcriptional and developmental programs. Weighted gene co-expression network analysis uncovered three key modules: one module strongly associated with AD, enriched for aging and signal transduction; one module linked to both AD and infection, highlighting cytoskeletal remodelling and host\u2013pathogen interactions; and one module specific to infection, enriched in astrocytes, pericytes, and endothelial cells, implicating blood\u2013brain\u2013barrier dysfunction. These findings suggest that systemic respiratory infections reshape transcriptional programs in the AD brain, dampening immune effector pathways and engaging vascular and host\u2013pathogen processes in blood\u2013brain\u2013barrier\u2013associated cell types. Our results highlight the complex interplay between systemic infection, neuroinflammation, and vascular responses in AD.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE313307",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE313307",
+        "verdict": "relevant",
+        "confidence": 0.95,
+        "reason": "Exact match on all axes: human prefrontal cortex post-mortem brain, bulk RNA-seq, and an explicit AD (113) vs control (89) contrast (763 DEGs identified). Infection stratification is an added variable but the requested AD-vs-control PFC contrast is directly present, making this strong prior evidence.",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "direct",
+      "match_tier_reason": "same organism, tissue and contrast (judge: relevant)",
+      "blocking": false
+    },
+    {
+      "accession": "GSE282552",
+      "source": "GEO",
+      "title": "Long-read RNA sequencing reveals synaptic genes with differential isoform usage in schizophrenia [short-read RNAseq ]",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 18,
+      "summary": "Over the past 15+ years, genetic studies have been notably successful in revealing the architecture of multiple psychiatric disorders, including schizophrenia. It is now widely acknowledged that schizophrenia is highly polygenic, consisting of both common variants of unknown significance, identified through genome-wide association studies (GWAS), and rare CNVs and coding variants. Despite these advances, the underlying mechanisms of specific genes implicated by GWAS are not well understood. Multiple lines of evidence implicate alternative splicing in the pathophysiology of schizophrenia. Single-nucleotide polymorphisms (SNPs) within implicated schizophrenia loci could alter isoform diversity and abundances which may not be reflected in a typical differential expression study. Hence, we generated a comprehensive isoform survey of postmortem human dorsolateral prefrontal cortex (DLPFC) from schizophrenia cases and neurotypical controls to identify case-control isoform-level differences. We developed an analysis pipeline that combines the strengths of PacBio SMRT long-read RNA sequencing in conducting a detailed isoform census with the capacity of short-read RNA sequencing for the quantification of isoform abundances. From several hundred thousand discovered long-read isoforms we curated a transcriptome with tens of thousands of high confidence novel isoforms. We then identified differential isoform usage (DIU) genes using a combination of established and in-house pipelines that enables case-control comparisons. Many of these novel isoforms are differentially expressed in schizophrenia DLPFC vs neurotypical controls. Differentially expressed genes are enriched in gene sets related to synaptic structure and function, RNA binding and splicing, as well as cell types previously implicated in schizophrenia, including cortical excitatory neurons, medium spiny neurons, and pyramidal CA1 neurons. Publicly available splicing data, genotyping, proteomics, and single nucleus sequencing results verify and support our results.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE282552",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE282552",
+        "verdict": "irrelevant",
+        "confidence": 0.9,
+        "reason": "Right organism, tissue (post-mortem DLPFC/prefrontal cortex), and short-read RNA-seq assay, but the disease and contrast axis are entirely different: this study is schizophrenia cases vs neurotypical controls, with no mention of Alzheimer's disease. It cannot serve as prior evidence for an AD-vs-control contrast despite the anatomical/assay overlap.",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE282551",
+      "source": "GEO",
+      "title": "Long-read RNA sequencing reveals synaptic genes with differential isoform usage in schizophrenia\u00a0[long-read RNAseq ]",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL28352;34678",
+      "n_samples": 30,
+      "summary": "Over the past 15+ years, genetic studies have been notably successful in revealing the architecture of multiple psychiatric disorders, including schizophrenia. It is now widely acknowledged that schizophrenia is highly polygenic, consisting of both common variants of unknown significance, identified through genome-wide association studies (GWAS), and rare CNVs and coding variants. Despite these advances, the underlying mechanisms of specific genes implicated by GWAS are not well understood. Multiple lines of evidence implicate alternative splicing in the pathophysiology of schizophrenia. Single-nucleotide polymorphisms (SNPs) within implicated schizophrenia loci could alter isoform diversity and abundances which may not be reflected in a typical differential expression study. Hence, we generated a comprehensive isoform survey of postmortem human dorsolateral prefrontal cortex (DLPFC) from schizophrenia cases and neurotypical controls to identify case-control isoform-level differences. We developed an analysis pipeline that combines the strengths of PacBio SMRT long-read RNA sequencing in conducting a detailed isoform census with the capacity of short-read RNA sequencing for the quantification of isoform abundances. From several hundred thousand discovered long-read isoforms we curated a transcriptome with tens of thousands of high confidence novel isoforms. We then identified differential isoform usage (DIU) genes using a combination of established and in-house pipelines that enables case-control comparisons. Many of these novel isoforms are differentially expressed in schizophrenia DLPFC vs neurotypical controls. Differentially expressed genes are enriched in gene sets related to synaptic structure and function, RNA binding and splicing, as well as cell types previously implicated in schizophrenia, including cortical excitatory neurons, medium spiny neurons, and pyramidal CA1 neurons. Publicly available splicing data, genotyping, proteomics, and single nucleus sequencing results verify and support our results.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE282551",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE282551",
+        "verdict": "irrelevant",
+        "confidence": 0.82,
+        "reason": "Organism (human), tissue (postmortem DLPFC/prefrontal cortex), and assay (RNA-seq) all match, but the disease contrast is schizophrenia vs neurotypical controls \u2014 not Alzheimer's vs cognitively normal. The dataset never involves AD, so it cannot serve as prior evidence for an AD-specific contrast despite the shared tissue and assay.",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE310554",
+      "source": "GEO",
+      "title": "Paired Vascular-Parenchymal Single Nuclei Sequencing Reveals Perturbed Endothelial-to-Mesenchymal Transition in Alzheimer\u2019s Disease",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 39,
+      "summary": "The neurovascular unit (NVU) plays a crucial role in maintaining brain functions by integrating vascular cells, neurons, and glia to ensure metabolic support and blood-brain barrier integrity. While vascular dysfunction has been implicated in Alzheimer's disease (AD), the specific contributions of various vascular cell types remain understudied, partly due to challenges in isolating these cells from post-mortem tissue. In this study, we analyzed prefrontal cortex tissue from AD patients and control subjects using single-nuclei RNA sequencing to create a high-resolution atlas capturing major vascular and parenchymal cell types. Our findings reveal distinct associations between AD risk and gene expression profiles specific to pericytes, perivascular fibroblasts, and activated microglia. Functional analyses indicate that these genes converge on amyloid-related pathways, suggesting that perivascular compartments and immune modulators play significant roles in the early stages of AD pathobiology. Additionally, we identified a new endothelial-mesenchymal transition population that is diminished in AD, indicating a potential disruption in endothelial plasticity that may contribute to vascular dysfunction. Key ligand-receptor interactions between vascular and parenchymal cell types, such as ANGPT2, were found to be markedly dysregulated, highlighting potential targets that could drive NVU breakdown in AD. These findings provide a comprehensive framework for evaluating NVU cells in human disease and underscore novel links between vascular dynamics and AD pathogenesis. The study offers valuable insights into disease mechanisms and suggests new therapeutic avenues aimed at protecting and restoring the brain's neurovascular interface.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE310554",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE310554",
+        "verdict": "relevant",
+        "confidence": 0.8,
+        "reason": "Matches on all core axes: Homo sapiens, prefrontal cortex post-mortem brain, and the exact contrast (AD vs cognitively normal controls) via RNA sequencing. The only caveat is assay granularity \u2014 this is single-nuclei RNA-seq (vascular/parenchymal cell atlas) rather than bulk RNA-seq; the plan says 'rna-seq' without specifying bulk, so snRNA-seq of the same system and contrast is legitimate prior e",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "direct",
+      "match_tier_reason": "same organism, tissue and contrast (judge: relevant)",
+      "blocking": false
+    },
+    {
+      "accession": "GSE291605",
+      "source": "GEO",
+      "title": "Human Brain Cell-Type-Specific Aging Clocks Based on Single-Nuclei Transcriptomics",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 31,
+      "summary": "Aging is the primary risk factor for most neurodegenerative diseases, yet the cell-type-specific progression of brain aging remains poorly understood. Here, human cell-type-specific transcriptomic aging clocks are developed using high-quality single-nucleus RNA sequencing data from post mortem human prefrontal cortex tissue of 31 donors aged 18\u201394 years, encompassing 73,941 high-quality nuclei. Distinct transcriptomic changes are observed across major cell types, including upregulation of inflammatory response genes in microglia from older samples. Aging clocks trained on each major cell type accurately predict chronological age, capture biologically relevant pathways, and remain robust in independent single-nucleus RNA-sequencing datasets, underscoring their broad applicability. Notably, cell-type-specific age acceleration is identified in individuals with Alzheimer's disease and schizophrenia, suggesting altered aging trajectories in these conditions. These findings demonstrate the feasibility of cell-type-specific transcriptomic clocks to measure biological aging in the human brain and highlight potential mechanisms of selective vulnerability in neurodegenerative diseases.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE291605",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE297551",
+      "source": "GEO",
+      "title": "Loss of age-associated increase in m6A-modified RNA contributes to GABAergic dysregulation in Alzheimer\u2019s disease",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL18573",
+      "n_samples": 60,
+      "summary": "Dysregulated RNA metabolism is a significant feature of Alzheimer\u2019s disease (AD), yet how post-transcriptional RNA modifications like N6-methyladenosine (m6A) are altered in AD is unknown. Here, we performed deamination adjacent to RNA modification targets (DART-seq) on human dorsolateral prefrontal cortices to assess changes in m6A with nucleotide resolution. In non-AD brains, m6A sites increased with age, predominantly within the 3\u2032UTR of transcripts encoding tripartite synapse proteins. In contrast, AD brains lost the age-associated m6A site increase and exhibited global hypomethylation of transcripts, including MAPT and APP. Hypomethylated genes involved with GABAergic signaling, glutamate transport, and ubiquitin-mediated proteolysis exhibited reduced expression, connecting m6A to synaptic excitotoxicity and disrupted proteostasis in AD. Site-specific m6A levels were linked with GABRA1 expression and protein levels, but this relationship was abolished in AD. Our findings provide insight into post-transcriptional mechanisms of dysregulated RNA metabolism in AD that are related to aging and GABAergic regulation.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE297551",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE296943",
+      "source": "GEO",
+      "title": "Deciphering HAND Pathogenesis Using Single-Nucleotide Omics Approaches",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL34281",
+      "n_samples": 8,
+      "summary": "Although antiretroviral therapy (ART) effectively suppresses HIV-1 replication to undetectable levels and restores many immune parameters in people living with HIV (PLWH), these individuals remain at elevated risk for HIV-associated comorbidities. Among the most prevalent is neurocognitive impairment\u2014a mild form of HIV-associated neurocognitive disorders (HAND)\u2014which affects up to 50% of PLWH. Despite extensive investigation, the precise mechanisms underlying HAND pathogenesis remain unclear, in part due to its multifactorial nature. To address this, we conducted a comparative single-nucleus multi-omics analysis\u2014integrating RNA sequencing (RNA-seq) and chromatin accessibility profiling (ATAC-seq)\u2014of post-mortem brain tissues from HIV-infected individuals with and without HAND, as well as uninfected controls. Our results reveal substantial dysregulation in genes involved in inflammation, innate immunity, glycosylation, and cholesterol metabolism in HIV-infected brains (HAND+ and HAND\u2212) relative to uninfected controls. Notably, these changes were further accentuated in HAND+ samples compared to HAND\u2212, with microglia and oligodendrocytes emerging as the most affected cell populations\u2014highlighting their potential central role in sustaining neuroinflammation. Interestingly, we observed a disconnect between transcriptomic and epigenomic signals: many inflammation-related genes located in accessible chromatin regions in HAND+ brains were not transcriptionally upregulated. This epigenetic priming\u2014particularly in microglia and astrocytes\u2014is consistent with the concept of trained immunity (TRIM), wherein prior exposures epigenetically \u201ctrain\u201d innate immune cells to respond differently to subsequent stimuli. Our findings suggest that maladaptive TRIM may be a key contributor to persistent neuroinflammation and the pathogenesis of HAND in the ART era.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE296943",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE247416",
+      "source": "GEO",
+      "title": "Integrative genomic approach identifies glial transcriptomic dysregulation in the cortex of individuals with Alcohol Use Disorder",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 73,
+      "summary": "Nuclei were isolated from human postmartum brain frozen dorsolateral prefrontal cortex samples of AUD and control individuals. Libraries were prepared with 10X Genomics platform and sequenced using NovaSeq 6000. Post-filtering and site integration resulted in 464, 716 nuclei for downstream analysis.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE247416",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE212630",
+      "source": "GEO",
+      "title": "pTDP-43 levels correlate with cell type specific molecular alterations in the prefrontal cortex of C9orf72 ALS/FTD patients",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 52,
+      "summary": "Repeat expansions in the C9orf72 gene are the most common genetic cause of amyotrophic lateral sclerosis and familial frontotemporal dementia (ALS/FTD). To identify molecular defects that take place in the dorsolateral frontal cortex of patients with C9orf72 ALS/FTD, we compared healthy controls with C9orf72 ALS/FTD donor samples staged based on the levels of cortical phosphorylated TAR DNA binding protein (pTDP-43), a neuropathological hallmark of disease progression. We identified distinct molecular changes in different cell types that take place during FTD development. Loss of neurosurveillance microglia and activation of the complement cascade take place early, when pTDP-43 aggregates are absent or very low, and become more pronounced in late stages, suggesting an initial involvement of microglia in disease progression. Reduction of layer 2-3 cortical projection neurons with high expression of CUX2/LAMP5 also occurs early, and the reduction becomes more pronounced as pTDP-43 accumulates. Several unique features were observed only in samples with high levels of pTDP-43, including global alteration of chromatin accessibility in oligodendrocytes, microglia, and astrocytes; higher ratios of premature oligodendrocytes; increased levels of the noncoding RNA NEAT1 in astrocytes and neurons, and higher amount of phosphorylated ribosomal protein S6. Our findings reveal previously unknown progressive functional changes in major cell types found in the frontal cortex of C9orf72 ALS/FTD patients that shed light on the mechanisms underlying the pathology of this disease.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE212630",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE275676",
+      "source": "GEO",
+      "title": "m6A-seq in the human vanetromedial prefrontal cortex in major depressive disorder",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 78,
+      "summary": "The role of N6-Methyladenosine (m6A) in the context of Major Depressive Disorder (MDD) were investigated in the ventromedial prefrontal cortex of males and females.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE275676",
+      "similarity": 0.8,
+      "mismatches": [
+        {
+          "field": "contrast",
+          "expected": "Alzheimer's disease cognitively normal controls",
+          "found": null,
+          "severity": "major",
+          "note": "contrast terms 'Alzheimer's disease cognitively normal controls' not evident in GSE275676 metadata"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    }
+  ],
+  "de_results": [
+    {
+      "accession": "GSE313307",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case group (Alzheimer's disease) is empty (0 samples) \u2014 a DE contrast requires a non-empty case arm.; Control group (cognitively normal) is empty (0 samples) \u2014 a DE contrast requires a non-empty control arm.; All 202 samples were dumped into 'exclude' for identical boilerplate reason ('no diagnosis metadata; ambiguous arm'), which is implausible for a whole brain-bank cohort and suggests the diagnosis meta; If per-sample diagnosis truly cannot be recovered for any sample, the correct action is to report that the contrast cannot be built and fix the metadata linkage (e.g., match BBN accessions to the brai; The result is a null selection: nothing to compare, so the proposal cannot represent the requested AD vs cognitively-normal prefrontal-cortex contrast.",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 202,
+          "assignments": [
+            {
+              "sample": "BBN11763",
+              "label": "exclude",
+              "reason": "No per-sample diagnosis metadata; BBN accession alone cannot be assigned to AD or control arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN12609",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; cannot confirm AD vs control vs other dementia",
+              "votes": 1
+            },
+            {
+              "sample": "BBN13407",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN14416",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN14795",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN15259",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN15810",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN19206",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN19207",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN19364",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN19597",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN19603",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN19605",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN19608",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN22226",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN22622",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24312",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24322",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24324",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24325",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24337",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24526",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24528",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24561",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24563",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24668",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN24895",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN25058",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN25060",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN25739",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN26009",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN2602",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN2612",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN2624",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN3378",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN3442",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN3447",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN3454",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN4204",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN4205",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN4214",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN4232",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN4240",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN5761",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7110",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7125",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7196",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7214",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7306",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7310",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7413",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7422",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7462",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7465",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7477",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7485",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7494",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7511",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7517",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7519",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7530",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7535",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7539",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7540",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7541",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7545",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7569",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7591",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7602",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN7623",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8719",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8770",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8819",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8833",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8846",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8857",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8868",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8910",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8918",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8958",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8960",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8961",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8965",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN8997",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9003",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9005",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9016",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9031",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9076",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9113",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9122",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9123",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9134",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9151",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9183",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9188",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9189",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9205",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9219",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9262",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9263",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9266",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9268",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9296",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9303",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9315",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9323",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9329",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9332",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9341",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9342",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9346",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9354",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9359",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9367",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9371",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9377",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9378",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9389",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9408",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9409",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9413",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9419",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9420",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9421",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9422",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9423",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9429",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9430",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9435",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN9505",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00126307",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00126309",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00126493",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00126718",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00126719",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00126722",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00128402",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00128416",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00128771",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00128793",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00128799",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00129135",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00129136",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00129521",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00130047",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00130142",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00130147",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00130208",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00130916",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00135109",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00135156",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00135381",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00326947",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00328342",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00328355",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00328369",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00328372",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00328560",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00328567",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00328692",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00328775",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00329202",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00329753",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00332200",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00332218",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00332222",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00332233",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00332243",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00332261",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00332278",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00332849",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00333724",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00335201",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00528597",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00529468",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00529822",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00529874",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00530812",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00531442",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00532822",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00532843",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00627017",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00628766",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00628893",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00629018",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00629544",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00629614",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00631488",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00631516",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00632514",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00632544",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00632578",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00632924",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00633738",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00634151",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00635477",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00635513",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00635895",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00635953",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00726827",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            },
+            {
+              "sample": "BBN00735762",
+              "label": "exclude",
+              "reason": "No diagnosis metadata; ambiguous arm",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty; every sample was excluded, so no AD-vs-control contrast exists and no differential-expression analysis is possible.",
+          "concerns": [
+            "Case group (Alzheimer's disease) is empty (0 samples) \u2014 a DE contrast requires a non-empty case arm.",
+            "Control group (cognitively normal) is empty (0 samples) \u2014 a DE contrast requires a non-empty control arm.",
+            "All 202 samples were dumped into 'exclude' for identical boilerplate reason ('no diagnosis metadata; ambiguous arm'), which is implausible for a whole brain-bank cohort and suggests the diagnosis meta",
+            "If per-sample diagnosis truly cannot be recovered for any sample, the correct action is to report that the contrast cannot be built and fix the metadata linkage (e.g., match BBN accessions to the brai",
+            "The result is a null selection: nothing to compare, so the proposal cannot represent the requested AD vs cognitively-normal prefrontal-cortex contrast."
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
+      "n_de_padj05_lfc1": 0,
+      "qc": {
+        "n_samples": 202,
+        "n_genes_detected": 48615,
+        "median_library_size": 18771213.791500002,
+        "median_zero_fraction": 0.554,
+        "flags": []
+      }
+    },
+    {
+      "accession": "GSE310554",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE291605",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE297551",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE296943",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE247416",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE212630",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE275676",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case (0) and control (0) are both empty; a differential-expression contrast requires non-empty case AND control arms.; The dataset (GSE275676) is a major depressive disorder study containing only MDD cases and MDD-study controls \u2014 there are zero Alzheimer's disease samples, so the AD-vs-control contrast simply does no; The MDD-study controls are NOT cognitively-normal AD-cohort controls; using them as the requested control arm would be off-contrast, so they cannot rescue the comparison either.; The per-sample exclusion reasons are individually correct (right call to drop MDD cases and non-AD controls), but the net result is a null selection that cannot answer the research question \u2014 the corr",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 39,
+          "assignments": [
+            {
+              "sample": "female_ctrl_1_input",
+              "label": "exclude",
+              "reason": "MDD-study control (GSE275676), not an AD-cohort cognitively-normal control; no matching AD case arm exists",
+              "votes": 1
+            },
+            {
+              "sample": "female_ctrl_2_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "female_ctrl_3_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "female_ctrl_4_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "female_ctrl_5_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "female_ctrl_6_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "female_ctrl_7_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "female_ctrl_8_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "female_ctrl_9_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_10_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_1_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_2_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_3_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_4_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_5_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_6_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_7_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_8_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "female_mdd_9_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_10_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_1_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_2_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_3_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_4_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_5_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_6_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_7_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_8_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_ctrl_9_input",
+              "label": "exclude",
+              "reason": "MDD-study control, not from an AD cohort; wrong study for AD vs control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_10_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_1_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_2_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_3__input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_4_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_5_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_6_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_7_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_8_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            },
+            {
+              "sample": "male_mdd_9_input",
+              "label": "exclude",
+              "reason": "Major depressive disorder case, not Alzheimer's disease; different condition",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty, so no AD vs cognitively-normal contrast can be run \u2014 the requested comparison is not present in these samples.",
+          "concerns": [
+            "Case (0) and control (0) are both empty; a differential-expression contrast requires non-empty case AND control arms.",
+            "The dataset (GSE275676) is a major depressive disorder study containing only MDD cases and MDD-study controls \u2014 there are zero Alzheimer's disease samples, so the AD-vs-control contrast simply does no",
+            "The MDD-study controls are NOT cognitively-normal AD-cohort controls; using them as the requested control arm would be off-contrast, so they cannot rescue the comparison either.",
+            "The per-sample exclusion reasons are individually correct (right call to drop MDD cases and non-AD controls), but the net result is a null selection that cannot answer the research question \u2014 the corr"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
+      "n_de_padj05_lfc1": 0,
+      "qc": {
+        "n_samples": 39,
+        "n_genes_detected": 48214,
+        "median_library_size": 19730705.0,
+        "median_zero_fraction": 0.428,
+        "flags": []
+      }
+    }
+  ],
+  "concordance": null,
+  "comparison": null,
+  "enrichment": null,
+  "heatmap": null,
+  "projection": {
+    "expected_n_de": null,
+    "effect_size_prior": null,
+    "qc_pitfalls": [
+      "Check for rRNA / globin carryover, especially in blood/plasma inputs.",
+      "Verify library size and 3' bias; low-input EV/exosome RNA often yields shallow, high-duplication libraries.",
+      "Normalization choice (median-of-ratios vs TMM vs CPM) changes DE calls \u2014 fix one and report it.",
+      "Batch/lane confounding with condition is the most common false-signal source; block or randomize."
+    ],
+    "power_read": "Planned N per group not specified; specify it for a power read. As a rule of thumb, bulk RNA-seq needs \u22486\u201312 per group to detect moderate effects reliably.",
+    "feasibility": "cautionary",
+    "caveats": [
+      "No prior study yielded raw counts for DE (6 had no usable per-study counts table; 2 had no assignable case/control grouping); DE-count and effect-size priors are not estimated. Try raising --reanalyze-top to reach studies deeper in the ranking that may deposit raw counts."
+    ]
+  },
+  "narrative": "Prior public data offers only weak support for this plan: several closely matching human RNA-seq datasets of Alzheimer's disease brain tissue exist, but none could be turned into a usable case-vs-control comparison, so the overall feasibility read is cautionary. The closest datasets by accession are GSE313307 (n=202), GSE310554 (n=39), and GSE291605 (n=31), along with GSE282552 (n=18) and GSE282551 (n=30), all human RNA-seq. The main caveats are concrete: six of the reanalyzed studies had no usable per-study counts table, and two others could not be split into non-empty Alzheimer's and cognitively-normal arms \u2014 in GSE313307 all 202 samples were dropped for lacking per-sample diagnosis metadata, and GSE275676 turned out to be a major depressive disorder study with no Alzheimer's samples at all. Because no dataset yielded raw counts for a real contrast, no differential-expression count or effect-size prior could be estimated. The planned number of samples per group was also not specified, so no power assessment is possible; as a rough guide, bulk RNA-seq typically needs about 6\u201312 samples per group to detect moderate effects. Watch for the usual pitfalls flagged here \u2014 normalization choice affecting DE calls, and batch or lane effects confounded with condition, which is the most common source of false signal. In short, the biological match is strong on paper, but until a study with recoverable raw counts and assignable diagnosis groups is reached, this sanity-check cannot confirm the plan is supported by existing data.",
+  "warnings": [
+    "LLM backend: claude-cli (spec parsing + narrative phrasing only; numbers come from data, not the model).",
+    "GSE310554: GSE310554_raw_counts_matrix.tsv.gz is 1093 MB > cap 52 MB; skipped",
+    "GSE310554: found candidate table(s) but none parsed",
+    "GSE291605: no supplementary expression table found (files: GSE291605_RAW.tar, filelist.txt)",
+    "GSE297551: no supplementary expression table found (files: GSE297551_RAW.tar, GSE297551_WB_LJ_A10-WT_S29_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A11-WT_S30_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A12-WT_S31_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A13-WT_S32_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A15-WT_S34_Aligned.sortedByCoord.rm_dup.bed.gz)",
+    "GSE296943: no supplementary expression table found (files: GSE296943_Control1_filtered_feature_bc_matrix.h5, GSE296943_Control2_filtered_feature_bc_matrix.h5, GSE296943_Hand1_filtered_feature_bc_matrix.h5, GSE296943_Hand2_filtered_feature_bc_matrix.h5, GSE296943_RAW.tar, filelist.txt)",
+    "GSE212630: no supplementary expression table found (files: GSE212630_RAW.tar, filelist.txt)"
+  ]
+}

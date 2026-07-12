@@ -1,0 +1,1253 @@
+{
+  "schema_version": "0.1.0",
+  "spec": {
+    "raw_prompt": "Human breast cancer tumor vs normal breast tissue RNA-seq, triple-negative, ~8 per group",
+    "organism": "Homo sapiens",
+    "tissue": "breast",
+    "contrast_case": "triple-negative breast cancer tumor",
+    "contrast_control": "normal breast tissue",
+    "omics_type": "rna-seq",
+    "platform": null,
+    "n_per_group": 8,
+    "parser": "llm",
+    "keywords": [
+      "triple-negative breast cancer",
+      "TNBC",
+      "tumor vs normal",
+      "breast tissue",
+      "RNA-seq",
+      "differential expression",
+      "human"
+    ]
+  },
+  "matches": [
+    {
+      "accession": "GSE261033",
+      "source": "GEO",
+      "title": "Epigenetic landscape, key transcriptional regulators, and in vivo identification of human Tr1 cells [scMultiome]",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 28,
+      "summary": "Type 1 regulatory T (Tr1) cells are CD4+ T cells with immunoregulatory function, which are induced from mature peripheral CD4+ T cells in response to persistent extra-thymic antigens. The role of human Tr1 cells in disease is not completely understood, because transcription factors that regulate their antigen-driven differentiation are not known, and there is lack of consensus on how to best identify them in the tissue, where antigen interactions occur. Here, we leveraged comprehensive bulk and single-cell (sc) transcriptomic, epigenomic, and TCR repertoire profiling of human antigen-induced Tr1 cells, complemented with CRISPR-based functional genomics, to uncover the role of transcription factors IRF4, BATF and MAF in human Tr1 cell differentiation and function. In addition, we identify a Tr1 cell transcriptional signature that can reveal Tr1-like cells in sc-RNA-seq datasets of peripheral blood CD4+ T cells of patients treated with Tr1 therapy, and within tumor-resident CD4+ T cells in patients with clear-cell renal cell carcinoma, triple-negative breast cancer, and colorectal cancer. These data enable further development of Tr1 therapies and Tr1-targeting treatments, and provide new insights into human Tr1 cell biology.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE261033",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE261033",
+        "verdict": "irrelevant",
+        "confidence": 0.95,
+        "reason": "Dataset profiles human Tr1 regulatory CD4+ T cells (immune cell differentiation, TF regulators via scMultiome/single-cell), not bulk RNA-seq of breast tumor vs normal tissue. TNBC appears only in passing as one of several cancers where a Tr1 signature was checked in tumor-resident T cells; there is no tumor-vs-normal breast tissue contrast and the biological system, assay, and contrast axis all di",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE273078",
+      "source": "GEO",
+      "title": "Fibrillarin regulates oncogenic protein pools and ribosome protein composition in triple-negative breast cancer",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL21697",
+      "n_samples": 18,
+      "summary": "Cancer cells hijack various gene expression regulation programs to support their increased metabolic demands, including translation. Emerging data suggests that specific aspects of translation, such as initiation, fidelity and efficiency, can be regulated by alterations in any of the ribosome components, being ribosomal proteins or RNA (rRNA). rRNA is highly decorated with chemical modifications that can influence its stability, folding, and interaction with other molecules. Thus, we hypothesised that chemical modifications may play an essential role in controlling the pool of oncogenic proteins in triple-negative breast cancer (TNBC). As a result, this study focuses on studying the role of fibrillarin, the catalytic enzyme responsible for the deposition of 2'-O-methylation, the most abundant rRNA modification, in the context of TNBC\u2019s aetiology and tumour progression. Using Ribosome profiling (Ribo-seq), we identified proto-oncogenes, e.g., MTA1, IRAK1 and TMSB10, whose translation efficiency is downregulated upon fibrillarin depletion. Understanding the dynamics between 2'-O-methylation and translational control of gene expression of these proto-oncogenes will facilitate the development of effective cures against TNBC.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE273078",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE273078",
+        "verdict": "partial",
+        "confidence": 0.72,
+        "reason": "Shares organism (human) and disease (TNBC) with the plan, but the actual contrast axis is fibrillarin depletion vs control (translational control), not tumor vs normal breast tissue. The assay is Ribo-seq (translation efficiency) rather than standard RNA-seq DE, and there is no indication of normal breast tissue samples or a tumor-vs-normal comparison. Keyword overlap on TNBC only; cannot serve as",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "proxy",
+      "match_tier_reason": "partial metadata match (judge: partial)",
+      "blocking": false
+    },
+    {
+      "accession": "GSE337023",
+      "source": "GEO",
+      "title": "Genomic and transcriptomic profiling of whole-genome-doubled triple-negative breast cancer cell populations",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL30173",
+      "n_samples": 24,
+      "summary": "To investigate whether the mechanism of whole-genome doubling (WGD) results in distinct genomic and transcriptomic phenotypes, we compared three routes to WGD against their respective parental aneuploid controls across two triple-negative breast cancer (TNBC) cell lines (HCC1806 and MDA-MB-231). WGD mechanisms included naturally occurring cell-cell fusion and two drug-induced cell-cycle error mechanisms: mitotic slippage (MS) and cytokinesis failure (CF). All populations were profiled in biological triplicate by TagSeq (3' tag-based RNA-seq) for transcriptomic analysis and low-pass whole-genome sequencing (WGS) for copy-number profiling.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE337023",
+      "similarity": 1.0,
+      "mismatches": [],
+      "judge": {
+        "accession": "GSE337023",
+        "verdict": "partial",
+        "confidence": 0.6,
+        "reason": "Same organism (human), disease (TNBC), and assay (RNA-seq/TagSeq), but the biological system is cell lines (HCC1806, MDA-MB-231), not breast tissue, and there is no normal-tissue arm. The contrast axis is whole-genome-doubling mechanism vs parental aneuploid controls, not tumor vs normal. It shares the disease context but cannot serve as tumor-vs-normal prior evidence.",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "proxy",
+      "match_tier_reason": "partial metadata match (judge: partial)",
+      "blocking": false
+    },
+    {
+      "accession": "GSE333496",
+      "source": "GEO",
+      "title": "Epigenetic landscape, key transcriptional regulators, and in vivo identification of human Tr1 cells [RNA-Seq]",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL20301",
+      "n_samples": 11,
+      "summary": "Type 1 regulatory T (Tr1) cells are CD4+ T cells with immunoregulatory function, which are induced from mature peripheral CD4+ T cells in response to persistent extra-thymic antigens. The role of human Tr1 cells in disease is not completely understood, because transcription factors that regulate their antigen-driven differentiation are not known, and there is lack of consensus on how to best identify them in the tissue, where antigen interactions occur. Here, we leveraged comprehensive bulk and single-cell (sc) transcriptomic, epigenomic, and TCR repertoire profiling of human antigen-induced Tr1 cells, complemented with CRISPR-based functional genomics, to uncover the role of transcription factors IRF4, BATF and MAF in human Tr1 cell differentiation and function. In addition, we identify a Tr1 cell transcriptional signature that can reveal Tr1-like cells in sc-RNA-seq datasets of peripheral blood CD4+ T cells of patients treated with Tr1 therapy, and within tumor-resident CD4+ T cells in patients with clear-cell renal cell carcinoma, triple-negative breast cancer, and colorectal cancer. These data enable further development of Tr1 therapies and Tr1-targeting treatments, and provide new insights into human Tr1 cell biology.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE333496",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 16",
+          "found": 11,
+          "severity": "minor",
+          "note": "GSE333496 has 11 samples; smaller than the planned design"
+        }
+      ],
+      "judge": {
+        "accession": "GSE333496",
+        "verdict": "irrelevant",
+        "confidence": 0.94,
+        "reason": "The dataset profiles human Tr1 (CD4+ regulatory T) cells and their transcriptional regulators (IRF4/BATF/MAF), not breast tumor vs normal tissue. TNBC is mentioned only in passing as one of several tumor types where a Tr1 signature was later applied to CD4+ T cells. Wrong biological system (immune cells, not breast epithelium/tissue), no tumor-vs-normal-breast contrast, and no per-group breast coh",
+        "judged_by": "claude-cli"
+      },
+      "match_tier": "none",
+      "match_tier_reason": "not a metadata or pathway match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE309543",
+      "source": "GEO",
+      "title": "Natural Killer Cell-Derived Extracellular Vesicles Reprogram Human Immunity to Enhance Tumour Cytotoxicity",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL34281",
+      "n_samples": 4,
+      "summary": "Despite evidence of natural killer cell\u2013derived extracellular vesicles (NK-EVs) possessing intrinsic cytotoxicity, their broader immunomodulatory effects on human immune subsets remain poorly defined, representing a key knowledge gap that must be addressed to advance their clinical translation as cancer immunotherapeutics. In this study, the immunomodulatory effects of NK-EVs were evaluated on peripheral blood mononuclear cells (PBMCs), a mixed population of circulating immune cells, from healthy donors and patients with aggressive breast cancer. NK-EVs were produced through a clinically scalable production process and PBMCs exposed to NK-EVs were assessed using high-resolution single-cell transcriptomics and functional cytotoxicity assays. NK-EVs reprogrammed PBMC on a transcriptomic (gene regulation) and cellular level, resulting in functional improvement of the PBMCs' tumour cell killing capabilities. These effects were mediated through distinct PBMC subsets, including cytotoxic T cells, NK cells and myeloid cells. Interestingly, CD8+ T cells, CD56+ NK cells, and CD33+ myeloid cells appear to play a more prominent role in NK-EV-mediated immune reprogramming than CD4+ T cells, with genes involved in their activation being markedly affected upon EV stimulation. Notably, the responses were consistent across all biological PBMC donors (n=6), regardless of disease status. Collectively, these findings demonstrate that NK-EVs orchestrate coordinated immune activation, highlighting their promise as an immunotherapeutic for cancer and other immune-mediated diseases.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE309543",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 16",
+          "found": 4,
+          "severity": "minor",
+          "note": "GSE309543 has 4 samples; smaller than the planned design"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE303509",
+      "source": "GEO",
+      "title": "Biomarker-guided responses in patient-derived organoids predict effective therapies in breast cancer",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676;34284",
+      "n_samples": 14,
+      "summary": "Poor therapeutic response in subsets of breast cancer (BC) patients poses an ongoing challenge. Here, we present a series of 14 patient-derived triple-negative BC organoids, established with the aim of modeling resistant disease with greater fidelity using biomarkers and developing an in-vitro system grounded in clinical data for testing alternative treatment strategies.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE303509",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 16",
+          "found": 14,
+          "severity": "minor",
+          "note": "GSE303509 has 14 samples; smaller than the planned design"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE302168",
+      "source": "GEO",
+      "title": "GLI2 mediates response to paclitaxel in triple-negative breast cancer",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24676",
+      "n_samples": 12,
+      "summary": "Bone is the most frequent site of both metastasis and recurrence for patients with breast cancer, and there are currently no FDA-approved therapeutics which target cancer in bone. Skeletal metastases upregulate the transcription factor Glioma-associated oncogene 2 (Gli2), resulting in secretion of parathyroid hormone-related protein (PTHrP), which accelerates bone turnover and enables tumor proliferation. Gli2 has been implicated as a mediator of chemoresistance in a wide range of cancers, but its unique role in drug resistance has yet to be defined in treatment-resistant skeletal metastases. Therefore, this dataset aims to define the impact of GLI2 CRISPR knockout on transcriptional response to paclitaxel (PTX), the current standard of care for breast cancer patients with distant metastases.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE302168",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 16",
+          "found": 12,
+          "severity": "minor",
+          "note": "GSE302168 has 12 samples; smaller than the planned design"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE312563",
+      "source": "GEO",
+      "title": "Lysyl oxidase inhibition disrupts mitochondrial homeostasis to create vulnerability to ferroptosis in TNBC",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL11154",
+      "n_samples": 12,
+      "summary": "High metabolic heterogeneity and plasticity of triple-negative breast cancer (TNBC) contribute to therapy resistance, necessitating identification of novel therapeutic vulnerabilities. Here, we identify non-canonical functions of the ECM remodeler, lysyl oxidase (LOX), in regulating glucose metabolism and mitochondrial homeostasis and show that inhibiting LOX generates targetable vulnerability to ferroptosis. Mechanistically, LOX interacts with PARKIN and its upstream kinase PINK1, which we identified as a substrate of LOX. LOX-mediated PINK1 oxidation suppresses PARKIN phosphorylation, stabilizing HIF-1\u03b1 and increasing glycolysis. Concomitantly, LOX inhibits PARKIN-mediated mitophagy and maintains mitochondria-ER contacts through VDAC1 stabilization while the LOX-HSP90 complex promotes mitochondrial Ca2+ transport and ATP production. Inhibiting LOX suppresses glycolysis, disrupts mitochondrial dynamics, reduces OXPHOS and GPX4/FSP1, and induces compensatory DHODH activity. Our \u2018one-two punch\u2019 approach combining LOX inhibition with clinical DHODH inhibitor suppresses tumor growth in vivo in chemo-free setting. Notably, LOX protein correlates with HIF-1\u03b1/GLUT1/GPX4 in TNBC patient tumors, supporting its clinical relevance. ",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE312563",
+      "similarity": 0.95,
+      "mismatches": [
+        {
+          "field": "n",
+          "expected": ">= 16",
+          "found": 12,
+          "severity": "minor",
+          "note": "GSE312563 has 12 samples; smaller than the planned design"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    },
+    {
+      "accession": "GSE334884",
+      "source": "GEO",
+      "title": "Matrix Stiffness-driven FAK Splicing Tunes Cell Mechanosensing",
+      "organism": "Homo sapiens",
+      "omics_type": "rna-seq",
+      "platform": "GPL24106",
+      "n_samples": 4,
+      "summary": "The extracellular matrix (ECM) stiffness influences many physiological and pathological processes. Cells can sense mechanical changes within the ECM through mechanosensors, most notably through the focal adhesion kinase (FAK). Using human-derived data and 2D/3D engineered models, we identified a ubiquitous and uncharacterized FAK isoform lacking exon 4 (FAK\u0394e4). We demonstrated that FAK\u0394e4 splicing is regulated by substrate stiffness in a biphasic manner, in which an optimal stiffness is required for a maximal FAK\u0394e4 expression. We further showed that FAK\u0394e4 dictates at which stiffness optimal migration speed and invasion occurs, impairs focal adhesion dynamics and maturation, and shifts its autophosphorylation and downstream YAP nuclear translocation toward lower stiffness compared to the canonical FAK isoform. Moreover, the FAK\u0394e4 expression levels to canonical FAK determine at which stiffness cells will converge during durotaxis. Our results reveal how FAK\u0394e4 acts as a fine-tuning mechanosensing switch and reframe our understanding of mechanotransduction.",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE334884",
+      "similarity": 0.5,
+      "mismatches": [
+        {
+          "field": "tissue",
+          "expected": "breast",
+          "found": null,
+          "severity": "major",
+          "note": "requested tissue 'breast' not evident in GSE334884 metadata"
+        },
+        {
+          "field": "contrast",
+          "expected": "triple-negative breast cancer tumor normal breast tissue",
+          "found": null,
+          "severity": "major",
+          "note": "contrast terms 'triple-negative breast cancer tumor normal breast tissue' not evident in GSE334884 metadata"
+        },
+        {
+          "field": "n",
+          "expected": ">= 16",
+          "found": 4,
+          "severity": "minor",
+          "note": "GSE334884 has 4 samples; smaller than the planned design"
+        }
+      ],
+      "judge": null,
+      "match_tier": "proxy",
+      "match_tier_reason": "related biology / partial metadata match",
+      "blocking": false
+    }
+  ],
+  "de_results": [
+    {
+      "accession": "GSE273078",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case (n=0) and control (n=0) are both empty \u2014 a DE contrast requires two non-empty groups; nothing here can be compared.; The 49 items are all from a shRNA-knockdown ribosome-profiling study (GSE273078): condSH2/condSH3 knockdowns vs condSC scrambled control, plus IN/RPF and derived DESeq2 normalized/statistic columns \u2014 ; The individual exclusion reasons are factually correct (knockdown/control ribo-seq samples and derived stat columns are legitimately off-contrast), but the dataset simply lacks any TNBC-tumor or norma; This dataset appears to be the wrong resource for the stated research question; a TNBC-vs-normal-breast contrast needs samples from a tumor/normal cohort (e.g., TCGA-BRCA TNBC vs adjacent-normal), not",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 49,
+          "assignments": [
+            {
+              "sample": "condSH2_rep1_RPF",
+              "label": "exclude",
+              "reason": "shRNA-knockdown (condSH2) ribosome-profiling RPF sample from GSE273078; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep1_IN",
+              "label": "exclude",
+              "reason": "scrambled-shRNA control (condSC) input-mRNA sample; a knockdown control, not normal breast tissue",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep1_RPF",
+              "label": "exclude",
+              "reason": "scrambled-shRNA control RPF sample; knockdown control, not normal breast tissue",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep1_IN",
+              "label": "exclude",
+              "reason": "condSH2 knockdown input-mRNA sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep1_RPF",
+              "label": "exclude",
+              "reason": "condSH3 knockdown RPF sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep1_IN",
+              "label": "exclude",
+              "reason": "condSH3 knockdown input-mRNA sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep2_RPF",
+              "label": "exclude",
+              "reason": "condSH2 knockdown RPF replicate; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep2_IN",
+              "label": "exclude",
+              "reason": "scrambled-shRNA control input sample; knockdown control, not normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep2_RPF",
+              "label": "exclude",
+              "reason": "scrambled-shRNA control RPF sample; knockdown control, not normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep2_IN",
+              "label": "exclude",
+              "reason": "condSH2 knockdown input sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep2_RPF",
+              "label": "exclude",
+              "reason": "condSH3 knockdown RPF sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep2_IN",
+              "label": "exclude",
+              "reason": "condSH3 knockdown input sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep3_RPF",
+              "label": "exclude",
+              "reason": "scrambled-shRNA control RPF sample; knockdown control, not normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep3_IN",
+              "label": "exclude",
+              "reason": "scrambled-shRNA control input sample; knockdown control, not normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep3_RPF",
+              "label": "exclude",
+              "reason": "condSH2 knockdown RPF sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep3_IN",
+              "label": "exclude",
+              "reason": "condSH2 knockdown input sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep3_RPF",
+              "label": "exclude",
+              "reason": "condSH3 knockdown RPF sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep3_IN",
+              "label": "exclude",
+              "reason": "condSH3 knockdown input sample; not TNBC or normal breast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep1_RPF_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a biological sample; knockdown ribo-seq data",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep1_IN_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep1_RPF_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep1_IN_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep1_RPF_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep1_IN_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep2_RPF_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep2_IN_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep2_RPF_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep2_IN_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep2_RPF_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep2_IN_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep3_RPF_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSC_rep3_IN_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep3_RPF_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_rep3_IN_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep3_RPF_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_rep3_IN_DESeq2_norm",
+              "label": "exclude",
+              "reason": "derived DESeq2 normalized-count column, not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_vs_condSC_lfcMLE_DESeq2_IN",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (log2FC), not a sample; knockdown-vs-control contrast",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_vs_condSC_p_IN",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (p-value), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_vs_condSC_padj_IN",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (adjusted p-value), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_vs_condSC_lfcMLE_DESeq2_IN",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (log2FC), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_vs_condSC_p_IN",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (p-value), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_vs_condSC_lfcMLE_DESeq2_RPF",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (log2FC), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_vs_condSC_p_RPF",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (p-value), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_vs_condSC_lfcMLE_DESeq2_RPF",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (log2FC), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_vs_condSC_p_RPF",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (p-value), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_vs_condSC_log2fc_DESeq2_RD",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (ribosome-density log2FC), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH2_vs_condSC_p_RD",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (p-value), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_vs_condSC_log2fc_DESeq2_RD",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (ribosome-density log2FC), not a sample",
+              "votes": 1
+            },
+            {
+              "sample": "condSH3_vs_condSC_p_RD",
+              "label": "exclude",
+              "reason": "derived DE-statistic column (p-value), not a sample",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty, so the requested TNBC-tumor vs normal-breast contrast is not present in these samples and no differential-expression comparison can be run.",
+          "concerns": [
+            "Case (n=0) and control (n=0) are both empty \u2014 a DE contrast requires two non-empty groups; nothing here can be compared.",
+            "The 49 items are all from a shRNA-knockdown ribosome-profiling study (GSE273078): condSH2/condSH3 knockdowns vs condSC scrambled control, plus IN/RPF and derived DESeq2 normalized/statistic columns \u2014 ",
+            "The individual exclusion reasons are factually correct (knockdown/control ribo-seq samples and derived stat columns are legitimately off-contrast), but the dataset simply lacks any TNBC-tumor or norma",
+            "This dataset appears to be the wrong resource for the stated research question; a TNBC-vs-normal-breast contrast needs samples from a tumor/normal cohort (e.g., TCGA-BRCA TNBC vs adjacent-normal), not"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
+      "n_de_padj05_lfc1": 0,
+      "qc": {
+        "n_samples": 49,
+        "n_genes_detected": 17017,
+        "median_library_size": 7984314.980692543,
+        "median_zero_fraction": 0.134,
+        "flags": []
+      }
+    },
+    {
+      "accession": "GSE337023",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set is empty (0 samples) and control set is empty (0 samples); a DE contrast requires both arms non-empty.; The dataset is entirely in-vitro (HCC1806 and MDA-MB-231 cell-line monocultures, cancer+fibroblast co-cultures, fibroblast monocultures, and 'MS' conditions) \u2014 it contains neither primary TNBC tumor t; The proposer's exclusion reasoning is biologically correct (none of the 24 samples match either requested arm), but the correct verdict is that the contrast is not answerable here, not that a valid ca; If a cell-line-based proxy contrast were acceptable (e.g., TNBC cancer monoculture vs fibroblast/normal-like control), that would need to be explicitly restated as a different research question \u2014 it d",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 24,
+          "assignments": [
+            {
+              "sample": "C_1806_a",
+              "label": "exclude",
+              "reason": "HCC1806 TNBC cell-line monoculture, not primary tumor tissue; no normal-tissue control exists, so contrast is not answerable",
+              "votes": 1
+            },
+            {
+              "sample": "C_1806_b",
+              "label": "exclude",
+              "reason": "HCC1806 TNBC cell-line monoculture, not primary tumor tissue; matches neither tissue-level arm",
+              "votes": 1
+            },
+            {
+              "sample": "C_1806_c",
+              "label": "exclude",
+              "reason": "HCC1806 TNBC cell-line monoculture, not primary tumor tissue; matches neither tissue-level arm",
+              "votes": 1
+            },
+            {
+              "sample": "C_231_a",
+              "label": "exclude",
+              "reason": "MDA-MB-231 TNBC cell-line monoculture, not primary tumor tissue; no normal-tissue control exists",
+              "votes": 1
+            },
+            {
+              "sample": "C_231_b",
+              "label": "exclude",
+              "reason": "MDA-MB-231 TNBC cell-line monoculture, not primary tumor tissue; matches neither tissue-level arm",
+              "votes": 1
+            },
+            {
+              "sample": "C_231_c",
+              "label": "exclude",
+              "reason": "MDA-MB-231 TNBC cell-line monoculture, not primary tumor tissue; matches neither tissue-level arm",
+              "votes": 1
+            },
+            {
+              "sample": "CF_1806_a",
+              "label": "exclude",
+              "reason": "HCC1806 cancer + fibroblast co-culture; a mixed in-vitro condition matching neither TNBC tumor nor normal breast tissue",
+              "votes": 1
+            },
+            {
+              "sample": "CF_1806_b",
+              "label": "exclude",
+              "reason": "HCC1806 cancer + fibroblast co-culture; mixed condition, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "CF_1806_c",
+              "label": "exclude",
+              "reason": "HCC1806 cancer + fibroblast co-culture; mixed condition, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "CF_231_a",
+              "label": "exclude",
+              "reason": "MDA-MB-231 cancer + fibroblast co-culture; mixed in-vitro condition, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "CF_231_b",
+              "label": "exclude",
+              "reason": "MDA-MB-231 cancer + fibroblast co-culture; mixed condition, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "CF_231_c",
+              "label": "exclude",
+              "reason": "MDA-MB-231 cancer + fibroblast co-culture; mixed condition, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "F_1806_a",
+              "label": "exclude",
+              "reason": "Fibroblast monoculture; fibroblasts are not normal breast tissue and not tumor, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "F_1806_b",
+              "label": "exclude",
+              "reason": "Fibroblast monoculture; not normal breast tissue nor tumor, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "F_1806_c",
+              "label": "exclude",
+              "reason": "Fibroblast monoculture; not normal breast tissue nor tumor, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "F_231_a",
+              "label": "exclude",
+              "reason": "Fibroblast monoculture; not normal breast tissue nor tumor, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "F_231_b",
+              "label": "exclude",
+              "reason": "Fibroblast monoculture; not normal breast tissue nor tumor, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "F_231_c",
+              "label": "exclude",
+              "reason": "Fibroblast monoculture; not normal breast tissue nor tumor, matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "MS_1806_a",
+              "label": "exclude",
+              "reason": "Separate 'MS' experimental condition for HCC1806; matches neither TNBC tumor nor normal breast tissue arm",
+              "votes": 1
+            },
+            {
+              "sample": "MS_1806_b",
+              "label": "exclude",
+              "reason": "Separate 'MS' experimental condition for HCC1806; matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "MS_1806_c",
+              "label": "exclude",
+              "reason": "Separate 'MS' experimental condition for HCC1806; matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "MS_231_a",
+              "label": "exclude",
+              "reason": "Separate 'MS' experimental condition for MDA-MB-231; matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "MS_231_b",
+              "label": "exclude",
+              "reason": "Separate 'MS' experimental condition for MDA-MB-231; matches neither arm",
+              "votes": 1
+            },
+            {
+              "sample": "MS_231_c",
+              "label": "exclude",
+              "reason": "Separate 'MS' experimental condition for MDA-MB-231; matches neither arm",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control arms are empty, so the requested TNBC-tumor-vs-normal-breast-tissue contrast cannot be run on this dataset \u2014 no differential expression is possible with zero samples per arm.",
+          "concerns": [
+            "Case set is empty (0 samples) and control set is empty (0 samples); a DE contrast requires both arms non-empty.",
+            "The dataset is entirely in-vitro (HCC1806 and MDA-MB-231 cell-line monocultures, cancer+fibroblast co-cultures, fibroblast monocultures, and 'MS' conditions) \u2014 it contains neither primary TNBC tumor t",
+            "The proposer's exclusion reasoning is biologically correct (none of the 24 samples match either requested arm), but the correct verdict is that the contrast is not answerable here, not that a valid ca",
+            "If a cell-line-based proxy contrast were acceptable (e.g., TNBC cancer monoculture vs fibroblast/normal-like control), that would need to be explicitly restated as a different research question \u2014 it d"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
+      "n_de_padj05_lfc1": 0,
+      "qc": {
+        "n_samples": 24,
+        "n_genes_detected": 20917,
+        "median_library_size": 3458930.0105,
+        "median_zero_fraction": 0.504,
+        "flags": []
+      }
+    },
+    {
+      "accession": "GSE309543",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE303509",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE302168",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case (TNBC tumor) = 0 samples and control (normal breast tissue) = 0 samples \u2014 no contrast can be formed.; All 12 samples are cell-line perturbation conditions (GLI2-KO/WT \u00d7 DMSO/PTX), i.e. a drug/genetic-perturbation experiment, not tumor vs normal tissue; the dataset simply does not contain the requested; The per-sample exclusion reasoning is individually correct (none are tumor or normal tissue), but the net result is a null selection \u2014 the right conclusion is that this contrast is unanswerable in thi; If the actual biological interest here is drug response or GLI2 knockout effect (e.g. WT_DMSO vs WT_PTX, or WT vs GLI2_KO), the research question/contrast should be redefined to match the samples rath",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 12,
+          "assignments": [
+            {
+              "sample": "GLI2_KO_DMSO / 13051-JM-0007",
+              "label": "exclude",
+              "reason": "GLI2-knockout cell line + DMSO vehicle; a genetic/drug perturbation condition, neither a TNBC tumor nor normal breast tissue",
+              "votes": 1
+            },
+            {
+              "sample": "GLI2_KO_DMSO / 13051-JM-0009",
+              "label": "exclude",
+              "reason": "GLI2-knockout + DMSO perturbation condition; not tumor tissue and not normal tissue",
+              "votes": 1
+            },
+            {
+              "sample": "GLI2_KO_DMSO / 13051-JM-0011",
+              "label": "exclude",
+              "reason": "GLI2-knockout + DMSO perturbation condition; not tumor tissue and not normal tissue",
+              "votes": 1
+            },
+            {
+              "sample": "GLI2_KO_PTX / 13051-JM-0008",
+              "label": "exclude",
+              "reason": "GLI2-knockout + paclitaxel treatment; a perturbation arm, neither TNBC tumor nor normal breast tissue",
+              "votes": 1
+            },
+            {
+              "sample": "GLI2_KO_PTX / 13051-JM-0010",
+              "label": "exclude",
+              "reason": "GLI2-knockout + paclitaxel treatment; perturbation condition, not tumor or normal tissue",
+              "votes": 1
+            },
+            {
+              "sample": "GLI2_KO_PTX / 13051-JM-0012",
+              "label": "exclude",
+              "reason": "GLI2-knockout + paclitaxel treatment; perturbation condition, not tumor or normal tissue",
+              "votes": 1
+            },
+            {
+              "sample": "WT_DMSO / 13051-JM-0001",
+              "label": "exclude",
+              "reason": "Wild-type cell line + DMSO vehicle; a baseline perturbation condition, not normal breast tissue nor a TNBC tumor",
+              "votes": 1
+            },
+            {
+              "sample": "WT_DMSO / 13051-JM-0005",
+              "label": "exclude",
+              "reason": "Wild-type + DMSO vehicle baseline; a cell-line condition, not normal breast tissue nor a tumor",
+              "votes": 1
+            },
+            {
+              "sample": "WT_DMSO / 13051-JM-0004",
+              "label": "exclude",
+              "reason": "Wild-type + DMSO vehicle baseline; a cell-line condition, not normal breast tissue nor a tumor",
+              "votes": 1
+            },
+            {
+              "sample": "WT_PTX / 13051-JM-0003",
+              "label": "exclude",
+              "reason": "Wild-type + paclitaxel treatment; a drug perturbation condition, neither tumor nor normal tissue",
+              "votes": 1
+            },
+            {
+              "sample": "WT_PTX / 13051-JM-0002",
+              "label": "exclude",
+              "reason": "Wild-type + paclitaxel treatment; a drug perturbation condition, neither tumor nor normal tissue",
+              "votes": 1
+            },
+            {
+              "sample": "WT_PTX / 13051-JM-0006",
+              "label": "exclude",
+              "reason": "Wild-type + paclitaxel treatment; a drug perturbation condition, neither tumor nor normal tissue",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty, so the requested TNBC-tumor vs normal-breast-tissue contrast is not present in these samples at all; a DE contrast cannot be run on empty groups.",
+          "concerns": [
+            "Case (TNBC tumor) = 0 samples and control (normal breast tissue) = 0 samples \u2014 no contrast can be formed.",
+            "All 12 samples are cell-line perturbation conditions (GLI2-KO/WT \u00d7 DMSO/PTX), i.e. a drug/genetic-perturbation experiment, not tumor vs normal tissue; the dataset simply does not contain the requested",
+            "The per-sample exclusion reasoning is individually correct (none are tumor or normal tissue), but the net result is a null selection \u2014 the right conclusion is that this contrast is unanswerable in thi",
+            "If the actual biological interest here is drug response or GLI2 knockout effect (e.g. WT_DMSO vs WT_PTX, or WT vs GLI2_KO), the research question/contrast should be redefined to match the samples rath"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
+      "n_de_padj05_lfc1": 0,
+      "qc": {
+        "n_samples": 12,
+        "n_genes_detected": 25049,
+        "median_library_size": 89941279.5,
+        "median_zero_fraction": 0.021,
+        "flags": []
+      }
+    },
+    {
+      "accession": "GSE312563",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "no usable per-study counts table for this dataset",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": null,
+      "n_de_padj05_lfc1": 0,
+      "qc": null
+    },
+    {
+      "accession": "GSE334884",
+      "contrast": "triple-negative breast cancer tumor vs normal breast tissue",
+      "n_case": 2,
+      "n_control": 2,
+      "status": "ok",
+      "note": "DE via Welch t-test on log2 normalized values (case vs control) \u2014 this table is normalized, not raw counts, so effect sizes are log2 ratios of normalized expression and significance uses a t-test, not DESeq2",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "welch-log2",
+      "sample_selection": {
+        "outcome": "used",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 2,
+          "n_control": 2,
+          "n_excluded": 3,
+          "assignments": [
+            {
+              "sample": "N",
+              "label": "exclude",
+              "reason": "Not a biological sample \u2014 a summary/aggregate column in a PSI splicing table (group mean/count); ambiguous and not a per-sample expression column.",
+              "votes": 1
+            },
+            {
+              "sample": "T",
+              "label": "exclude",
+              "reason": "Not a biological sample \u2014 a summary/aggregate column in a PSI splicing table; ambiguous and not a per-sample expression column.",
+              "votes": 1
+            },
+            {
+              "sample": "\u0394PSI (%)",
+              "label": "exclude",
+              "reason": "A computed statistic (delta percent-spliced-in) comparing groups, not a sample; cannot be assigned to either arm.",
+              "votes": 1
+            },
+            {
+              "sample": "MDA-MB-231_1kpa",
+              "label": "case",
+              "reason": "MDA-MB-231 is the canonical triple-negative breast cancer cell line, matching the case arm; 1kPa stiffness is an orthogonal treatment covariate.",
+              "votes": 1
+            },
+            {
+              "sample": "MDA-MB-231_10kpa",
+              "label": "case",
+              "reason": "MDA-MB-231 is the canonical TNBC cell line, matching the case arm; 10kPa stiffness is an orthogonal treatment covariate.",
+              "votes": 1
+            },
+            {
+              "sample": "MCF10a_1kpa",
+              "label": "control",
+              "reason": "MCF-10A is the standard non-tumorigenic normal breast epithelial cell line, best proxy for the normal-breast control arm; 1kPa stiffness is an orthogonal covariate.",
+              "votes": 1
+            },
+            {
+              "sample": "MCF10a_10kpa",
+              "label": "control",
+              "reason": "MCF-10A is the standard normal breast epithelial cell line, best proxy for the normal-breast control arm; 10kPa stiffness is an orthogonal covariate.",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": true,
+          "reason": "MDA-MB-231 (case) vs MCF-10A (control) is the canonical, biologically valid TNBC-vs-normal-breast-epithelium in vitro pairing; both arms non-empty, stiffness balanced across arms, and the excluded N/T/\u0394PSI columns are correctly identified as summary/statistic columns rather than samples.",
+          "concerns": [
+            "These are cultured cell lines, not the 'tumor' and 'normal breast tissue' literally requested \u2014 MDA-MB-231/MCF-10A are accepted proxies, but any tissue-level or clinical claims from this DE must be ca",
+            "No true biological replicates within each arm: the two case (and two control) samples differ only by substrate stiffness (1kPa vs 10kPa), so n effectively = 1 per condition; DE statistics will be unde",
+            "Stiffness (1kPa/10kPa) must be explicitly modeled as a covariate rather than assumed 'orthogonal' \u2014 with only 2v2 it cannot be separated from noise, so confirm this is intended as a pooled TNBC-vs-nor",
+            "Data appears to originate from a PSI (percent-spliced-in) splicing table (hence the N/T/\u0394PSI columns) \u2014 verify these four are genuine per-sample expression/PSI columns and that the intended analysis ("
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
+      "n_de_padj05_lfc1": 23,
+      "qc": {
+        "n_samples": 7,
+        "n_genes_detected": 25720,
+        "median_library_size": 603307.8521810625,
+        "median_zero_fraction": 0.42,
+        "flags": [
+          "low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps"
+        ]
+      }
+    }
+  ],
+  "concordance": {
+    "n_datasets": 1,
+    "note": "only 1 dataset(s) yielded DE tables; need >= 2 for cross-experiment concordance",
+    "top_concordant": []
+  },
+  "comparison": {
+    "datasets": [
+      {
+        "accession": "GSE334884",
+        "source_db": "GEO",
+        "tier": "primary",
+        "n_de": 23
+      }
+    ],
+    "genes": [
+      {
+        "gene": "BRCA1",
+        "n_datasets": 0,
+        "datasets": [],
+        "up": 0,
+        "down": 0,
+        "mean_log2fc": null
+      },
+      {
+        "gene": "EGFR",
+        "n_datasets": 0,
+        "datasets": [],
+        "up": 0,
+        "down": 0,
+        "mean_log2fc": null
+      },
+      {
+        "gene": "ERBB2",
+        "n_datasets": 0,
+        "datasets": [],
+        "up": 0,
+        "down": 0,
+        "mean_log2fc": null
+      },
+      {
+        "gene": "ESR1",
+        "n_datasets": 0,
+        "datasets": [],
+        "up": 0,
+        "down": 0,
+        "mean_log2fc": null
+      },
+      {
+        "gene": "MKI67",
+        "n_datasets": 0,
+        "datasets": [],
+        "up": 0,
+        "down": 0,
+        "mean_log2fc": null
+      },
+      {
+        "gene": "TP53",
+        "n_datasets": 0,
+        "datasets": [],
+        "up": 0,
+        "down": 0,
+        "mean_log2fc": null
+      }
+    ],
+    "pairwise": [],
+    "thresholds": {
+      "padj": 0.05,
+      "abs_log2fc": 1.0
+    },
+    "user": {
+      "n_genes": 6,
+      "vs_datasets": [
+        {
+          "accession": "GSE334884",
+          "shared": 0,
+          "shared_genes": [],
+          "jaccard": 0.0
+        }
+      ]
+    }
+  },
+  "enrichment": {
+    "library": "KEGG_2021_Human",
+    "sources": [
+      {
+        "id": "GSE334884",
+        "tier": "primary",
+        "source_db": "GEO",
+        "n_genes": 23,
+        "n_terms_sig": 0
+      },
+      {
+        "id": "USER",
+        "tier": "user",
+        "source_db": "user",
+        "n_genes": 6,
+        "n_terms_sig": 44
+      }
+    ],
+    "shared_pathways": [],
+    "surfaced": []
+  },
+  "heatmap": {
+    "genes": [
+      {
+        "gene": "ESR1",
+        "n_datasets_present": 0,
+        "n_datasets_de": 0,
+        "mean_log2fc": null,
+        "up": 0,
+        "down": 0,
+        "direction": "down",
+        "rank": 1
+      },
+      {
+        "gene": "ERBB2",
+        "n_datasets_present": 0,
+        "n_datasets_de": 0,
+        "mean_log2fc": null,
+        "up": 0,
+        "down": 0,
+        "direction": "down",
+        "rank": 2
+      },
+      {
+        "gene": "MKI67",
+        "n_datasets_present": 0,
+        "n_datasets_de": 0,
+        "mean_log2fc": null,
+        "up": 0,
+        "down": 0,
+        "direction": "down",
+        "rank": 3
+      },
+      {
+        "gene": "BRCA1",
+        "n_datasets_present": 0,
+        "n_datasets_de": 0,
+        "mean_log2fc": null,
+        "up": 0,
+        "down": 0,
+        "direction": "down",
+        "rank": 4
+      },
+      {
+        "gene": "EGFR",
+        "n_datasets_present": 0,
+        "n_datasets_de": 0,
+        "mean_log2fc": null,
+        "up": 0,
+        "down": 0,
+        "direction": "down",
+        "rank": 5
+      },
+      {
+        "gene": "TP53",
+        "n_datasets_present": 0,
+        "n_datasets_de": 0,
+        "mean_log2fc": null,
+        "up": 0,
+        "down": 0,
+        "direction": "down",
+        "rank": 6
+      }
+    ],
+    "datasets": [
+      {
+        "accession": "GSE334884",
+        "match_tier": "proxy",
+        "source_db": "GEO",
+        "tier": "primary"
+      }
+    ],
+    "matrix": [
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ],
+      [
+        null
+      ]
+    ],
+    "value": "log2FC",
+    "scope": "user_genes"
+  },
+  "projection": {
+    "expected_n_de": [
+      23,
+      23
+    ],
+    "effect_size_prior": "median |log2FC| of significant genes \u2248 3.60 across reanalyzed studies",
+    "qc_pitfalls": [
+      "Check for rRNA / globin carryover, especially in blood/plasma inputs.",
+      "Verify library size and 3' bias; low-input EV/exosome RNA often yields shallow, high-duplication libraries.",
+      "Normalization choice (median-of-ratios vs TMM vs CPM) changes DE calls \u2014 fix one and report it.",
+      "Batch/lane confounding with condition is the most common false-signal source; block or randomize.",
+      "Observed in GSE334884: low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps"
+    ],
+    "power_read": "Planned N = 8 per group. Reasonable for moderate effects in bulk RNA-seq. Comparable prior studies used as few as 2 per group, so a detectable signal at N=8 is plausible if effect sizes match.",
+    "feasibility": "cautionary",
+    "caveats": []
+  },
+  "narrative": "Prior public data offers only weak, indirect support for this plan. The keyword search surfaced several high-similarity human breast RNA-seq studies \u2014 the closest by accession being GSE261033, GSE273078, GSE337023, GSE333496, and GSE309543 \u2014 but on reanalysis none of these actually contained a triple-negative-tumor-versus-normal-breast contrast: they turned out to be shRNA-knockdown ribosome profiling, cell-line co-cultures, drug/knockout perturbations, or lacked usable per-study counts tables. The only dataset that yielded a differential-expression result was GSE334884, and even there the \"tumor vs normal\" arms were cell-line proxies (MDA-MB-231 vs MCF-10A), analyzed 2-vs-2 by a Welch t-test on normalized (not raw) values, so its 23 significant genes and effect-size prior (median |log2FC| \u2248 3.60) should be read with real caution. Key mismatches to flag: no true primary-tissue tumor-vs-normal cohort was recovered, replicates were effectively n=1 per condition in the one usable study, and GSE334884 carried a low-library-size QC flag typical of low-input preps. Because only one dataset produced a DE table (two are needed), no cross-experiment concordance could be computed. On the positive side, a planned N=8 per group is reasonable for detecting moderate effects in bulk RNA-seq, and comparable priors suggest signal is plausible if effect sizes hold. Overall the feasibility read is **cautionary** \u2014 the design is sound in principle, but the public evidence base here is thin and proxy-based rather than a confirmed tissue-level precedent.",
+  "warnings": [
+    "LLM backend: claude-cli (spec parsing + narrative phrasing only; numbers come from data, not the model).",
+    "GSE273078: supplementary table is normalized (GSE273078_DESeq2_output_26to30.csv.gz); DE requires raw counts and will be skipped (not faked)",
+    "GSE309543: no supplementary expression table found (files: GSE309543_RAW.tar, filelist.txt)",
+    "GSE303509: no supplementary expression table found (files: GSE303509_RAW.tar, filelist.txt)",
+    "GSE312563: no supplementary expression table found (files: GSE312563_Hs578_T_vehicle_vs_Hs578_T_24h_6403_DEG_by_DESeq2.csv.gz, GSE312563_MDA_231_vehicle_vs_MDA_231_24h_6403_DEG_by_DESeq2.csv.gz, GSE312563_MDA_436_vehicle_vs_MDA_436_24h_6403_DEG_by_DESeq2.csv.gz, GSE312563_RAW.tar, filelist.txt)",
+    "GSE334884: supplementary table is normalized (GSE334884_PSI_MDA-MB231_MCF10a_Stiffness.csv.gz); DE requires raw counts and will be skipped (not faked)",
+    "Narrative mentioned gene-like tokens not found in the analyzed data \u2014 verify: MDA, MCF"
+  ]
+}

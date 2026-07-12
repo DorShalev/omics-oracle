@@ -97,8 +97,8 @@ class GeoSupplSource:
             self._warn(f"{acc}: candidate tables did not share a gene index; cannot merge")
             return None
         if dtype == "normalized":
-            self._warn(f"{acc}: supplementary table is normalized ({used[0]}); "
-                       "DE requires raw counts and will be skipped (not faked)")
+            self._warn(f"{acc}: supplementary table is normalized ({used[0]}); DE will use a "
+                       "Welch t-test on log values (not DESeq2, which needs raw counts)")
         elif dtype == "unknown":
             self._warn(f"{acc}: could not confirm the table is raw counts ({used[0]}); DE skipped")
 
