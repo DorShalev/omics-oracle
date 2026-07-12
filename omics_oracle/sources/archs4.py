@@ -1,9 +1,14 @@
-"""ARCHS4 uniformly-reprocessed RNA-seq counts, via a local H5 file.
+"""ARCHS4 (Maayan) — a CO-EQUAL counts repository of uniformly-reprocessed RNA-seq.
 
-ARCHS4 distributes counts as a bulk H5 (>30 GB), so it is not bundled. Point the source at
-a local file with ``ARCHS4_H5`` or the ``h5_path`` argument. When the file is absent the
-source reports ``supports_counts() == False`` and the pipeline honestly degrades to
-metadata-only reanalysis rather than inventing counts.
+ARCHS4 reprocesses GEO/SRA RNA-seq into one consistent raw-count matrix, so it is a peer of the
+GEO per-study tables — not a fallback. For any accession the pipeline queries both repositories
+and prefers raw counts regardless of which one supplied them; ARCHS4's uniform raw counts are
+especially useful where a GEO study deposited only a normalized table (or nothing usable).
+
+ARCHS4 distributes its matrix as a bulk H5 (>30 GB), which is not bundled. Point the source at a
+local file with ``ARCHS4_H5`` or ``h5_path``. Without it the repository is INACTIVE:
+``supports_counts()`` is False, the pipeline says so plainly, and it never invents counts. (The
+former web API that allowed H5-free per-series access has been retired, so the H5 is required.)
 """
 from __future__ import annotations
 
@@ -22,22 +27,25 @@ class ARCHS4Source:
     def _usable(self) -> bool:
         return bool(self.h5_path) and os.path.exists(self.h5_path)
 
-    # -- optional finder over local metadata ----------------------------------------------
+    # -- peer finder over ARCHS4's own metadata (active only with the H5) ------------------
 
     def search(self, spec: ExperimentSpec, limit: int = 10) -> list[DatasetMatch]:
-        # GEO is the primary finder; ARCHS4 metadata search is only meaningful with the H5.
+        """Find ARCHS4 series matching the spec. Active only with the H5; GEO E-utilities remains
+        the richer index (ARCHS4 reprocesses the same GEO accessions), so this mainly confirms a
+        study also has ARCHS4 uniform counts available."""
         if not self._usable():
             return []
         try:
             import archs4py as a4
-            terms = [t for t in [spec.tissue, spec.contrast_case] if t] or spec.keywords[:1]
+            terms = [t for t in [spec.tissue, spec.contrast_case] if t] or (spec.keywords[:1] or [])
             if not terms:
                 return []
             meta = a4.meta.meta(self.h5_path, terms[0], meta_fields=["series_id", "source_name_ch1"])
         except Exception:
             return []
-        series = []
-        for sid in getattr(meta, "get", lambda *_: [])("series_id", []) if hasattr(meta, "get") else []:
+        series: list[str] = []
+        series_ids = meta.get("series_id", []) if hasattr(meta, "get") else []
+        for sid in series_ids:
             if sid and sid not in series:
                 series.append(sid)
         return [DatasetMatch(accession=s, source=self.name, organism=spec.organism,

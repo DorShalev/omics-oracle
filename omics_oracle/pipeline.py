@@ -51,8 +51,15 @@ def project_experiment(prompt: str,
     # 1. spec
     spec = parse_spec(prompt, llm=llm)
 
-    # 2. find + rank
-    finders = list(finder_sources) if finder_sources is not None else [GEOSource()]
+    # 2. find + rank. GEO E-utilities is the shared index; ARCHS4 joins as a co-equal repository
+    # finder when its H5 is present (it reprocesses the same accessions, so results are deduped).
+    if finder_sources is not None:
+        finders = list(finder_sources)
+    else:
+        finders = [GEOSource()]
+        _archs4_finder = ARCHS4Source(h5_path=h5_path)
+        if _archs4_finder.supports_counts():
+            finders.append(_archs4_finder)
     finder_names = {getattr(s, "name", "") for s in finders}
     if spec.omics_type in ("proteomics", "metabolomics") and finder_names <= {"GEO"}:
         warnings.append(f"GEO is not the authoritative index for {spec.omics_type}; matches may "
@@ -84,20 +91,24 @@ def project_experiment(prompt: str,
                         "deterministic mismatch model only, not semantically verified.")
 
     # 3-4. fetch per-study counts + reanalyze the top non-blocking matches.
-    # Default counts backend: each matched study's OWN supplementary expression table from GEO
-    # (small per-study download). A local ARCHS4 H5 is an explicit opt-in override via --h5.
+    # Counts come from CO-EQUAL repositories, not a primary+fallback: GEO per-study supplementary
+    # tables and ARCHS4 (Maayan) uniformly-reprocessed counts. fetch_counts queries every active
+    # repository for each study and PREFERS raw counts regardless of which one supplied them, so
+    # ARCHS4's raw counts win over a GEO normalized table for the same study (and vice-versa).
     if counts_sources is not None:
         counts_srcs = list(counts_sources)
     else:
         from .sources.geo_suppl import GeoSupplSource
-        # primary = each study's own GEO table; clinical = ARCHS4 raw counts (Maayan),
-        # used as a raw-counts fallback when GEO deposited only a normalized table.
         counts_srcs = [GeoSupplSource()]
-        clinical = ARCHS4Source(h5_path=h5_path)   # honors ARCHS4_H5 env when h5_path is None
-        if clinical.supports_counts():
-            counts_srcs.append(clinical)
-            warnings.append("Clinical source active: ARCHS4 (Maayan) raw counts will be used where "
-                            "a GEO study deposited only normalized data.")
+        archs4 = ARCHS4Source(h5_path=h5_path)     # honors ARCHS4_H5 env when h5_path is None
+        if archs4.supports_counts():
+            counts_srcs.append(archs4)
+            warnings.append("Counts repositories: GEO per-study tables + ARCHS4 (Maayan) "
+                            "uniformly-reprocessed counts — both queried per study, raw preferred.")
+        else:
+            warnings.append("Counts repositories: GEO per-study tables. The ARCHS4 (Maayan) "
+                            "uniform-counts repository is known but INACTIVE — it needs a local H5 "
+                            "(set ARCHS4_H5 or pass --h5) to join as a co-equal source.")
 
     de_results: list[DEResult] = []
     # Auto-expand: walk DOWN the ranked pool attempting reanalysis until we collect
