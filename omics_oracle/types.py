@@ -147,12 +147,14 @@ class DEResult:
     note: str = ""
     source_db: str = "GEO"                   # repository the counts came from
     tier: str = "primary"                    # "primary" | "clinical"
+    method: str = ""                         # DE method: "deseq2" (raw) | "welch-log2" (normalized)
+    sample_selection: Optional[dict] = None  # audit trail: which samples used/excluded + judge verdict
 
     def n_de(self, padj: float = 0.05, lfc: float = 1.0) -> int:
         if self.table is None or len(self.table) == 0:
             return 0
         t = self.table
-        return int(((t["padj"] < padj) & (t["log2fc"].abs() >= lfc)).sum())
+        return int(((t["padj"].fillna(1.0) < padj) & (t["log2fc"].abs() >= lfc)).sum())
 
     def to_dict(self) -> dict:
         return {
@@ -164,6 +166,8 @@ class DEResult:
             "note": self.note,
             "source_db": self.source_db,
             "tier": self.tier,
+            "method": self.method,
+            "sample_selection": self.sample_selection,
             "n_de_padj05_lfc1": self.n_de(),
             "qc": self.qc.to_dict() if self.qc else None,
         }

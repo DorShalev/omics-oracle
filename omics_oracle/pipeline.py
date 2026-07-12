@@ -34,6 +34,7 @@ def project_experiment(prompt: str,
                        judge_top: int = 5,
                        enrich: bool = True,
                        group_consensus: int = 3,
+                       verify_samples: bool = True,
                        user_genes: Optional[list[str]] = None,
                        finder_sources: Optional[Sequence[DatasetSource]] = None,
                        counts_sources: Optional[Sequence[DatasetSource]] = None) -> OracleReport:
@@ -121,7 +122,8 @@ def project_experiment(prompt: str,
                                        n_control=0, status="skipped",
                                        note="no usable per-study counts table for this dataset"))
             continue
-        res = reanalyze(cm, spec, llm=llm, group_consensus=group_consensus)
+        res = reanalyze(cm, spec, llm=llm, group_consensus=group_consensus,
+                        verify_samples=verify_samples)
         de_results.append(res)
         if res.status == "ok":
             ok += 1
@@ -129,6 +131,15 @@ def project_experiment(prompt: str,
     shown = {m.accession for m in matches}
     matches = matches + [m for m in pool if m.accession in {d.accession for d in de_results}
                          and m.accession not in shown]
+
+    # honesty: if studies were DE'd by DIFFERENT methods (DESeq2 on raw counts vs a t-test on
+    # normalized tables), cross-study log2FC magnitudes are not directly comparable — say so.
+    methods_used = {d.method for d in de_results if d.status == "ok" and d.method}
+    if len(methods_used) > 1:
+        warnings.append("Reanalyzed studies used different DE methods (" +
+                        ", ".join(sorted(methods_used)) + "); direction of change is comparable "
+                        "across them, but log2FC magnitudes are not (DESeq2 shrinks effect sizes; "
+                        "the normalized-table t-test does not).")
 
     # 5. concordance (genes harmonized to HGNC symbols so cross-id-type studies overlap)
     species = "mouse" if (spec.organism or "").lower().startswith("mus") else "human"

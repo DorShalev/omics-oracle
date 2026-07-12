@@ -67,20 +67,28 @@ def test_fetch_counts_end_to_end_monkeypatched(monkeypatch):
     assert res.n_de() >= 5
 
 
-def test_fetch_counts_normalized_is_returned_but_flagged(monkeypatch):
+def test_fetch_counts_normalized_is_analyzed_with_ttest(monkeypatch):
+    rng = np.random.default_rng(1)
     genes = [f"G{i}" for i in range(60)]
-    tpm = pd.DataFrame(np.abs(np.random.default_rng(1).random((60, 6))) * 3,
+    tpm = pd.DataFrame(np.abs(rng.random((60, 6))) * 3 + 0.1,
                        index=genes, columns=[f"s{i}" for i in range(6)])
+    # plant a clean, low-variance signal in the first 5 genes: high in s3-s5, low in s0-s2
+    tpm.iloc[:5, :3] = 0.5 + rng.random((5, 3)) * 0.05
+    tpm.iloc[:5, 3:] = 5.0 + rng.random((5, 3)) * 0.05
     s = GeoSupplSource()
     monkeypatch.setattr(s, "_list_suppl", lambda acc: [("GSE8_TPM.tsv.gz", "http://x/tpm")])
     monkeypatch.setattr(s, "_download", lambda acc, fname, url: _gz_csv(tpm, sep="\t"))
     cm = s.fetch_counts(DatasetMatch(accession="GSE8", source="GEO"))
     assert cm is not None and cm.data_type == "normalized"
     assert any("normalized" in w for w in s.last_warnings)
-    # and reanalyze refuses to run DE on it
+    # normalized tables are NOT discarded: DE runs via the labelled t-test path, not DESeq2
+    groups = {"s0": "control", "s1": "control", "s2": "control",
+              "s3": "case", "s4": "case", "s5": "case"}
     res = reanalyze(cm, ExperimentSpec(raw_prompt="x", omics_type="rna-seq",
-                                       contrast_case="a", contrast_control="b"))
-    assert res.status == "skipped" and "raw counts" in res.note
+                                       contrast_case="case", contrast_control="control"),
+                    groups=groups)
+    assert res.status == "ok" and res.method == "welch-log2"
+    assert res.n_de() >= 1 and "t-test" in res.note.lower()
 
 
 def test_no_table_returns_none_with_reason(monkeypatch):

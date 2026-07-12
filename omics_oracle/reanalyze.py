@@ -36,17 +36,20 @@ def compute_qc(counts: CountMatrix) -> QCSummary:
 
 def reanalyze(counts: CountMatrix, spec: ExperimentSpec,
               groups: Optional[dict[str, str]] = None,
-              min_group: int = 2, llm=None, group_consensus: int = 1) -> DEResult:
-    """QC always; DE when a case/control grouping is available.
+              min_group: int = 2, llm=None, group_consensus: int = 1,
+              verify_samples: bool = True) -> DEResult:
+    """QC always; DE when a verified case/control selection is available.
 
-    ``groups`` maps sample id -> "case"|"control". If None, we try to derive it from
-    ``counts.sample_meta`` using the spec's contrast terms; if that fails and an LLM is
-    provided, we ask it to label samples (labeling only — it never invents samples).
+    Sample selection (which samples are case / control / excluded) is delegated to
+    :func:`omics_oracle.selection.select_samples`, which proposes labels, VERIFIES them with an
+    independent judge, and records the full audit trail on ``DEResult.sample_selection``. Pass
+    ``groups`` to fix the selection explicitly (skips the LLM). DE method is chosen by data type:
+    raw counts -> pydeseq2, normalized -> Welch-on-log; unknown -> skipped.
 
     The DE result inherits the counts' repository labels (source_db / tier) so the report can
     show whether a study's DE came from the GEO per-study table (primary) or ARCHS4 (clinical).
     """
-    res = _reanalyze_impl(counts, spec, groups, min_group, llm, group_consensus)
+    res = _reanalyze_impl(counts, spec, groups, min_group, llm, group_consensus, verify_samples)
     res.source_db = getattr(counts, "source_db", "GEO")
     res.tier = getattr(counts, "tier", "primary")
     return res
@@ -54,52 +57,74 @@ def reanalyze(counts: CountMatrix, spec: ExperimentSpec,
 
 def _reanalyze_impl(counts: CountMatrix, spec: ExperimentSpec,
                     groups: Optional[dict[str, str]], min_group: int, llm,
-                    group_consensus: int = 1) -> DEResult:
+                    group_consensus: int = 1, verify_samples: bool = True) -> DEResult:
     qc = compute_qc(counts)
 
-    # P0 honesty gate: pydeseq2 is only valid on raw counts. Normalized (TPM/FPKM/log) or
-    # unconfirmed tables must NOT be rounded-and-DESeq'd — report QC and skip DE honestly.
+    # P0 honesty gate: pick the DE method by data type, never run the WRONG method.
+    #   raw counts     -> pydeseq2 (Wald)               [method="deseq2"]
+    #   normalized      -> Welch t-test on log2 values   [method="welch-log2"]
+    #   unknown/unconfirmed -> skip (we won't guess which method is valid)
+    # Normalized studies are NOT discarded: analysing each study case-vs-its-own-control still
+    # yields a comparable DE gene list — we just label the method so cross-study comparison is
+    # honest about mixing DESeq2 and t-test effect sizes.
     dtype = getattr(counts, "data_type", "raw")
-    if dtype != "raw":
+    if dtype not in ("raw", "normalized"):
         return DEResult(accession=counts.accession, contrast="(none)", n_case=0, n_control=0,
                         qc=qc, status="skipped",
-                        note=f"{counts.accession} supplementary table is {dtype} "
-                             f"({counts.source_file or 'source n/a'}); pydeseq2 requires raw counts, "
-                             "so DE was skipped rather than run on invalid input")
+                        note=f"{counts.accession} table data-type is '{dtype}' "
+                             f"({counts.source_file or 'source n/a'}); could not confirm raw vs "
+                             "normalized, so DE was skipped rather than run with the wrong method")
 
-    if groups is None:
-        groups = _derive_groups(counts, spec)
-    if not groups and llm is not None and getattr(llm, "available", False):
-        groups = (_llm_group_consensus(counts, spec, llm, group_consensus)
-                  if group_consensus > 1 else _llm_group_samples(counts, spec, llm))
+    # propose + verify which samples are case / control / excluded (full trail on the result)
+    from .selection import select_samples
+    audit = select_samples(counts, spec, llm=llm, consensus=group_consensus,
+                           verify=verify_samples, explicit_groups=groups)
+    sel = audit.to_dict()
+    sel_groups = audit.groups()
 
-    if not groups:
+    if not sel_groups:
         return DEResult(accession=counts.accession, contrast="(none)", n_case=0, n_control=0,
-                        qc=qc, status="skipped",
-                        note="no case/control grouping could be established from metadata; "
-                             "QC reported, DE skipped (no contrast invented)")
+                        qc=qc, status="skipped", sample_selection=sel,
+                        note=_drop_note(audit))
 
-    case = [s for s, g in groups.items() if g == "case" and s in counts.counts.columns]
-    control = [s for s, g in groups.items() if g == "control" and s in counts.counts.columns]
+    case = [s for s, g in sel_groups.items() if g == "case" and s in counts.counts.columns]
+    control = [s for s, g in sel_groups.items() if g == "control" and s in counts.counts.columns]
     if len(case) < min_group or len(control) < min_group:
         return DEResult(accession=counts.accession,
                         contrast=f"{spec.contrast_case or 'case'} vs {spec.contrast_control or 'control'}",
                         n_case=len(case), n_control=len(control), qc=qc, status="skipped",
-                        note=f"insufficient replicates for DE (case={len(case)}, control={len(control)}, "
-                             f"need >= {min_group} each)")
+                        sample_selection=sel,
+                        note=f"insufficient replicates after sample selection (case={len(case)}, "
+                             f"control={len(control)}, need >= {min_group} each)")
 
+    contrast = f"{spec.contrast_case or 'case'} vs {spec.contrast_control or 'control'}"
     try:
-        table = _run_pydeseq2(counts.counts, case, control)
+        if dtype == "raw":
+            table, method = _run_pydeseq2(counts.counts, case, control), "deseq2"
+        else:
+            table, method = _run_normalized_de(counts.counts, case, control), "welch-log2"
     except Exception as e:  # keep the pipeline honest about failure rather than faking a table
-        return DEResult(accession=counts.accession,
-                        contrast=f"{spec.contrast_case or 'case'} vs {spec.contrast_control or 'control'}",
+        return DEResult(accession=counts.accession, contrast=contrast,
                         n_case=len(case), n_control=len(control), qc=qc, status="error",
-                        note=f"pydeseq2 DE failed: {type(e).__name__}: {e}")
+                        sample_selection=sel, note=f"DE failed ({dtype}): {type(e).__name__}: {e}")
 
-    return DEResult(accession=counts.accession,
-                    contrast=f"{spec.contrast_case or 'case'} vs {spec.contrast_control or 'control'}",
+    note = ("DE via pydeseq2 (Wald test, case vs control)" if method == "deseq2" else
+            "DE via Welch t-test on log2 normalized values (case vs control) — this table is "
+            "normalized, not raw counts, so effect sizes are log2 ratios of normalized "
+            "expression and significance uses a t-test, not DESeq2")
+    return DEResult(accession=counts.accession, contrast=contrast,
                     n_case=len(case), n_control=len(control), table=table, qc=qc, status="ok",
-                    note="DE via pydeseq2 (Wald test, case vs control)")
+                    method=method, sample_selection=sel, note=note)
+
+
+def _drop_note(audit) -> str:
+    """Honest skip reason built from the sample-selection audit."""
+    if audit.outcome == "dropped" and audit.verdict is not None:
+        concerns = "; ".join(audit.verdict.concerns) if audit.verdict.concerns else audit.verdict.reason
+        return ("sample selection was rejected by the verification judge and dropped rather than "
+                f"run on a questionable grouping — {concerns or 'no case/control contrast confirmed'}")
+    return ("no case/control selection could be established for this study; QC reported, "
+            "DE skipped (no contrast invented)")
 
 
 def _run_pydeseq2(counts_gxs: pd.DataFrame, case: list[str], control: list[str]) -> pd.DataFrame:
@@ -128,87 +153,35 @@ def _run_pydeseq2(counts_gxs: pd.DataFrame, case: list[str], control: list[str])
     return out.reset_index()
 
 
-def _derive_groups(counts: CountMatrix, spec: ExperimentSpec) -> Optional[dict[str, str]]:
-    """Best-effort case/control assignment from sample metadata using contrast terms."""
-    meta = counts.sample_meta
-    if meta is None or spec.contrast_case is None or spec.contrast_control is None:
-        return None
-    case_terms = _terms(spec.contrast_case)
-    ctrl_terms = _terms(spec.contrast_control)
-    groups: dict[str, str] = {}
-    for sample in counts.counts.columns:
-        if sample not in meta.index:
-            continue
-        blob = " ".join(str(v) for v in meta.loc[sample].values).lower()
-        if any(t in blob for t in case_terms):
-            groups[sample] = "case"
-        elif any(t in blob for t in ctrl_terms):
-            groups[sample] = "control"
-    return groups or None
+def _run_normalized_de(expr_gxs: pd.DataFrame, case: list[str], control: list[str]) -> pd.DataFrame:
+    """DE for NORMALIZED tables (TPM/FPKM/log) — Welch t-test per gene on log2 values.
 
-
-def _terms(s: str) -> list[str]:
-    return [t for t in s.lower().replace("/", " ").split() if len(t) > 2]
-
-
-def _llm_group_samples(counts: CountMatrix, spec: ExperimentSpec, llm) -> Optional[dict[str, str]]:
-    """Ask the LLM to assign each sample column to case/control/exclude for this contrast.
-
-    Labeling only: the model chooses among the EXACT sample ids we pass; it cannot add samples.
-    Anything it doesn't return, or returns as 'exclude', is dropped.
+    DESeq2 is invalid here (it models raw-count dispersions), so we use a distribution-light
+    per-gene test on the log scale: log2FC = mean(case) - mean(control) in log2 space, a Welch
+    (unequal-variance) t-test for significance, and Benjamini-Hochberg FDR. Effect sizes are
+    log2 ratios of *normalized* expression, not shrunk DESeq2 estimates — labelled as such.
     """
-    samples = [str(c) for c in counts.counts.columns]
-    if not samples or spec.contrast_case is None or spec.contrast_control is None:
-        return None
-    meta = counts.sample_meta
-    hints = {}
-    if meta is not None:
-        for s in samples:
-            if s in meta.index:
-                hints[s] = " ".join(str(v) for v in meta.loc[s].values)
-    system = (
-        "You assign RNA-seq sample columns to two groups for a differential-expression contrast. "
-        "Use ONLY the provided sample identifiers. Return ONLY a JSON object mapping each sample id "
-        "to one of: \"case\", \"control\", \"exclude\". Assign by what the sample names imply; use "
-        "\"exclude\" when a sample clearly belongs to neither arm or is ambiguous. Do not invent ids."
-    )
-    user = (f"Contrast: case = {spec.contrast_case!r} vs control = {spec.contrast_control!r}\n"
-            f"Tissue/context: {spec.tissue}\n"
-            f"Sample ids (and any hints): {hints or samples}")
-    obj = llm.complete_json(system, user)
-    if not obj:
-        return None
-    groups = {}
-    for s in samples:
-        v = str(obj.get(s, "")).lower()
-        if v in ("case", "control"):
-            groups[s] = v
-    return groups or None
+    from scipy import stats
+    from scipy.stats import false_discovery_control
+
+    sub = expr_gxs[control + case].astype(float)
+    # Work in log2 space. If the table looks linear (large dynamic range) log-transform it;
+    # if it already looks log-scaled (compact range) use it as-is, so we never double-log.
+    hi = float(np.nanpercentile(sub.values, 99)) if sub.size else 0.0
+    logged = sub if hi <= 30 else np.log2(sub + 1.0)
+    keep = logged.notna().all(axis=1) & (logged.std(axis=1) > 0)   # drop flat/absent genes
+    logged = logged[keep]
+    if logged.empty:
+        raise ValueError("no genes with usable variation after log-transform")
+
+    ctrl_m = logged[control].to_numpy(dtype=float)
+    case_m = logged[case].to_numpy(dtype=float)
+    _, p = stats.ttest_ind(case_m, ctrl_m, axis=1, equal_var=False)
+    p = np.where(np.isnan(p), 1.0, p)
+    log2fc = case_m.mean(axis=1) - ctrl_m.mean(axis=1)
+    padj = false_discovery_control(p, method="bh")
+    return pd.DataFrame({"gene": logged.index.astype(str), "log2fc": log2fc,
+                         "pvalue": p, "padj": padj}).reset_index(drop=True)
 
 
-def _llm_group_consensus(counts: CountMatrix, spec: ExperimentSpec, llm,
-                         n: int = 3) -> Optional[dict[str, str]]:
-    """Run LLM grouping n times and keep a sample's label only when a majority agrees.
-
-    Self-consistency reduces the chance a single bad call corrupts the case/control split (the
-    most result-critical LLM decision). A sample without a majority label is dropped.
-    """
-    from collections import Counter
-    votes: dict[str, Counter] = {}
-    runs = 0
-    for _ in range(max(1, n)):
-        g = _llm_group_samples(counts, spec, llm)
-        if not g:
-            continue
-        runs += 1
-        for s, lab in g.items():
-            votes.setdefault(s, Counter())[lab] += 1
-    if runs == 0:
-        return None
-    need = runs // 2 + 1
-    consensus = {}
-    for s, c in votes.items():
-        lab, cnt = c.most_common(1)[0]
-        if cnt >= need and lab in ("case", "control"):
-            consensus[s] = lab
-    return consensus or None
+# Sample-selection helpers (heuristic + LLM propose/verify/consensus) live in selection.py.
