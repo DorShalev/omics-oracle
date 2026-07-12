@@ -43,25 +43,16 @@ def _symbol_fc_map(table, species: str) -> dict[str, float]:
 def _dataset_fc_for(table, y_syms: list[str], species: str) -> dict[str, Optional[float]]:
     """{sym: log2fc} for just the Y genes, mapping only what's needed (bounded by |y_syms|).
 
-    Builds one native-id -> max|log2fc| index over the study's own table (no mygene), then, for
-    id-keyed studies, reverse-maps the Y symbols into that id space with a single small mygene
-    call. This keeps heatmap cost proportional to the Y-gene count, not the 60k-row table size.
+    Classification-INDEPENDENT: builds one native-id -> max|log2fc| index over the study's own
+    table (version-stripped, uppercased; no mygene), then resolves each Y gene by trying, in
+    order, a direct symbol hit and — only for genes not found directly — a reverse map of the
+    symbol to Ensembl and Entrez ids. This is the fast path (no mygene) for pure-symbol tables,
+    yet still resolves Ensembl/Entrez-keyed rows AND the genuinely mixed tables some studies
+    deposit (e.g. circRNAs named by symbol but linear genes by Ensembl id), where assuming a
+    single id space silently drops truly-DE genes. Cost stays proportional to |y_syms|.
     """
     ids = [str(g) for g in table["gene"]]
-    id_type = detect_id_type(ids)
-
     fc_by_key: dict[str, float] = {}
-    if id_type == "symbol":
-        for gid, fc in zip(ids, table["log2fc"]):
-            try:
-                fc = float(fc)
-            except (TypeError, ValueError):
-                continue
-            k = gid.upper()
-            if k not in fc_by_key or abs(fc) > abs(fc_by_key[k]):
-                fc_by_key[k] = fc
-        return {s: fc_by_key.get(s.upper()) for s in y_syms}
-
     for gid, fc in zip(ids, table["log2fc"]):
         try:
             fc = float(fc)
@@ -70,11 +61,28 @@ def _dataset_fc_for(table, y_syms: list[str], species: str) -> dict[str, Optiona
         k = strip_version(gid).upper()
         if k not in fc_by_key or abs(fc) > abs(fc_by_key[k]):
             fc_by_key[k] = fc
-    sym2id = map_symbols_to(y_syms, id_type, species=species)
+
     out: dict[str, Optional[float]] = {}
+    missing: list[str] = []
     for s in y_syms:
-        gid = sym2id.get(s.upper())
-        out[s] = fc_by_key.get(strip_version(gid).upper()) if gid else None
+        v = fc_by_key.get(s.upper())            # direct symbol hit (fast path)
+        out[s] = v
+        if v is None:
+            missing.append(s)
+
+    if missing:                                  # only these need the bounded reverse map
+        ens = map_symbols_to(missing, "ensembl", species=species)
+        ent = map_symbols_to(missing, "entrez", species=species)
+        for s in missing:
+            su = s.upper()
+            cands = []
+            if ens.get(su):
+                cands.append(strip_version(ens[su]).upper())
+            if ent.get(su):
+                cands.append(strip_version(ent[su]).upper())
+            vals = [fc_by_key[c] for c in cands if c in fc_by_key]
+            if vals:
+                out[s] = max(vals, key=abs)
     return out
 
 

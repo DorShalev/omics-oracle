@@ -50,6 +50,30 @@ def test_heatmap_matrix_shape_and_cells():
     assert myc_row[0] is None and myc_row[1] == 3.0
 
 
+def test_heatmap_resolves_mixed_id_table(monkeypatch):
+    """A study naming some genes by symbol and others by Ensembl id (a real GEO pattern:
+    circRNA rows by symbol, linear-gene rows by Ensembl) must not silently drop the
+    Ensembl-keyed genes from the heatmap. Reverse-map is stubbed to stay offline."""
+    import omics_oracle.heatmap as hm
+    known = {"MYC": "ENSG00000136997", "VEGFA": "ENSG00000112715"}
+
+    def fake_map_symbols_to(syms, target, species="human"):
+        if target != "ensembl":
+            return {}
+        return {s.upper(): known[s.upper()] for s in syms if s.upper() in known}
+
+    monkeypatch.setattr(hm, "map_symbols_to", fake_map_symbols_to)
+    d = _de("GSEMIX", [("FOO-AS1", 2.0, 1e-5, 1e-4),                # symbol-named row
+                       ("ENSG00000136997.14", 1.4, 1e-4, 1e-3),     # MYC by Ensembl id
+                       ("ENSG00000112715.20", -1.1, 1e-3, 1e-2)])   # VEGFA by Ensembl id
+    matches = [DatasetMatch(accession="GSEMIX", source="GEO", match_tier="direct")]
+    h = build_heatmap([d], matches, user_genes=["MYC", "VEGFA", "FOO-AS1"])
+    cell = {g["gene"]: row[0] for g, row in zip(h["genes"], h["matrix"])}
+    assert cell["MYC"] == 1.4        # resolved via Ensembl reverse-map despite the mixed table
+    assert cell["VEGFA"] == -1.1
+    assert cell["FOO-AS1"] == 2.0    # plain symbol row still resolves by direct hit
+
+
 def test_narrative_validator_flags_invented_gene():
     allowed = {"TP53", "BRCA1", "MYC"}
     text = "TP53 and BRCA1 were consistent, and the invented gene ZZZ9 appeared strongly."
