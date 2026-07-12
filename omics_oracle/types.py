@@ -76,6 +76,9 @@ class DatasetMatch:
     # match tier (how this study relates to the plan): "direct" | "proxy" | "pathway" | "none"
     match_tier: str = ""
     match_tier_reason: str = ""
+    # assay modality: "bulk" | "single-cell" | "unknown". Single-cell studies are set aside from
+    # bulk DE (their .mtx/.h5/.rds are cell x gene); single-cell analysis is a planned addition.
+    modality: str = "unknown"
 
     @property
     def blocking(self) -> bool:

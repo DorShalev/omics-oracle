@@ -118,9 +118,11 @@ def project_experiment(prompt: str,
                 if w not in warnings:
                     warnings.append(w)
         if cm is None:
+            note = ("single-cell RNA-seq study — set aside from bulk DE (single-cell analysis "
+                    "is planned)" if getattr(m, "modality", "") == "single-cell"
+                    else "no usable per-study counts table for this dataset")
             de_results.append(DEResult(accession=m.accession, contrast="(none)", n_case=0,
-                                       n_control=0, status="skipped",
-                                       note="no usable per-study counts table for this dataset"))
+                                       n_control=0, status="skipped", note=note))
             continue
         res = reanalyze(cm, spec, llm=llm, group_consensus=group_consensus,
                         verify_samples=verify_samples)

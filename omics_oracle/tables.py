@@ -26,10 +26,29 @@ _SKIP_TOKENS = ("differential", "_deg", "deg_", "de_results", "diffexp", "result
                 "metadata", "samplesheet", "sample_sheet", "annotation", "readme", "filelist",
                 "fpkm_tracking", "gtf", "peaks", "mirna", "isoform")
 
+# Delimited bulk expression tables we can parse. `.tab` is common for FPKM/count matrices and
+# was previously ignored — real bulk studies (e.g. per-sample FPKM matrices) were being missed.
+_TABLE_EXT = (".csv", ".txt", ".tsv", ".tab", ".csv.gz", ".txt.gz", ".tsv.gz", ".tab.gz", ".xlsx")
+
+# Single-cell deposition signatures — NOT bulk expression tables. A 10x study deposits the
+# barcodes/features/matrix.mtx triplet, an .h5 feature-barcode matrix, or a Seurat .rds/.h5ad/.loom;
+# these are cell x gene and must not be fed to bulk DE. We detect and set them aside honestly.
+_SINGLE_CELL_TOKENS = ("barcodes.tsv", "features.tsv", "genes.tsv", "matrix.mtx",
+                       "_bc_matrix", "filtered_feature", "raw_feature", "molecule_info")
+_SINGLE_CELL_EXT = (".mtx", ".mtx.gz", ".h5", ".h5ad", ".loom", ".rds")
+
+
+def is_single_cell_file(filename: str) -> bool:
+    """True if the filename is a single-cell deposition (10x matrix, .h5/.rds/.h5ad/.loom)."""
+    low = filename.lower()
+    return low.endswith(_SINGLE_CELL_EXT) or any(t in low for t in _SINGLE_CELL_TOKENS)
+
 
 def is_probably_expression_file(filename: str) -> bool:
     low = filename.lower()
-    if not low.endswith((".csv", ".txt", ".tsv", ".csv.gz", ".txt.gz", ".tsv.gz", ".xlsx")):
+    if is_single_cell_file(low):
+        return False
+    if not low.endswith(_TABLE_EXT):
         return False
     return not any(t in low for t in _SKIP_TOKENS)
 
@@ -58,8 +77,12 @@ def decompress(raw: bytes, filename: str) -> bytes:
     return raw
 
 
-def read_expression_table(raw: bytes, filename: str) -> pd.DataFrame:
-    """Return a genes x samples numeric DataFrame, or raise ValueError if it can't be parsed."""
+def read_expression_table(raw: bytes, filename: str, min_cols: int = 2) -> pd.DataFrame:
+    """Return a genes x samples numeric DataFrame, or raise ValueError if it can't be parsed.
+
+    ``min_cols`` is the minimum number of sample columns required; use 1 for a per-sample file
+    (one gene->count column) and the default 2 for a study-level matrix.
+    """
     low = filename.lower()
     if low.endswith(".xlsx"):
         df = pd.read_excel(io.BytesIO(raw), index_col=0)
@@ -86,7 +109,7 @@ def read_expression_table(raw: bytes, filename: str) -> pd.DataFrame:
         cand = (fin.shape[1], round(float(numeric_frac), 3), fin)
         if best is None or cand[:2] > best[:2]:
             best = cand
-    if best is None or best[0] < 2 or best[1] < 0.8:
+    if best is None or best[0] < min_cols or best[1] < 0.8:
         raise ValueError(f"could not parse a numeric genes x samples table from {filename}")
     return best[2]
 

@@ -26,7 +26,7 @@ except Exception:  # pragma: no cover
 
 from ..types import CountMatrix, DatasetMatch, ExperimentSpec
 from ..tables import (read_expression_table, classify_data_type, is_probably_expression_file,
-                      filename_score)
+                      is_single_cell_file, filename_score)
 
 _BASE = "https://ftp.ncbi.nlm.nih.gov/geo/series"
 _HREF = re.compile(r'href="([^"?]+)"')
@@ -34,6 +34,10 @@ _HREF = re.compile(r'href="([^"?]+)"')
 _SPLIT_TOKENS = re.compile(
     r"(ctrl|control|exp|experiment|treat(?:ed|ment)?|case|tumou?r|normal|wt|ko|kd|"
     r"mut|wildtype|disease|healthy)", re.IGNORECASE)
+# assay-type tokens stripped from per-sample filenames so a sample's count + FPKM files unify
+_ASSAY_TOKENS = re.compile(
+    r"[_\-.]?(raw[_\-.]?counts?|read[_\-.]?counts?|feature[_\-.]?counts?|expected[_\-.]?counts?|"
+    r"gene[_\-.]?counts?|counts?|fpkm|rpkm|tpm|cpm|rpm|normali\w*|vst|rlog)", re.IGNORECASE)
 
 
 class GeoSupplSource:
@@ -70,9 +74,30 @@ class GeoSupplSource:
             return None
         candidates = [(f, u) for f, u in files if is_probably_expression_file(f)]
         if not candidates:
+            # Distinguish "single-cell (set aside)" from "genuinely no data". Recent GEO top-hits
+            # are dominated by scRNA-seq, deposited as 10x .mtx/.h5 or Seurat .rds — cell x gene,
+            # not a bulk table. A lone GSE..._RAW.tar usually IS the data; peek inside to see which.
+            tar = next((fu for fu in files if fu[0].lower().endswith("_raw.tar")), None)
+            if tar is not None:
+                kind = self._classify_tar(acc, tar[0], tar[1])
+                if kind == "single-cell":
+                    match.modality = "single-cell"
+                    self._warn(f"{acc}: single-cell RNA-seq (10x matrix / .h5 / .rds in "
+                               "RAW.tar) — set aside; bulk DE not applicable (single-cell "
+                               "analysis is planned)")
+                    return None
+                cm = self._assemble_from_tar(acc, tar[0], tar[1], match)
+                if cm is not None:
+                    return cm
+            if any(is_single_cell_file(f) for f, _ in files):
+                match.modality = "single-cell"
+                self._warn(f"{acc}: single-cell RNA-seq deposition (.mtx/.h5/.rds) — set aside; "
+                           "bulk DE not applicable (single-cell analysis is planned)")
+                return None
             self._warn(f"{acc}: no supplementary expression table found "
                        f"(files: {', '.join(f for f, _ in files[:6]) or 'none'})")
             return None
+        match.modality = "bulk"
 
         group = self._best_group(candidates)
         frames, used = [], []
@@ -154,38 +179,157 @@ class GeoSupplSource:
 
     # -- download (capped, cached) --------------------------------------------------------
 
-    def _download(self, accession: str, fname: str, url: str) -> Optional[bytes]:
+    def _download(self, accession: str, fname: str, url: str, cap: Optional[int] = None,
+                  silent: bool = False, prefix_only: bool = False) -> Optional[bytes]:
+        """Fetch a supplementary file (capped, cached). ``cap`` overrides the default size cap
+        (RAW.tars need a larger one); ``prefix_only`` returns just the first ``cap`` bytes without
+        caching (used to peek a tar's headers); ``silent`` suppresses size/skip warnings."""
+        limit = cap or self.max_bytes
         cdir = os.path.join(self.cache_dir, accession)
         cpath = os.path.join(cdir, fname)
-        if os.path.exists(cpath) and os.path.getsize(cpath) > 0:
+        if not prefix_only and os.path.exists(cpath) and os.path.getsize(cpath) > 0:
             with open(cpath, "rb") as fh:
                 return fh.read()
-        try:
-            head = self.session.head(url, timeout=self.timeout, allow_redirects=True)
-            clen = int(head.headers.get("content-length", "0") or 0)
-            if clen and clen > self.max_bytes:
-                self._warn(f"{accession}: {fname} is {clen/1e6:.0f} MB > cap "
-                           f"{self.max_bytes/1e6:.0f} MB; skipped")
-                return None
-        except Exception:
-            pass
+        if not prefix_only:
+            try:
+                head = self.session.head(url, timeout=self.timeout, allow_redirects=True)
+                clen = int(head.headers.get("content-length", "0") or 0)
+                if clen and clen > limit:
+                    if not silent:
+                        self._warn(f"{accession}: {fname} is {clen/1e6:.0f} MB > cap "
+                                   f"{limit/1e6:.0f} MB; skipped")
+                    return None
+            except Exception:
+                pass
         try:
             buf = bytearray()
             with self.session.get(url, stream=True, timeout=self.timeout) as r:
                 r.raise_for_status()
                 for chunk in r.iter_content(chunk_size=1 << 20):
                     buf.extend(chunk)
-                    if len(buf) > self.max_bytes:
-                        self._warn(f"{accession}: {fname} exceeded {self.max_bytes/1e6:.0f} MB "
-                                   "while streaming; skipped")
+                    if prefix_only and len(buf) >= limit:
+                        return bytes(buf[:limit])          # enough to read tar headers
+                    if not prefix_only and len(buf) > limit:
+                        if not silent:
+                            self._warn(f"{accession}: {fname} exceeded {limit/1e6:.0f} MB "
+                                       "while streaming; skipped")
                         return None
         except Exception as e:
-            self._warn(f"{accession}: download failed for {fname} ({type(e).__name__})")
+            if not silent:
+                self._warn(f"{accession}: download failed for {fname} ({type(e).__name__})")
             return None
+        if prefix_only:
+            return bytes(buf)
         os.makedirs(cdir, exist_ok=True)
         with open(cpath, "wb") as fh:
             fh.write(buf)
         return bytes(buf)
+
+    # -- RAW.tar (per-sample bulk count files bundled into one archive) --------------------
+
+    def _classify_tar(self, acc: str, name: str, url: str) -> str:
+        """Peek at a RAW.tar's first members to tell single-cell from bulk without full download.
+
+        Tar stores each member as a 512-byte header (name at offset 0) followed by its data; a
+        small prefix is enough to read the first member name(s), which reveal the modality —
+        `..._matrix.mtx.gz`/`..._bc_matrix.h5` (single-cell) vs `..._counts.txt.gz` (bulk).
+        """
+        import tarfile, io as _io
+        prefix = self._download(acc, name, url, cap=2 * 1024 ** 2, silent=True, prefix_only=True)
+        if not prefix:
+            return "unknown"
+        names: list[str] = []
+        try:
+            with tarfile.open(fileobj=_io.BytesIO(prefix), mode="r:") as tf:
+                for m in tf:                          # stops when the prefix runs out
+                    if m.isfile():
+                        names.append(m.name.split("/")[-1])
+                    if len(names) >= 6:
+                        break
+        except Exception:
+            pass
+        if not names:                                 # couldn't parse headers from the prefix
+            return "unknown"
+        if any(is_single_cell_file(n) for n in names):
+            return "single-cell"
+        return "bulk"
+
+    def _assemble_from_tar(self, acc: str, name: str, url: str,
+                           match: DatasetMatch) -> Optional[CountMatrix]:
+        """Download a bulk RAW.tar and stitch its per-sample count files into one matrix."""
+        import tarfile, io as _io
+        raw = self._download(acc, name, url, cap=int(os.environ.get(
+            "GEO_TAR_MAX_BYTES", str(400 * 1024 ** 2))))
+        if raw is None:
+            return None
+        # each sample may appear as several files (e.g. read_count.xlsx AND FPKM.xlsx); keep the
+        # highest-scored file per sample id (raw counts beat normalized) so we don't double-count.
+        best: dict[str, tuple[int, pd.Series]] = {}
+        try:
+            with tarfile.open(fileobj=_io.BytesIO(raw), mode="r:") as tf:
+                for m in tf:
+                    base = m.name.split("/")[-1]
+                    if not m.isfile() or is_single_cell_file(base) or not is_probably_expression_file(base):
+                        continue
+                    fh = tf.extractfile(m)
+                    if fh is None:
+                        continue
+                    try:
+                        s = self._read_one_sample(fh.read(), base)
+                    except Exception:
+                        continue                       # one unreadable member must not abort the tar
+                    if s is None or len(s) <= 100:
+                        continue
+                    sid, score = self._sample_id(base), filename_score(base)
+                    if sid not in best or score > best[sid][0]:
+                        best[sid] = (score, s)
+        except Exception as e:
+            self._warn(f"{acc}: could not read {name} ({type(e).__name__})")
+            return None
+        series = {sid: v[1] for sid, v in best.items()}
+        if len(series) < 2:
+            self._warn(f"{acc}: {name} had no per-sample count tables to assemble")
+            return None
+        counts = pd.DataFrame(series).dropna(how="all")
+        counts = counts[counts.sum(axis=1) > 0]
+        if counts.shape[0] < 100 or counts.shape[1] < 2:
+            return None
+        match.modality = "bulk"
+        dtype = classify_data_type(counts, name)
+        self._warn(f"{acc}: assembled a {counts.shape[0]}×{counts.shape[1]} matrix from "
+                   f"{counts.shape[1]} per-sample files inside {name} ({dtype})")
+        meta = self._sample_meta(counts.columns, name)
+        return CountMatrix(accession=acc, genes=list(counts.index), samples=list(counts.columns),
+                           counts=counts, sample_meta=meta, data_type=dtype, source_file=name,
+                           source_db="GEO", tier="primary",
+                           provenance=f"assembled from per-sample files in {name}")
+
+    def _read_one_sample(self, raw: bytes, fname: str) -> Optional[pd.Series]:
+        """Parse one per-sample count file to a gene->value Series (take the count column)."""
+        try:
+            df = read_expression_table(raw, fname, min_cols=1)
+        except ValueError:
+            return None
+        if df.shape[1] == 0:
+            return None
+        # featureCounts-style files carry Chr/Start/End/Strand/Length before the count column;
+        # the sample count is the LAST numeric column. Single-column files just use that column.
+        col = df.columns[-1]
+        s = pd.to_numeric(df[col], errors="coerce").dropna()
+        return s if len(s) else None
+
+    @staticmethod
+    def _sample_id(fname: str) -> str:
+        """Sample id from a per-sample filename, with the assay-type token stripped so the same
+        sample's count file and FPKM file collapse to ONE id (GSM..._Veh1_read_count +
+        GSM..._Veh1_FPKM -> GSM..._Veh1)."""
+        base = re.sub(r"\.(txt|tsv|csv|tab|xlsx)(\.gz)?$", "", fname, flags=re.IGNORECASE)
+        base = _ASSAY_TOKENS.sub("", base)
+        base = re.sub(r"[_\-.]{2,}", "_", base).strip("_-.")
+        if base:
+            return base
+        m = re.match(r"(GSM\d+)", fname)
+        return m.group(1) if m else fname
 
     # -- assembly -------------------------------------------------------------------------
 
