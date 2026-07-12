@@ -18,6 +18,7 @@ only ever LABELS the exact sample ids we pass — it can never invent a sample.
 """
 from __future__ import annotations
 
+import re
 from collections import Counter
 from dataclasses import asdict, dataclass, field
 from typing import Optional
@@ -281,27 +282,60 @@ def select_samples(counts, spec, llm=None, *, consensus: int = 1, verify: bool =
     return audit
 
 
-def _heuristic_selection(counts, spec) -> Optional[SampleSelection]:
-    """Best-effort case/control labels from sample metadata using the spec's contrast terms.
+# generic control/case condition tokens — used when the spec's own wording doesn't match, so a
+# ctrl/exp split (or wt/ko, treated/untreated, tumor/normal, diabetic/non-diabetic) still groups.
+# Matched as whole words against a metadata blob that includes the source filename (split-file
+# provenance) and the series-matrix characteristics.
+_GENERIC_CONTROL = ("control", "ctrl", "normal", "healthy", "wildtype", "wt", "untreated",
+                    "vehicle", "mock", "dmso", "sham", "baseline", "nondiabetic", "adjacent",
+                    "naive", "uninfected", "pbs", "scramble", "scrambled", "sictrl", "shctrl")
+_GENERIC_CASE = ("experiment", "exp", "treated", "treatment", "tumor", "tumour", "cancer",
+                 "disease", "knockout", "ko", "knockdown", "kd", "mutant", "diabetic", "patient",
+                 "stimulated", "infected", "lesion", "affected", "diseased")
 
-    Metadata-only: it can only place samples it recognizes into an arm; anything it doesn't
-    match is simply not assigned (implicitly excluded), which the verifier then sanity-checks.
+
+def _heuristic_selection(counts, spec) -> Optional[SampleSelection]:
+    """Case/control labels from sample metadata — the deterministic, no-LLM path.
+
+    Uses a metadata blob per sample that includes the series-matrix characteristics AND the
+    source filename, so split-file provenance (``*_ctrl`` vs ``*_exp``) is a grouping signal.
+    First tries the spec's own contrast wording; if that doesn't produce both arms, falls back to
+    generic condition tokens. Whatever it produces is still checked by the verification judge.
     """
     meta = getattr(counts, "sample_meta", None)
-    if meta is None or spec.contrast_case is None or spec.contrast_control is None:
+    if meta is None:
         return None
-    case_terms = _terms(spec.contrast_case)
-    ctrl_terms = _terms(spec.contrast_control)
-    assigns: list[SampleAssignment] = []
+    blobs: dict[str, str] = {}
     for sample in counts.counts.columns:
         s = str(sample)
-        if s not in meta.index:
-            continue
-        blob = " ".join(str(v) for v in meta.loc[s].values).lower()
-        if any(t in blob for t in case_terms):
-            assigns.append(SampleAssignment(s, CASE, "metadata matched case terms"))
-        elif any(t in blob for t in ctrl_terms):
-            assigns.append(SampleAssignment(s, CONTROL, "metadata matched control terms"))
+        if s in meta.index:
+            raw = " ".join(str(v) for v in meta.loc[s].values).lower()
+            blobs[s] = " " + re.sub(r"[^a-z0-9]+", " ", raw).strip() + " "   # word-level matching
+    if not blobs:
+        return None
+
+    sel = None
+    if spec.contrast_case and spec.contrast_control:
+        sel = _assign_by_terms(blobs, _terms(spec.contrast_case), _terms(spec.contrast_control),
+                               "sample metadata matched the requested contrast terms")
+    if sel is None:                                  # split-file / generic condition fallback
+        sel = _assign_by_terms(blobs, _GENERIC_CASE, _GENERIC_CONTROL,
+                               "grouped by a case/control condition token (e.g. split-file arm)")
+    return sel
+
+
+def _assign_by_terms(blobs: dict[str, str], case_terms, ctrl_terms,
+                     reason: str) -> Optional[SampleSelection]:
+    """Assign each sample by whole-word term match; a sample hitting BOTH arms is left unassigned
+    (ambiguous). Returns a selection only if both arms end up non-empty."""
+    assigns: list[SampleAssignment] = []
+    for s, blob in blobs.items():
+        hit_case = any(f" {t} " in blob for t in case_terms)
+        hit_ctrl = any(f" {t} " in blob for t in ctrl_terms)
+        if hit_case and not hit_ctrl:
+            assigns.append(SampleAssignment(s, CASE, reason))
+        elif hit_ctrl and not hit_case:
+            assigns.append(SampleAssignment(s, CONTROL, reason))
     if not any(a.label == CASE for a in assigns) or not any(a.label == CONTROL for a in assigns):
         return None
     return SampleSelection(assigns, proposed_by="heuristic")

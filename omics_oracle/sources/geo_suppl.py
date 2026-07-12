@@ -127,6 +127,7 @@ class GeoSupplSource:
         elif dtype == "unknown":
             self._warn(f"{acc}: could not confirm the table is raw counts ({used[0]}); DE skipped")
 
+        meta = self._enrich_meta(acc, counts.columns, meta)
         return CountMatrix(
             accession=acc, genes=list(counts.index), samples=list(counts.columns),
             counts=counts, sample_meta=meta, data_type=dtype, source_file=", ".join(used),
@@ -298,7 +299,7 @@ class GeoSupplSource:
         dtype = classify_data_type(counts, name)
         self._warn(f"{acc}: assembled a {counts.shape[0]}×{counts.shape[1]} matrix from "
                    f"{counts.shape[1]} per-sample files inside {name} ({dtype})")
-        meta = self._sample_meta(counts.columns, name)
+        meta = self._enrich_meta(acc, counts.columns, self._sample_meta(counts.columns, name))
         return CountMatrix(accession=acc, genes=list(counts.index), samples=list(counts.columns),
                            counts=counts, sample_meta=meta, data_type=dtype, source_file=name,
                            source_db="GEO", tier="primary",
@@ -358,6 +359,25 @@ class GeoSupplSource:
     def _sample_meta(self, columns, fname: str) -> pd.DataFrame:
         cols = [str(c) for c in columns]
         return pd.DataFrame({"column_name": cols, "source_file": [fname] * len(cols)}, index=cols)
+
+    def _enrich_meta(self, acc: str, columns, base_meta):
+        """Join real per-sample metadata from the series_matrix onto the filename-based meta, so
+        the sample selector sees true tissue/condition labels (not cryptic column names)."""
+        try:
+            from ..series_matrix import fetch_sample_metadata, build_sample_meta
+            sm = fetch_sample_metadata(acc, self.session, self.timeout)
+            if sm is None:
+                return base_meta
+            add = build_sample_meta(columns, sm)
+            if add is None:
+                return base_meta
+            merged = add if base_meta is None else base_meta.join(add, how="left")
+            n_matched = int((add["gsm"].astype(str) != "").sum())
+            self._warn(f"{acc}: matched {n_matched}/{len(list(columns))} samples to series-matrix "
+                       "metadata (real tissue/condition labels available for grouping)")
+            return merged
+        except Exception:
+            return base_meta
 
     def _warn(self, msg: str) -> None:
         self.last_warnings.append(msg)

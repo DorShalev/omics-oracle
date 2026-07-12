@@ -14,7 +14,8 @@
       "NAFLD",
       "steatosis",
       "high-fat diet",
-      "mouse liver",
+      "liver",
+      "mouse",
       "RNA-seq",
       "hepatic lipid metabolism"
     ]
@@ -36,11 +37,12 @@
         "accession": "GSE306578",
         "verdict": "irrelevant",
         "confidence": 0.9,
-        "reason": "Same organism (mouse) and tissue (liver) and broad assay (RNA-seq, though single-cell), but the biological system and contrast are entirely different: oncogenic \u03b2-catenin in hepatocytes / normal vs chronically-damaged liver, a hepatic oncogenesis model. There is no dietary intervention (high-fat vs chow) and no NAFLD/steatosis axis, so it cannot serve as prior evidence for the planned diet-induced",
+        "reason": "Both are mouse liver RNA-seq, but the biology and contrast differ entirely: the dataset studies oncogenic \u03b2-catenin hepatocytes in normal vs chronically damaged liver (a hepatic cancer/injury model), with no dietary intervention. The planned high-fat-diet vs chow NAFLD/steatosis contrast is absent, and it is single-cell (\u03b2-catenin recombination) rather than bulk diet-controlled tissue. Shared orga",
         "judged_by": "claude-cli"
       },
       "match_tier": "none",
       "match_tier_reason": "not a metadata or pathway match",
+      "modality": "unknown",
       "blocking": false
     },
     {
@@ -59,11 +61,12 @@
         "accession": "GSE289033",
         "verdict": "partial",
         "confidence": 0.6,
-        "reason": "Matches organism (mouse), assay (RNA-seq), tissue (liver/hepatocytes), and disease (MAFLD/NAFLD, HFD-induced). However, the study's actual contrast axis is a bone-liver intervention (osteocyte-derived EV ablation / miR-483-5p antagonism), not high-fat diet vs normal chow. HFD is only the background disease model, and the 9-sample design likely compares EV/miRNA perturbation rather than diet, so it",
+        "reason": "Right organism (mouse), assay (RNA-seq), and disease context (MAFLD/steatosis with HFD induction), and liver is central to the study. But the dataset's actual contrast axis is an intervention on the bone-liver axis (OCY-EV genetic ablation / miR-483-5p antagonism / bone-resorption inhibitors), not a clean high-fat-diet vs normal-chow comparison. The 9-sample design and exact tissue of the sequence",
         "judged_by": "claude-cli"
       },
       "match_tier": "proxy",
       "match_tier_reason": "partial metadata match (judge: partial)",
+      "modality": "bulk",
       "blocking": false
     },
     {
@@ -81,12 +84,13 @@
       "judge": {
         "accession": "GSE313258",
         "verdict": "partial",
-        "confidence": 0.72,
-        "reason": "Matches organism (mouse), tissue (liver), and assay (RNA-seq) with a metabolic/hepatic-lipid focus relevant to NAFLD/steatosis. However, the actual contrast axis is DINP phthalate dose (0/1.5/15/150 mg/kg), not high-fat diet vs normal chow \u2014 all mice are on a 45% HFD background, so the planned HFD-vs-chow contrast is not directly present (the 0 mg/kg control is still HFD). Useful as related prior ",
+        "confidence": 0.8,
+        "reason": "Matches organism (mouse), tissue (liver), and assay (RNA-seq), and is relevant to hepatic lipid metabolism/steatosis. However, the contrast axis differs: all mice are on high-fat diet and the experimental variable is DINP phthalate dose (0/1.5/15/150 mg/kg), not HFD vs normal chow. No normal-chow comparison arm is described, so it cannot directly serve as prior evidence for the planned diet contra",
         "judged_by": "claude-cli"
       },
       "match_tier": "proxy",
       "match_tier_reason": "partial metadata match (judge: partial)",
+      "modality": "bulk",
       "blocking": false
     },
     {
@@ -112,12 +116,13 @@
       "judge": {
         "accession": "GSE302447",
         "verdict": "partial",
-        "confidence": 0.55,
-        "reason": "Right organism (mouse) and assay (RNA-seq), and the diet-induced obesity / lipid-metabolism theme is biologically adjacent to NAFLD/steatosis. But the primary contrast axis is an oral drug treatment vs control in DIO mice, not the requested high-fat-diet vs normal-chow diet contrast, and the tissue is never stated (liver unconfirmed \u2014 could be adipose, whole-body, or multiple). As a thin SuperSeri",
+        "confidence": 0.5,
+        "reason": "Same organism (mouse) and assay (RNA-seq), and the diet-induced-obesity/lipid-metabolism focus overlaps with the NAFLD/HFD system, so it likely contains HFD-fed animals. But the primary contrast is a drug treatment for obesity, not HFD vs normal chow, and as an uninformative SuperSeries it never confirms liver tissue (could be adipose/other or multi-tissue). Overlapping biology but wrong contrast ",
         "judged_by": "claude-cli"
       },
       "match_tier": "proxy",
       "match_tier_reason": "partial metadata match (judge: partial)",
+      "modality": "unknown",
       "blocking": false
     },
     {
@@ -143,6 +148,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "bulk",
       "blocking": false
     },
     {
@@ -168,6 +174,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "bulk",
       "blocking": false
     },
     {
@@ -193,6 +200,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "bulk",
       "blocking": false
     },
     {
@@ -218,6 +226,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "bulk",
       "blocking": false
     },
     {
@@ -250,6 +259,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "unknown",
       "blocking": false
     }
   ],
@@ -260,13 +270,94 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set is empty (0 samples) and control set is empty (0 samples) \u2014 a differential-expression contrast requires both arms to be non-empty.; The exclusions themselves are individually reasonable (all 9 samples are vehicle controls, antagomir NC, or OCY-EV/antagomir treatments \u2014 none are dietary HFD or normal-chow conditions), but this mean; This appears to be an osteocyte-EV/antagomir experiment, not a high-fat-diet vs normal-chow study; the contrast cannot be built from these samples and the selection should not proceed as a valid DE an",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
-      "sample_selection": null,
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 9,
+          "assignments": [
+            {
+              "sample": "GSM8782045_Veh1",
+              "label": "exclude",
+              "reason": "Vehicle control in an OCY-EV/antagomir experiment; not a dietary (HFD or chow) condition",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8782046_Veh2",
+              "label": "exclude",
+              "reason": "Vehicle control; no diet treatment, off-contrast",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8782047_Veh3",
+              "label": "exclude",
+              "reason": "Vehicle control; no diet treatment, off-contrast",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8782048_OCY-EV+ANTA-NC1",
+              "label": "exclude",
+              "reason": "Osteocyte-EV + antagomir negative control; not HFD or chow",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8782049_OCY-EV+ANTA-NC2",
+              "label": "exclude",
+              "reason": "Osteocyte-EV + antagomir negative control; not HFD or chow",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8782050_OCY-EV+ANTA-NC3",
+              "label": "exclude",
+              "reason": "Osteocyte-EV + antagomir negative control; not HFD or chow",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8782051_OCY-EV+ANTA1",
+              "label": "exclude",
+              "reason": "Osteocyte-EV + antagomir treatment; not a dietary condition",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8782052_OCY-EV+ANTA2",
+              "label": "exclude",
+              "reason": "Osteocyte-EV + antagomir treatment; not a dietary condition",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8782053_OCY-EV+ANTA3",
+              "label": "exclude",
+              "reason": "Osteocyte-EV + antagomir treatment; not a dietary condition",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty, so the requested HFD-vs-chow contrast is not represented at all in this selection; there is nothing to compare.",
+          "concerns": [
+            "Case set is empty (0 samples) and control set is empty (0 samples) \u2014 a differential-expression contrast requires both arms to be non-empty.",
+            "The exclusions themselves are individually reasonable (all 9 samples are vehicle controls, antagomir NC, or OCY-EV/antagomir treatments \u2014 none are dietary HFD or normal-chow conditions), but this mean",
+            "This appears to be an osteocyte-EV/antagomir experiment, not a high-fat-diet vs normal-chow study; the contrast cannot be built from these samples and the selection should not proceed as a valid DE an"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
       "n_de_padj05_lfc1": 0,
-      "qc": null
+      "qc": {
+        "n_samples": 9,
+        "n_genes_detected": 16770,
+        "median_library_size": 18171471.0,
+        "median_zero_fraction": 0.166,
+        "flags": []
+      }
     },
     {
       "accession": "GSE313258",
@@ -274,7 +365,7 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set is empty (0 samples) and control set is empty (0 samples) \u2014 a DE contrast requires both arms to be non-empty; nothing is runnable.; The proposer's per-sample exclusion reasons are individually correct: 'CONTROL_REP*' are vehicle/untreated controls of a dose-response study (not normal-chow dietary controls), and '1.5/15/150_REP*' a; However, the correct conclusion is that the requested contrast does not exist in these samples \u2014 there is neither a high-fat-diet arm nor a normal-chow arm. This should be flagged as 'contrast not pre; No liver tissue is confirmed for any retained sample either, but this is moot since no samples are retained.; Do not attempt to salvage this by mapping vehicle control to 'normal chow' or a dose arm to 'high-fat diet' \u2014 that would fabricate a contrast that mixes an unrelated dose-response design.",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case (0) and control (0) are both empty \u2014 a DE contrast requires both arms non-empty; this selection yields nothing to test.; The dataset is a chemical/drug dose-response study (vehicle CONTROL + dose levels 1.5/15/150), not a diet study \u2014 there is no 'high-fat diet' arm and no 'normal chow' arm, so the proposer's exclusion ; Dose levels (1.5/15/150) are compound concentrations, not diets, so none can be repurposed as the high-fat-diet case without misrepresenting the design.; Correct action is to reject/flag this dataset as not matching the research question rather than present an empty-vs-empty 'selection' as if it were a runnable contrast.",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
@@ -290,338 +381,337 @@
             {
               "sample": "CONTROL_REP1",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control of a dose-response study; no case (high-fat diet) arm exists, so no valid contrast.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP2",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; requested high-fat-diet contrast is absent from this dose-response dataset.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP3",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP4",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP5",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP6",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP7",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP8",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP9",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP10",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP11",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP12",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP13",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "CONTROL_REP14",
               "label": "exclude",
-              "reason": "Vehicle/untreated control of a dose-response study, not a normal-chow dietary control",
+              "reason": "Vehicle/baseline control; no high-fat-diet case arm to contrast against.",
               "votes": 1
             },
             {
               "sample": "1.5_REP1",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group of a dose-response study; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP2",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP3",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP4",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP5",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP6",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP7",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP8",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP9",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP10",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP11",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP12",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "1.5_REP13",
               "label": "exclude",
-              "reason": "Low-dose treatment arm, not a high-fat-diet group",
+              "reason": "Low-dose (1.5) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP1",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group of a dose-response study; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP2",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP3",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP4",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP5",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP6",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP7",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP8",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP9",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP10",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP11",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP12",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "15_REP13",
               "label": "exclude",
-              "reason": "Mid-dose treatment arm, not a high-fat-diet group",
+              "reason": "Mid-dose (15) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP1",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group of a dose-response study; a dose level, not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP2",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP3",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP4",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP5",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP6",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP7",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP8",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP9",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP10",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP11",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP12",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP13",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             },
             {
               "sample": "150_REP14",
               "label": "exclude",
-              "reason": "High-dose treatment arm, not a high-fat-diet group",
+              "reason": "High-dose (150) treatment group; not a high-fat diet.",
               "votes": 1
             }
           ]
         },
         "verdict": {
           "agree": false,
-          "reason": "Both case and control sets are empty, so no differential-expression contrast can be run; the requested high-fat-diet vs normal-chow comparison is simply not present in this dataset, which is a dose-response (vehicle + 1.5/15/150 dose arms) study.",
+          "reason": "Both case and control sets are empty, so no differential-expression contrast can be run; the requested high-fat-diet vs normal-chow comparison is simply not present in this dataset.",
           "concerns": [
-            "Case set is empty (0 samples) and control set is empty (0 samples) \u2014 a DE contrast requires both arms to be non-empty; nothing is runnable.",
-            "The proposer's per-sample exclusion reasons are individually correct: 'CONTROL_REP*' are vehicle/untreated controls of a dose-response study (not normal-chow dietary controls), and '1.5/15/150_REP*' a",
-            "However, the correct conclusion is that the requested contrast does not exist in these samples \u2014 there is neither a high-fat-diet arm nor a normal-chow arm. This should be flagged as 'contrast not pre",
-            "No liver tissue is confirmed for any retained sample either, but this is moot since no samples are retained.",
-            "Do not attempt to salvage this by mapping vehicle control to 'normal chow' or a dose arm to 'high-fat diet' \u2014 that would fabricate a contrast that mixes an unrelated dose-response design."
+            "Case (0) and control (0) are both empty \u2014 a DE contrast requires both arms non-empty; this selection yields nothing to test.",
+            "The dataset is a chemical/drug dose-response study (vehicle CONTROL + dose levels 1.5/15/150), not a diet study \u2014 there is no 'high-fat diet' arm and no 'normal chow' arm, so the proposer's exclusion ",
+            "Dose levels (1.5/15/150) are compound concentrations, not diets, so none can be repurposed as the high-fat-diet case without misrepresenting the design.",
+            "Correct action is to reject/flag this dataset as not matching the research question rather than present an empty-vs-empty 'selection' as if it were a runnable contrast."
           ],
           "judged_by": "claude-cli"
         }
@@ -657,13 +747,140 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Control set has 0 samples \u2014 a differential-expression contrast requires both arms non-empty; nothing can be computed against an empty control.; No 'normal chow' / standard-diet sample appears anywhere in the sample list; every sample is on HFD (either HFD vehicle control or HFD+TOFA), so the diet contrast is simply not present in this dataset; The 9 'case' samples are all HFD vehicle controls; with no chow baseline they define one condition only, not a case-vs-control comparison.; Excluding the 7 HFD_TOFA samples is reasonable (drug arm, off-contrast), but it does not fix the fundamental problem that no control-diet group exists.; If the intended biological contrast were actually HFD-vehicle vs HFD-TOFA (drug effect), the labels are mislabeled relative to the stated diet question; either way the stated 'HFD vs normal chow' cont",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
-      "sample_selection": null,
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 9,
+          "n_control": 0,
+          "n_excluded": 7,
+          "assignments": [
+            {
+              "sample": "MUP-uPA_HFD_Ctrl_liver_1",
+              "label": "case",
+              "reason": "HFD vehicle control = pure high-fat diet, matches case arm; not a drug condition",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_Ctrl_liver_2",
+              "label": "case",
+              "reason": "HFD vehicle control = pure high-fat diet, matches case arm",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_Ctrl_liver_3",
+              "label": "case",
+              "reason": "HFD vehicle control = pure high-fat diet, matches case arm",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_Ctrl_liver_4",
+              "label": "case",
+              "reason": "HFD vehicle control = pure high-fat diet, matches case arm",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_Ctrl_liver_5",
+              "label": "case",
+              "reason": "HFD vehicle control = pure high-fat diet, matches case arm",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_Ctrl_liver_6",
+              "label": "case",
+              "reason": "HFD vehicle control = pure high-fat diet, matches case arm",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_Ctrl_liver_7",
+              "label": "case",
+              "reason": "HFD vehicle control = pure high-fat diet, matches case arm",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_Ctrl_liver_8",
+              "label": "case",
+              "reason": "HFD vehicle control = pure high-fat diet, matches case arm",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_Ctrl_liver_9",
+              "label": "case",
+              "reason": "HFD vehicle control = pure high-fat diet, matches case arm",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_TOFA_liver_1",
+              "label": "exclude",
+              "reason": "HFD + tofacitinib drug treatment; a pharmacologic condition, neither plain high-fat diet nor normal chow",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_TOFA_liver_2",
+              "label": "exclude",
+              "reason": "HFD + tofacitinib drug treatment; not the diet contrast",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_TOFA_liver_3",
+              "label": "exclude",
+              "reason": "HFD + tofacitinib drug treatment; not the diet contrast",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_TOFA_liver_4",
+              "label": "exclude",
+              "reason": "HFD + tofacitinib drug treatment; not the diet contrast",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_TOFA_liver_5",
+              "label": "exclude",
+              "reason": "HFD + tofacitinib drug treatment; not the diet contrast",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_TOFA_liver_6",
+              "label": "exclude",
+              "reason": "HFD + tofacitinib drug treatment; not the diet contrast",
+              "votes": 1
+            },
+            {
+              "sample": "MUP-uPA_HFD_TOFA_liver_7",
+              "label": "exclude",
+              "reason": "HFD + tofacitinib drug treatment; not the diet contrast",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "The control arm (normal chow) is empty, so the requested HFD-vs-normal-chow contrast cannot be tested with these samples.",
+          "concerns": [
+            "Control set has 0 samples \u2014 a differential-expression contrast requires both arms non-empty; nothing can be computed against an empty control.",
+            "No 'normal chow' / standard-diet sample appears anywhere in the sample list; every sample is on HFD (either HFD vehicle control or HFD+TOFA), so the diet contrast is simply not present in this dataset",
+            "The 9 'case' samples are all HFD vehicle controls; with no chow baseline they define one condition only, not a case-vs-control comparison.",
+            "Excluding the 7 HFD_TOFA samples is reasonable (drug arm, off-contrast), but it does not fix the fundamental problem that no control-diet group exists.",
+            "If the intended biological contrast were actually HFD-vehicle vs HFD-TOFA (drug effect), the labels are mislabeled relative to the stated diet question; either way the stated 'HFD vs normal chow' cont"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
       "n_de_padj05_lfc1": 0,
-      "qc": null
+      "qc": {
+        "n_samples": 16,
+        "n_genes_detected": 12498,
+        "median_library_size": 24715.378905366437,
+        "median_zero_fraction": 0.0,
+        "flags": [
+          "low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps"
+        ]
+      }
     },
     {
       "accession": "GSE302444",
@@ -671,13 +888,97 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set is empty (0 samples) and control set is empty (0 samples) \u2014 a differential-expression contrast requires both arms to be non-empty, so no analysis is possible as proposed.; The exclusion reasoning is factually sound: all 9 samples share the CDAA-HFD dietary background (4 vehicle/ctrl, 5 tofacitinib), so there is genuinely no 'normal chow' arm to contrast against high-fat; The only real contrast present in these samples is a drug contrast (tofacitinib vs vehicle on a fixed HFD background), which is NOT the requested diet contrast \u2014 the requested contrast does not exist ; Conclusion: rather than an 'appropriate selection,' this should be reported as an infeasible contrast for the given samples; the correct action is to flag that the dataset does not support HFD-vs-chow",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
-      "sample_selection": null,
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 9,
+          "assignments": [
+            {
+              "sample": "WT_CDAA-HFD_ctrl_liver_1",
+              "label": "exclude",
+              "reason": "CDAA-HFD background (vehicle/ctrl arm of a tofacitinib drug study); no normal-chow diet arm exists, so it fits neither 'high-fat diet' vs 'normal chow' arm \u2014 this is the drug-vehicle control, not a diet control.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_CDAA-HFD_ctrl_liver_2",
+              "label": "exclude",
+              "reason": "CDAA-HFD vehicle control; on the same HFD background as every other sample, so there is no normal-chow counterpart to contrast against.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_CDAA-HFD_ctrl_liver_3",
+              "label": "exclude",
+              "reason": "CDAA-HFD vehicle control; all samples share the HFD diet, so the requested diet contrast is absent.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_CDAA-HFD_ctrl_liver_4",
+              "label": "exclude",
+              "reason": "CDAA-HFD vehicle control; no normal-chow arm present, cannot serve as either diet arm.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_CDAA-HFD_TOFA_liver_1",
+              "label": "exclude",
+              "reason": "CDAA-HFD + tofacitinib (drug-treated arm); differs from ctrl by drug, not diet \u2014 all samples are HFD, so no diet contrast is possible.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_CDAA-HFD_TOFA_liver_2",
+              "label": "exclude",
+              "reason": "CDAA-HFD + tofacitinib; drug treatment on fixed HFD background, not a normal-chow vs HFD comparison.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_CDAA-HFD_TOFA_liver_3",
+              "label": "exclude",
+              "reason": "CDAA-HFD + tofacitinib; belongs to the drug-vs-vehicle contrast, not the requested diet contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_CDAA-HFD_TOFA_liver_4",
+              "label": "exclude",
+              "reason": "CDAA-HFD + tofacitinib; no normal-chow control exists, so it fits neither diet arm.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_CDAA-HFD_TOFA_liver_5",
+              "label": "exclude",
+              "reason": "CDAA-HFD + tofacitinib; drug-treated HFD sample, irrelevant to a diet (HFD vs normal chow) contrast that has no chow arm in this dataset.",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control are empty, so the requested HFD-vs-normal-chow contrast cannot be run in this dataset \u2014 the proposer is correct that no normal-chow arm exists, but that makes the selection unusable for DE, not appropriate.",
+          "concerns": [
+            "Case set is empty (0 samples) and control set is empty (0 samples) \u2014 a differential-expression contrast requires both arms to be non-empty, so no analysis is possible as proposed.",
+            "The exclusion reasoning is factually sound: all 9 samples share the CDAA-HFD dietary background (4 vehicle/ctrl, 5 tofacitinib), so there is genuinely no 'normal chow' arm to contrast against high-fat",
+            "The only real contrast present in these samples is a drug contrast (tofacitinib vs vehicle on a fixed HFD background), which is NOT the requested diet contrast \u2014 the requested contrast does not exist ",
+            "Conclusion: rather than an 'appropriate selection,' this should be reported as an infeasible contrast for the given samples; the correct action is to flag that the dataset does not support HFD-vs-chow"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
       "n_de_padj05_lfc1": 0,
-      "qc": null
+      "qc": {
+        "n_samples": 9,
+        "n_genes_detected": 12357,
+        "median_library_size": 30729.23245947402,
+        "median_zero_fraction": 0.0,
+        "flags": [
+          "low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps"
+        ]
+      }
     },
     {
       "accession": "GSE302442",
@@ -685,13 +986,152 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case (0) and control (0) are both empty \u2014 a DE contrast requires two non-empty arms, so nothing can be tested.; All 18 samples are high-fat-diet; there is no normal-chow arm anywhere in the dataset, so the diet contrast genuinely cannot be built.; The dataset only supports other contrasts (e.g., TOFA drug vs vehicle, or PPARa-KO vs WT within HFD), none of which is the requested diet comparison \u2014 the requested contrast should be reported as infe; Exclusions themselves are justified (no valid normal-chow sample was wrongly dropped), but the net result is an unrunnable comparison.",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
-      "sample_selection": null,
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 18,
+          "assignments": [
+            {
+              "sample": "PPARa-WT_HFD_ctrl_liver_1",
+              "label": "exclude",
+              "reason": "HFD (WT, vehicle ctrl); no normal-chow control arm exists, so the diet contrast is unbuildable.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-WT_HFD_ctrl_liver_2",
+              "label": "exclude",
+              "reason": "HFD (WT, vehicle ctrl); not normal chow \u2014 no control arm for the requested diet contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-WT_HFD_ctrl_liver_3",
+              "label": "exclude",
+              "reason": "HFD (WT, vehicle ctrl); all samples are HFD, so 'normal chow' control is absent.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-WT_HFD_ctrl_liver_4",
+              "label": "exclude",
+              "reason": "HFD (WT, vehicle ctrl); no chow-fed samples to serve as the control arm.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-WT_HFD_TOFA_liver_1",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (WT); a treated HFD sample, neither diet arm applies.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-WT_HFD_TOFA_liver_2",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (WT); still HFD, not normal chow.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-WT_HFD_TOFA_liver_3",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (WT); no chow control exists for the diet contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-WT_HFD_TOFA_liver_4",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (WT); a drug-treated HFD sample, not a diet arm.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-WT_HFD_TOFA_liver_5",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (WT); HFD throughout, no normal-chow control.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-KO_HFD_ctrl_liver_1",
+              "label": "exclude",
+              "reason": "HFD (PPARa-KO, vehicle ctrl); genotype confounder and no chow control arm.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-KO_HFD_ctrl_liver_2",
+              "label": "exclude",
+              "reason": "HFD (PPARa-KO, vehicle ctrl); still HFD, not normal chow.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-KO_HFD_ctrl_liver_3",
+              "label": "exclude",
+              "reason": "HFD (PPARa-KO, vehicle ctrl); no chow-fed control arm present.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-KO_HFD_ctrl_liver_4",
+              "label": "exclude",
+              "reason": "HFD (PPARa-KO, vehicle ctrl); diet contrast has no valid control group.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-KO_HFD_TOFA_liver_1",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (PPARa-KO); treated HFD, neither diet arm.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-KO_HFD_TOFA_liver_2",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (PPARa-KO); HFD, not normal chow.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-KO_HFD_TOFA_liver_3",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (PPARa-KO); no chow control exists.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-KO_HFD_TOFA_liver_4",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (PPARa-KO); drug-treated HFD, not a diet arm.",
+              "votes": 1
+            },
+            {
+              "sample": "PPARa-KO_HFD_TOFA_liver_5",
+              "label": "exclude",
+              "reason": "HFD + TOFA drug (PPARa-KO); all samples HFD, no normal-chow control.",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty, so no differential-expression contrast can be run \u2014 the requested 'HFD vs normal chow' comparison is not present in these samples. The proposer's exclusion reasoning is factually correct (every sample is HFD; the 'ctrl' labels denote drug-vehicle, not diet), but an empty/empty selection is not a usable contrast.",
+          "concerns": [
+            "Case (0) and control (0) are both empty \u2014 a DE contrast requires two non-empty arms, so nothing can be tested.",
+            "All 18 samples are high-fat-diet; there is no normal-chow arm anywhere in the dataset, so the diet contrast genuinely cannot be built.",
+            "The dataset only supports other contrasts (e.g., TOFA drug vs vehicle, or PPARa-KO vs WT within HFD), none of which is the requested diet comparison \u2014 the requested contrast should be reported as infe",
+            "Exclusions themselves are justified (no valid normal-chow sample was wrongly dropped), but the net result is an unrunnable comparison."
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
       "n_de_padj05_lfc1": 0,
-      "qc": null
+      "qc": {
+        "n_samples": 18,
+        "n_genes_detected": 6507,
+        "median_library_size": -Infinity,
+        "median_zero_fraction": 0.0,
+        "flags": [
+          "low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps",
+          "few detected genes (<10k) \u2014 possible degraded/low-complexity libraries"
+        ]
+      }
     },
     {
       "accession": "GSE302440",
@@ -699,13 +1139,91 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set is empty (0 samples) \u2014 no HFD arm assigned even though 8 HFD samples exist; control set is empty (0 samples) \u2014 no normal-chow samples exist at all.; A HFD-vs-chow contrast cannot be constructed here: there is no reference (normal-chow) group, so the requested diet axis is genuinely absent.; The only real axis in these samples is drug treatment (TOFA vs vehicle/control) on a fixed HFD background \u2014 a different contrast than requested.; The proposer's exclusion reasoning is correct (contrast is infeasible), but an all-excluded/empty selection cannot be run as a differential-expression comparison and should be reported as 'contrast no",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
-      "sample_selection": null,
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 8,
+          "assignments": [
+            {
+              "sample": "WT_HFD_ctrl_liver_1",
+              "label": "exclude",
+              "reason": "WT on high-fat diet (vehicle/TOFA-control arm); no normal-chow control arm exists, so the diet contrast is infeasible \u2014 this is a drug-treatment axis (TOFA vs vehicle), not diet.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_HFD_ctrl_liver_2",
+              "label": "exclude",
+              "reason": "WT HFD vehicle control; belongs to neither arm of a HFD-vs-normal-chow contrast (no chow samples present).",
+              "votes": 1
+            },
+            {
+              "sample": "WT_HFD_ctrl_liver_3",
+              "label": "exclude",
+              "reason": "WT HFD vehicle control; no normal-chow arm to compare against, diet contrast not present in dataset.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_HFD_ctrl_liver_4",
+              "label": "exclude",
+              "reason": "WT HFD vehicle control; excluded as the requested diet contrast has no control (normal chow) samples.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_HFD_TOFA_liver_1",
+              "label": "exclude",
+              "reason": "WT HFD + TOFA drug treatment; still HFD background, not a diet comparison \u2014 the actual axis is drug (TOFA) vs vehicle.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_HFD_TOFA_liver_2",
+              "label": "exclude",
+              "reason": "WT HFD + TOFA; HFD background, no normal-chow arm, so it fits neither side of the diet contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "WT_HFD_TOFA_liver_3",
+              "label": "exclude",
+              "reason": "WT HFD + TOFA; excluded because the HFD-vs-chow diet contrast is infeasible here (all samples are HFD).",
+              "votes": 1
+            },
+            {
+              "sample": "WT_HFD_TOFA_liver_4",
+              "label": "exclude",
+              "reason": "WT HFD + TOFA; belongs to the drug-treatment axis, not the requested diet contrast \u2014 no normal-chow control exists.",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "The requested diet contrast (high-fat diet vs normal chow) is not present in this dataset: all 8 liver samples are HFD-background (WT_HFD vehicle-control or WT_HFD_TOFA), with no normal-chow arm. Both proposed case and control sets are empty, so the selection is not a usable DE contrast \u2014 it fails the non-empty requirement.",
+          "concerns": [
+            "Case set is empty (0 samples) \u2014 no HFD arm assigned even though 8 HFD samples exist; control set is empty (0 samples) \u2014 no normal-chow samples exist at all.",
+            "A HFD-vs-chow contrast cannot be constructed here: there is no reference (normal-chow) group, so the requested diet axis is genuinely absent.",
+            "The only real axis in these samples is drug treatment (TOFA vs vehicle/control) on a fixed HFD background \u2014 a different contrast than requested.",
+            "The proposer's exclusion reasoning is correct (contrast is infeasible), but an all-excluded/empty selection cannot be run as a differential-expression comparison and should be reported as 'contrast no"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
       "n_de_padj05_lfc1": 0,
-      "qc": null
+      "qc": {
+        "n_samples": 8,
+        "n_genes_detected": 11876,
+        "median_library_size": 28925.47336123338,
+        "median_zero_fraction": 0.0,
+        "flags": [
+          "low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps"
+        ]
+      }
     },
     {
       "accession": "GSE334406",
@@ -734,24 +1252,30 @@
       "Verify library size and 3' bias; low-input EV/exosome RNA often yields shallow, high-duplication libraries.",
       "Normalization choice (median-of-ratios vs TMM vs CPM) changes DE calls \u2014 fix one and report it.",
       "Batch/lane confounding with condition is the most common false-signal source; block or randomize.",
-      "Observed in GSE313258: low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps"
+      "Observed in GSE313258: low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps",
+      "Observed in GSE302445: low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps",
+      "Observed in GSE302444: low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps",
+      "Observed in GSE302442: low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps",
+      "Observed in GSE302442: few detected genes (<10k) \u2014 possible degraded/low-complexity libraries",
+      "Observed in GSE302440: low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps"
     ],
     "power_read": "Planned N per group not specified; specify it for a power read. As a rule of thumb, bulk RNA-seq needs \u22486\u201312 per group to detect moderate effects reliably.",
     "feasibility": "cautionary",
     "caveats": [
-      "No prior study yielded raw counts for DE (7 had no usable per-study counts table; 1 had no assignable case/control grouping); DE-count and effect-size priors are not estimated. Try raising --reanalyze-top to reach studies deeper in the ranking that may deposit raw counts."
+      "No prior study yielded raw counts for DE (2 had no usable per-study counts table; 6 had no assignable case/control grouping); DE-count and effect-size priors are not estimated. Try raising --reanalyze-top to reach studies deeper in the ranking that may deposit raw counts."
     ]
   },
-  "narrative": "Prior public data only weakly supports this plan as specified. The closest matches by title/organism/omics were mouse RNA-seq datasets GSE306578, GSE289033, and GSE313258 (all top-similarity), with GSE302447 and GSE302445 ranking lower due to a major tissue mismatch. However, none of these could be turned into a high-fat-diet vs normal-chow differential-expression check: seven of the reanalyzed studies had no usable per-study counts table, and the one liver-lipid-metabolism dataset that did (GSE313258) turned out to be a dose-response design (vehicle plus dose arms) with no chow-vs-HFD contrast present, so its samples were dropped rather than force-fit to your comparison. As a result, no differential-expression count or effect-size prior could be estimated from prior data. One concrete QC caveat carried over from GSE313258 is a low median library size (<1M counts), and general pitfalls to watch include normalization choice and batch/condition confounding. Note also that no per-group sample size was specified, so no power read is possible beyond the rough guideline of ~6\u201312 samples per group for moderate effects. Overall feasibility is cautionary: the biological topic is well represented in public mouse liver RNA-seq, but no retrieved dataset provided a runnable matching contrast to anchor expectations, so treat any projections as unconfirmed until a dataset with raw counts and a true HFD-vs-chow grouping is located.",
+  "narrative": "Prior public data offers only weak, indirect support for this plan: the search surfaced several mouse liver RNA-seq datasets, but none delivered a usable high-fat-diet vs normal-chow contrast on reanalysis, so the feasibility read is **cautionary**. The closest matches by keyword are GSE306578, GSE289033, and GSE313258 (the last titled around hepatic lipid metabolism remodeling), with GSE302447 and GSE302445 ranking lower due to a major tissue mismatch. When these were reanalyzed, every candidate fell through: two (GSE302447, GSE334406) had no usable per-study counts table, and the rest could not be assigned a valid case/control grouping \u2014 for example, GSE289033 turned out to be an osteocyte-EV/antagomir study, GSE313258 a compound dose-response study, and the GSE30244x series were tofacitinib-on-HFD drug experiments with no normal-chow arm at all. As a result, no differential-expression counts or effect-size priors could be estimated from prior data. Several datasets also carried QC flags for low median library size (<1M counts) typical of low-input/EV preps, and general pitfalls include normalization choice and batch-condition confounding. Your planned N per group was not specified; as a rough guide, bulk RNA-seq typically needs about 6\u201312 per group to detect moderate effects. Overall, the biological question is reasonable and matching datasets exist by topic, but because no public study here yielded a runnable HFD-vs-chow contrast, I'd treat the supporting evidence as unconfirmed and consider generating your own well-balanced diet arms rather than relying on these accessions.",
   "warnings": [
     "LLM backend: claude-cli (spec parsing + narrative phrasing only; numbers come from data, not the model).",
-    "GSE289033: no supplementary expression table found (files: GSE289033_RAW.tar, filelist.txt)",
-    "GSE313258: supplementary table is normalized (GSE313258_AllSamples_Countsmatrix_TPM.csv.gz); DE requires raw counts and will be skipped (not faked)",
+    "GSE289033: assembled a 16770\u00d79 matrix from 9 per-sample files inside GSE289033_RAW.tar (raw)",
+    "GSE313258: supplementary table is normalized (GSE313258_AllSamples_Countsmatrix_TPM.csv.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
     "GSE302447: could not list supplementary files (HTTPError)",
-    "GSE302445: no supplementary expression table found (files: GSE302445_MUP_uPA_HFD_TOFA_liver_FPKM.tab.gz)",
-    "GSE302444: no supplementary expression table found (files: GSE302444_WT_CDAA-HFD_TOFA_liver_FPKM.tab.gz)",
-    "GSE302442: no supplementary expression table found (files: GSE302442_PPARa-KO_HFD_TOFA_liver_FPKM.tab.gz)",
-    "GSE302440: no supplementary expression table found (files: GSE302440_WT_HFD_TOFA_liver_FPKM.tab.gz)",
+    "GSE302445: supplementary table is normalized (GSE302445_MUP_uPA_HFD_TOFA_liver_FPKM.tab.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+    "GSE302444: supplementary table is normalized (GSE302444_WT_CDAA-HFD_TOFA_liver_FPKM.tab.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+    "GSE302442: supplementary table is normalized (GSE302442_PPARa-KO_HFD_TOFA_liver_FPKM.tab.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+    "GSE302440: supplementary table is normalized (GSE302440_WT_HFD_TOFA_liver_FPKM.tab.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+    "GSE334406: GSE334406_RAW.tar had no per-sample count tables to assemble",
     "GSE334406: no supplementary expression table found (files: GSE334406_RAW.tar, filelist.txt)"
   ]
 }

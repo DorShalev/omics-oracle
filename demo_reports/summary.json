@@ -4,15 +4,27 @@
     "prompt": "RNA-seq of human colorectal cancer tumor vs adjacent normal tissue, ~10 per group, to find differentially expressed genes",
     "spec": {
       "organism": "Homo sapiens",
-      "tissue": "colorectal (tumor and adjacent normal)",
+      "tissue": "colorectal tissue",
       "contrast": "colorectal cancer tumor vs adjacent normal tissue"
     },
-    "n_matches": 10,
+    "n_matches": 6,
     "tiers": {
-      "none": 4,
-      "proxy": 6
+      "none": 3,
+      "proxy": 3
     },
     "reanalyzed": [
+      {
+        "acc": "GSE313035",
+        "status": "ok",
+        "method": "welch-log2",
+        "n_de": 0,
+        "case": 36,
+        "control": 31,
+        "note": "DE via Welch t-test on log2 normalized values (case vs control) \u2014 this table is normalized",
+        "sel_outcome": "used",
+        "excluded": 0,
+        "judge_agree": true
+      },
       {
         "acc": "GSE312260",
         "status": "skipped",
@@ -20,82 +32,43 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
-      },
-      {
-        "acc": "GSE289055",
-        "status": "skipped",
-        "method": "",
-        "n_de": 0,
-        "case": 0,
-        "control": 0,
-        "sel_outcome": "dropped",
-        "excluded": 18,
-        "judge_agree": false
       },
       {
         "acc": "GSE285319",
-        "status": "skipped",
-        "method": "",
+        "status": "ok",
+        "method": "welch-log2",
         "n_de": 0,
-        "case": 0,
-        "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
-      },
-      {
-        "acc": "GSE335811",
-        "status": "skipped",
-        "method": "",
-        "n_de": 0,
-        "case": 0,
-        "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
-      },
-      {
-        "acc": "GSE337988",
-        "status": "skipped",
-        "method": "",
-        "n_de": 0,
-        "case": 0,
-        "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
-      },
-      {
-        "acc": "GSE324345",
-        "status": "skipped",
-        "method": "",
-        "n_de": 0,
-        "case": 0,
-        "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "case": 3,
+        "control": 3,
+        "note": "DE via Welch t-test on log2 normalized values (case vs control) \u2014 this table is normalized",
+        "sel_outcome": "used",
+        "excluded": 0,
+        "judge_agree": true
       }
     ],
-    "concordance": null,
+    "concordance": {
+      "n": 2,
+      "top": []
+    },
     "enrichment": {
       "shared": 0,
       "surfaced": 0
     },
     "heatmap": {
-      "genes": 0,
-      "datasets": 0
+      "genes": 6,
+      "datasets": 2
     },
     "warnings": [
-      "GSE312260: no supplementary expression table found (files: GSE312260_RAW.tar, filelist.txt)",
-      "GSE335811: no supplementary expression table found (files: GSE335811_RAW.tar, filelist.txt)",
-      "GSE324345: no supplementary expression table found (files: GSE324345_RAW.tar, filelist.txt)"
+      "GSE313035: supplementary table is normalized (GSE313035_TPM_ctrl.txt.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+      "GSE312260: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)",
+      "GSE285319: supplementary table is normalized (GSE285319_TPM.xlsx); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)"
     ],
     "ok": true,
-    "seconds": 191.4
+    "seconds": 207.9
   },
   {
     "id": "breast",
@@ -107,8 +80,8 @@
     },
     "n_matches": 9,
     "tiers": {
-      "none": 2,
-      "proxy": 7
+      "none": 3,
+      "proxy": 6
     },
     "reanalyzed": [
       {
@@ -118,19 +91,9 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
         "sel_outcome": "dropped",
         "excluded": 49,
-        "judge_agree": false
-      },
-      {
-        "acc": "GSE337023",
-        "status": "skipped",
-        "method": "",
-        "n_de": 0,
-        "case": 0,
-        "control": 0,
-        "sel_outcome": "dropped",
-        "excluded": 24,
         "judge_agree": false
       },
       {
@@ -140,6 +103,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -151,9 +115,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
+        "sel_outcome": "dropped",
+        "excluded": 14,
+        "judge_agree": false
       },
       {
         "acc": "GSE302168",
@@ -162,6 +127,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
         "sel_outcome": "dropped",
         "excluded": 12,
         "judge_agree": false
@@ -173,9 +139,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
+        "sel_outcome": "dropped",
+        "excluded": 12,
+        "judge_agree": false
       },
       {
         "acc": "GSE334884",
@@ -184,6 +151,7 @@
         "n_de": 23,
         "case": 2,
         "control": 2,
+        "note": "DE via Welch t-test on log2 normalized values (case vs control) \u2014 this table is normalized",
         "sel_outcome": "used",
         "excluded": 3,
         "judge_agree": true
@@ -202,15 +170,15 @@
       "datasets": 1
     },
     "warnings": [
-      "GSE273078: supplementary table is normalized (GSE273078_DESeq2_output_26to30.csv.gz); DE requires raw counts and will be skipped (not faked)",
-      "GSE309543: no supplementary expression table found (files: GSE309543_RAW.tar, filelist.txt)",
-      "GSE303509: no supplementary expression table found (files: GSE303509_RAW.tar, filelist.txt)",
-      "GSE312563: no supplementary expression table found (files: GSE312563_Hs578_T_vehicle_vs_Hs578_T_24h_6403_DEG_by_DESeq2.csv.gz, GSE312563_MDA_231_vehicle_vs_MDA_231_24h_6403_DEG_by_DESeq2.csv.gz, GSE312563_MDA_436_vehicle_vs_MDA_436_24h_6403_DEG_by_DESeq2.csv.gz, GSE312563_RAW.tar, filelist.txt)",
-      "GSE334884: supplementary table is normalized (GSE334884_PSI_MDA-MB231_MCF10a_Stiffness.csv.gz); DE requires raw counts and will be skipped (not faked)",
-      "Narrative mentioned gene-like tokens not found in the analyzed data \u2014 verify: MDA, MCF"
+      "GSE273078: supplementary table is normalized (GSE273078_DESeq2_output_26to30.csv.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+      "GSE309543: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)",
+      "GSE303509: assembled a 44391\u00d714 matrix from 14 per-sample files inside GSE303509_RAW.tar (raw)",
+      "GSE312563: assembled a 162473\u00d712 matrix from 12 per-sample files inside GSE312563_RAW.tar (normalized)",
+      "GSE334884: supplementary table is normalized (GSE334884_PSI_MDA-MB231_MCF10a_Stiffness.csv.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+      "Narrative mentioned gene-like tokens not found in the analyzed data \u2014 verify: MDA, TNBC, MCF10A"
     ],
     "ok": true,
-    "seconds": 557.6
+    "seconds": 851.4
   },
   {
     "id": "alzheimer",
@@ -222,9 +190,9 @@
     },
     "n_matches": 10,
     "tiers": {
-      "direct": 2,
+      "direct": 1,
       "none": 2,
-      "proxy": 6
+      "proxy": 7
     },
     "reanalyzed": [
       {
@@ -234,9 +202,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": "dropped",
-        "excluded": 202,
-        "judge_agree": false
+        "note": "no case/control selection could be established for this study; QC reported, DE skipped (no",
+        "sel_outcome": "none",
+        "excluded": null,
+        "judge_agree": null
       },
       {
         "acc": "GSE310554",
@@ -245,6 +214,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "no usable per-study counts table for this dataset",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -256,6 +226,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "no usable per-study counts table for this dataset",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -267,6 +238,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "no usable per-study counts table for this dataset",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -278,6 +250,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -289,6 +262,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "no usable per-study counts table for this dataset",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -300,6 +274,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -311,6 +286,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
         "sel_outcome": "dropped",
         "excluded": 39,
         "judge_agree": false
@@ -328,13 +304,18 @@
     "warnings": [
       "GSE310554: GSE310554_raw_counts_matrix.tsv.gz is 1093 MB > cap 52 MB; skipped",
       "GSE310554: found candidate table(s) but none parsed",
+      "GSE291605: GSE291605_RAW.tar is 962 MB > cap 419 MB; skipped",
       "GSE291605: no supplementary expression table found (files: GSE291605_RAW.tar, filelist.txt)",
+      "GSE297551: GSE297551_RAW.tar had no per-sample count tables to assemble",
       "GSE297551: no supplementary expression table found (files: GSE297551_RAW.tar, GSE297551_WB_LJ_A10-WT_S29_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A11-WT_S30_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A12-WT_S31_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A13-WT_S32_Aligned.sortedByCoord.rm_dup.bed.gz, GSE297551_WB_LJ_A15-WT_S34_Aligned.sortedByCoord.rm_dup.bed.gz)",
-      "GSE296943: no supplementary expression table found (files: GSE296943_Control1_filtered_feature_bc_matrix.h5, GSE296943_Control2_filtered_feature_bc_matrix.h5, GSE296943_Hand1_filtered_feature_bc_matrix.h5, GSE296943_Hand2_filtered_feature_bc_matrix.h5, GSE296943_RAW.tar, filelist.txt)",
-      "GSE212630: no supplementary expression table found (files: GSE212630_RAW.tar, filelist.txt)"
+      "GSE296943: GSE296943_RAW.tar is 5290 MB > cap 419 MB; skipped",
+      "GSE296943: single-cell RNA-seq deposition (.mtx/.h5/.rds) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)",
+      "GSE247416: could not parse GSE247416_old_new_numberings.xlsx (no numeric sample columns)",
+      "GSE247416: found candidate table(s) but none parsed",
+      "GSE212630: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)"
     ],
     "ok": true,
-    "seconds": 484.7
+    "seconds": 384.2
   },
   {
     "id": "t2d_islet",
@@ -346,10 +327,22 @@
     },
     "n_matches": 10,
     "tiers": {
-      "none": 3,
-      "proxy": 7
+      "proxy": 8,
+      "none": 2
     },
     "reanalyzed": [
+      {
+        "acc": "GSE335464",
+        "status": "skipped",
+        "method": "",
+        "n_de": 0,
+        "case": 0,
+        "control": 0,
+        "note": "no usable per-study counts table for this dataset",
+        "sel_outcome": null,
+        "excluded": null,
+        "judge_agree": null
+      },
       {
         "acc": "GSE285253",
         "status": "skipped",
@@ -357,9 +350,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
+        "sel_outcome": "dropped",
+        "excluded": 12,
+        "judge_agree": false
       },
       {
         "acc": "GSE333721",
@@ -368,6 +362,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -379,6 +374,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -390,9 +386,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
+        "sel_outcome": "dropped",
+        "excluded": 40,
+        "judge_agree": false
       },
       {
         "acc": "GSE307751",
@@ -401,6 +398,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
         "sel_outcome": "dropped",
         "excluded": 26,
         "judge_agree": false
@@ -412,6 +410,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -423,6 +422,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -438,14 +438,16 @@
       "datasets": 0
     },
     "warnings": [
-      "GSE285253: no supplementary expression table found (files: GSE285253_RAW.tar, filelist.txt)",
-      "GSE333721: no supplementary expression table found (files: GSE333721_stressor_screen_6conditions.rds)",
-      "GSE305932: no supplementary expression table found (files: GSE305932_RAW.tar, filelist.txt)",
-      "GSE332956: no supplementary expression table found (files: GSE332956_RAW.tar, filelist.txt)",
-      "GSE301598: no supplementary expression table found (files: GSE301598_RAW.tar, filelist.txt)"
+      "GSE335464: no supplementary expression table found (files: GSE335464_README.md.txt, GSE335464_processed_data.tar.gz)",
+      "GSE285253: assembled a 26870\u00d712 matrix from 12 per-sample files inside GSE285253_RAW.tar (raw)",
+      "GSE333721: single-cell RNA-seq deposition (.mtx/.h5/.rds) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)",
+      "GSE305932: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)",
+      "GSE310965: supplementary table is normalized (GSE310965_Salmon_Batch-Corrected_Normalized_Counts_PIC_and_Vehicle.xlsx); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+      "GSE332956: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)",
+      "GSE301598: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)"
     ],
     "ok": true,
-    "seconds": 241.1
+    "seconds": 669.5
   },
   {
     "id": "mouse_nafld",
@@ -468,9 +470,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
+        "sel_outcome": "dropped",
+        "excluded": 9,
+        "judge_agree": false
       },
       {
         "acc": "GSE313258",
@@ -479,6 +482,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
         "sel_outcome": "dropped",
         "excluded": 54,
         "judge_agree": false
@@ -490,6 +494,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "no usable per-study counts table for this dataset",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -501,9 +506,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
+        "sel_outcome": "dropped",
+        "excluded": 7,
+        "judge_agree": false
       },
       {
         "acc": "GSE302444",
@@ -512,9 +518,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
+        "sel_outcome": "dropped",
+        "excluded": 9,
+        "judge_agree": false
       },
       {
         "acc": "GSE302442",
@@ -523,9 +530,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
+        "sel_outcome": "dropped",
+        "excluded": 18,
+        "judge_agree": false
       },
       {
         "acc": "GSE302440",
@@ -534,9 +542,10 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
-        "sel_outcome": null,
-        "excluded": null,
-        "judge_agree": null
+        "note": "sample selection was rejected by the verification judge and dropped rather than run on a q",
+        "sel_outcome": "dropped",
+        "excluded": 8,
+        "judge_agree": false
       },
       {
         "acc": "GSE334406",
@@ -545,6 +554,7 @@
         "n_de": 0,
         "case": 0,
         "control": 0,
+        "note": "no usable per-study counts table for this dataset",
         "sel_outcome": null,
         "excluded": null,
         "judge_agree": null
@@ -560,16 +570,17 @@
       "datasets": 0
     },
     "warnings": [
-      "GSE289033: no supplementary expression table found (files: GSE289033_RAW.tar, filelist.txt)",
-      "GSE313258: supplementary table is normalized (GSE313258_AllSamples_Countsmatrix_TPM.csv.gz); DE requires raw counts and will be skipped (not faked)",
+      "GSE289033: assembled a 16770\u00d79 matrix from 9 per-sample files inside GSE289033_RAW.tar (raw)",
+      "GSE313258: supplementary table is normalized (GSE313258_AllSamples_Countsmatrix_TPM.csv.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
       "GSE302447: could not list supplementary files (HTTPError)",
-      "GSE302445: no supplementary expression table found (files: GSE302445_MUP_uPA_HFD_TOFA_liver_FPKM.tab.gz)",
-      "GSE302444: no supplementary expression table found (files: GSE302444_WT_CDAA-HFD_TOFA_liver_FPKM.tab.gz)",
-      "GSE302442: no supplementary expression table found (files: GSE302442_PPARa-KO_HFD_TOFA_liver_FPKM.tab.gz)",
-      "GSE302440: no supplementary expression table found (files: GSE302440_WT_HFD_TOFA_liver_FPKM.tab.gz)",
+      "GSE302445: supplementary table is normalized (GSE302445_MUP_uPA_HFD_TOFA_liver_FPKM.tab.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+      "GSE302444: supplementary table is normalized (GSE302444_WT_CDAA-HFD_TOFA_liver_FPKM.tab.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+      "GSE302442: supplementary table is normalized (GSE302442_PPARa-KO_HFD_TOFA_liver_FPKM.tab.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+      "GSE302440: supplementary table is normalized (GSE302440_WT_HFD_TOFA_liver_FPKM.tab.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+      "GSE334406: GSE334406_RAW.tar had no per-sample count tables to assemble",
       "GSE334406: no supplementary expression table found (files: GSE334406_RAW.tar, filelist.txt)"
     ],
     "ok": true,
-    "seconds": 236.4
+    "seconds": 923.4
   }
 ]

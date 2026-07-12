@@ -16,8 +16,8 @@
       "RNA-seq",
       "beta cell",
       "insulin secretion",
-      "glucose homeostasis",
-      "differential expression"
+      "glucose metabolism",
+      "islet dysfunction"
     ]
   },
   "matches": [
@@ -35,13 +35,14 @@
       "mismatches": [],
       "judge": {
         "accession": "GSE335464",
-        "verdict": "irrelevant",
-        "confidence": 0.82,
-        "reason": "Organism (human), tissue (pancreatic islet), and assay (RNA-seq) match, but the dataset studies type 1 diabetes (T1D GWAS mechanisms, baseline vs T1D-stimulating conditions, and hESC-derived beta-like knockout cells), not type 2 diabetes. There is no T2D-vs-non-diabetic donor contrast; the biological question and contrast axis differ entirely, and much of the RNA-seq is on isogenic hESC-derived ce",
+        "verdict": "partial",
+        "confidence": 0.72,
+        "reason": "Organism (human) and tissue (pancreatic islet) match, but the disease and contrast differ substantively: this study targets type 1 diabetes (GWAS effector-gene mechanisms), not type 2 diabetes, and its RNA-seq contrast is gene knockout vs wild-type in hESC-derived beta-like cells (plus single-cell baseline vs T1D-stimulating conditions) \u2014 not a T2D-vs-non-diabetic donor comparison. Overlaps in sys",
         "judged_by": "claude-cli"
       },
-      "match_tier": "none",
-      "match_tier_reason": "not a metadata or pathway match",
+      "match_tier": "proxy",
+      "match_tier_reason": "partial metadata match (judge: partial)",
+      "modality": "unknown",
       "blocking": false
     },
     {
@@ -60,11 +61,12 @@
         "accession": "GSE308718",
         "verdict": "irrelevant",
         "confidence": 0.9,
-        "reason": "Both are human RNA-seq mentioning beta cells/diabetes, but the actual system and contrast don't match: this dataset studies stem cell-derived beta cells (SC-\u03b2) co-aggregated with macrophages in different polarization states, aimed at type 1 diabetes cell therapy \u2014 not primary pancreatic islet tissue. The contrast is macrophage polarization (SC-MReg/Inf/Unp), not T2D vs non-diabetic donors. Wrong b",
+        "reason": "Although human RNA-seq with diabetes/beta-cell themes, the actual system is stem-cell-derived beta cells (SC-\u03b2) in vitro, not primary pancreatic islets; the contrast is macrophage polarization states (unpolarized/inflammatory/regenerative) during differentiation, not T2D vs non-diabetic donors; and the disease context is type 1 diabetes, not T2D. No shared biological system, contrast axis, or dono",
         "judged_by": "claude-cli"
       },
       "match_tier": "none",
       "match_tier_reason": "not a metadata or pathway match",
+      "modality": "unknown",
       "blocking": false
     },
     {
@@ -82,12 +84,13 @@
       "judge": {
         "accession": "GSE312607",
         "verdict": "irrelevant",
-        "confidence": 0.72,
-        "reason": "Same organism/assay (human RNA-seq) and islet/diabetes theme, but the actual biology and contrast diverge on every axis that matters: it studies HNF1A-MODY (monogenic diabetes), not type 2 diabetes; the contrast is mutant-vs-control genotype during development, not diabetic-vs-non-diabetic donor state; and the samples are stem-cell-derived islets, not primary donor pancreatic islet tissue. Keyword",
+        "confidence": 0.86,
+        "reason": "Right organism, tissue (islet) and assay (RNA-seq), but the biological system and contrast are wrong: it is a stem-cell-derived islet HNF1A-MODY (monogenic diabetes) mutant-vs-control comparison, not primary human pancreatic islets from T2D vs non-diabetic donors. Different disease entity (MODY, not type 2 diabetes) and different contrast axis (in vitro genotype vs donor disease status).",
         "judged_by": "claude-cli"
       },
       "match_tier": "none",
       "match_tier_reason": "not a metadata or pathway match",
+      "modality": "unknown",
       "blocking": false
     },
     {
@@ -105,12 +108,13 @@
       "judge": {
         "accession": "GSE285253",
         "verdict": "partial",
-        "confidence": 0.8,
-        "reason": "Matches organism (human), assay (RNA-seq), and islet cell-type, but diverges on both key axes: the contrast is an isogenic HNF1A-MODY mutation (monogenic diabetes) vs control, not T2D-vs-nondiabetic donors, and the system is stem-cell-derived islets rather than primary donor pancreatic islet tissue. Related islet/diabetes biology but wrong contrast and model system, so only weak prior evidence.",
+        "confidence": 0.72,
+        "reason": "Matches organism (human), assay (RNA-seq), and islet context, but the biological system and contrast differ: it uses stem-cell-derived islets (not primary donor islets) and contrasts an HNF1A-MODY monogenic-diabetes mutation vs control, not type 2 diabetes vs non-diabetic donors. MODY is a distinct diabetes subtype, so this offers only tangential, not direct, prior evidence.",
         "judged_by": "claude-cli"
       },
       "match_tier": "proxy",
       "match_tier_reason": "partial metadata match (judge: partial)",
+      "modality": "bulk",
       "blocking": false
     },
     {
@@ -128,6 +132,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "single-cell",
       "blocking": false
     },
     {
@@ -145,6 +150,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "single-cell",
       "blocking": false
     },
     {
@@ -162,6 +168,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "bulk",
       "blocking": false
     },
     {
@@ -179,6 +186,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "bulk",
       "blocking": false
     },
     {
@@ -204,6 +212,7 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "single-cell",
       "blocking": false
     },
     {
@@ -229,12 +238,13 @@
       "judge": null,
       "match_tier": "proxy",
       "match_tier_reason": "related biology / partial metadata match",
+      "modality": "single-cell",
       "blocking": false
     }
   ],
   "de_results": [
     {
-      "accession": "GSE285253",
+      "accession": "GSE335464",
       "contrast": "(none)",
       "n_case": 0,
       "n_control": 0,
@@ -248,12 +258,126 @@
       "qc": null
     },
     {
+      "accession": "GSE285253",
+      "contrast": "(none)",
+      "n_case": 0,
+      "n_control": 0,
+      "status": "skipped",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set is empty (0 samples) and control set is empty (0 samples) \u2014 a differential-expression contrast requires non-empty groups on both sides; nothing can be computed.; All 12 samples are iPSC-derived in-vitro cells (non-carrier or HNF1A-MODY, some purmorphamine-treated), none are primary T2D or non-diabetic donor islets \u2014 the exclusions are individually justified, b; The dataset as described appears to contain no primary pancreatic-islet donor samples matching either the T2D or non-diabetic-donor definition; the requested contrast does not exist in these GSMs, so ; HNF1A-MODY is monogenic diabetes, correctly not equated with T2D; but again this only confirms there is no case arm available.",
+      "source_db": "GEO",
+      "tier": "primary",
+      "method": "",
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 12,
+          "assignments": [
+            {
+              "sample": "GSM8699234_L1_MKRN240009919-1A_227YCMLT4_L6_1_GE",
+              "label": "exclude",
+              "reason": "iPSC (PGP-1) Stage-3 non-carrier differentiating cells, not a T2D or non-diabetic donor islet; wrong tissue and condition for the contrast",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699235_L2_MKRN240009920-1A_227YCMLT4_L6_1_GE",
+              "label": "exclude",
+              "reason": "iPSC non-carrier Stage-3 progenitor, in-vitro model not a donor islet; neither contrast arm",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699236_L3_MKRN240009921-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC non-carrier Stage-3 progenitor, in-vitro model not a donor islet; neither contrast arm",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699237_L4_MKRN240009922-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC non-carrier + purmorphamine treatment; treated in-vitro cells, not a T2D/non-diabetic donor islet",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699238_L5_MKRN240009923-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC non-carrier + purmorphamine treatment; treated in-vitro cells, not a donor islet arm",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699239_L6_MKRN240009924-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC non-carrier + purmorphamine treatment; treated in-vitro cells, not a donor islet arm",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699240_L7_MKRN240009925-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC HNF1A-MODY (monogenic diabetes), not type 2 diabetes and not a donor; distinct condition from the case arm",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699241_L8_MKRN240009926-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC HNF1A-MODY monogenic-diabetes model, not T2D donor; wrong condition and tissue for the case arm",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699242_L9_MKRN240009927-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC HNF1A-MODY monogenic-diabetes model, not T2D donor; wrong condition and tissue for the case arm",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699243_L10_MKRN240009928-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC HNF1A-MODY + purmorphamine; monogenic model plus SHH-agonist treatment, not a T2D donor islet",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699244_L11_MKRN240009929-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC HNF1A-MODY + purmorphamine; treated monogenic-diabetes model, not a T2D donor islet",
+              "votes": 1
+            },
+            {
+              "sample": "GSM8699245_L12_MKRN240009930-1A_227YCMLT4_L7_1_GE",
+              "label": "exclude",
+              "reason": "iPSC HNF1A-MODY + purmorphamine; treated monogenic-diabetes model, not a T2D donor islet",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty, so the requested T2D-donor vs non-diabetic-donor contrast is not present in the selected samples at all.",
+          "concerns": [
+            "Case set is empty (0 samples) and control set is empty (0 samples) \u2014 a differential-expression contrast requires non-empty groups on both sides; nothing can be computed.",
+            "All 12 samples are iPSC-derived in-vitro cells (non-carrier or HNF1A-MODY, some purmorphamine-treated), none are primary T2D or non-diabetic donor islets \u2014 the exclusions are individually justified, b",
+            "The dataset as described appears to contain no primary pancreatic-islet donor samples matching either the T2D or non-diabetic-donor definition; the requested contrast does not exist in these GSMs, so ",
+            "HNF1A-MODY is monogenic diabetes, correctly not equated with T2D; but again this only confirms there is no case arm available."
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
+      "n_de_padj05_lfc1": 0,
+      "qc": {
+        "n_samples": 12,
+        "n_genes_detected": 26870,
+        "median_library_size": 28105479.5,
+        "median_zero_fraction": 0.218,
+        "flags": []
+      }
+    },
+    {
       "accession": "GSE333721",
       "contrast": "(none)",
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
@@ -267,7 +391,7 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
@@ -281,13 +405,283 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case (0) and control (0) are both empty \u2014 a differential-expression contrast requires non-empty case and control groups.; All 40 samples belong to a VEH-vs-PIC (vehicle vs poly I:C dsRNA-mimic) islet stimulation experiment, i.e. a treatment-arm design, not a donor diabetes-status cohort.; The proposer's per-sample reasons are individually correct (none of these labels encode T2D vs non-diabetic status), which actually confirms this dataset does not contain the requested contrast.; This dataset is unsuitable for the T2D-vs-non-diabetic islet question; a different dataset with donor diabetes-status annotation is needed. (If donor T2D status exists as separate metadata not shown h",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
-      "sample_selection": null,
+      "sample_selection": {
+        "outcome": "dropped",
+        "selection": {
+          "proposed_by": "claude-cli",
+          "consensus_runs": 1,
+          "n_case": 0,
+          "n_control": 0,
+          "n_excluded": 40,
+          "assignments": [
+            {
+              "sample": "M1_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm of a PIC-vs-VEH islet stimulation experiment; no T2D/non-diabetic donor status assigned.",
+              "votes": 1
+            },
+            {
+              "sample": "M1_PIC",
+              "label": "exclude",
+              "reason": "PIC (dsRNA mimic) treatment arm, not a diabetes-status group; irrelevant to T2D-vs-non-diabetic contrast.",
+              "votes": 1
+            },
+            {
+              "sample": "M2_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "M2_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a T2D or non-diabetic donor label.",
+              "votes": 1
+            },
+            {
+              "sample": "M3_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "M3_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F1_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no T2D/non-diabetic label.",
+              "votes": 1
+            },
+            {
+              "sample": "F1_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F2_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "F2_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F3_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "F3_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "M4_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "M4_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "M5_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "M5_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "M6_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "M6_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F4_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "F4_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F5_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "F5_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F6_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "F6_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "M7_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "M7_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "M8_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "M8_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "M9_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "M9_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F7_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "F7_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F8_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "F8_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F9_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "F9_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "M10_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "M10_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            },
+            {
+              "sample": "F10_VEH",
+              "label": "exclude",
+              "reason": "Vehicle treatment arm; no diabetes-status annotation.",
+              "votes": 1
+            },
+            {
+              "sample": "F10_PIC",
+              "label": "exclude",
+              "reason": "PIC treatment arm; not a diabetes-status group.",
+              "votes": 1
+            }
+          ]
+        },
+        "verdict": {
+          "agree": false,
+          "reason": "Both case and control sets are empty, so the requested T2D-vs-non-diabetic contrast is not present in these samples; no DE analysis is possible.",
+          "concerns": [
+            "Case (0) and control (0) are both empty \u2014 a differential-expression contrast requires non-empty case and control groups.",
+            "All 40 samples belong to a VEH-vs-PIC (vehicle vs poly I:C dsRNA-mimic) islet stimulation experiment, i.e. a treatment-arm design, not a donor diabetes-status cohort.",
+            "The proposer's per-sample reasons are individually correct (none of these labels encode T2D vs non-diabetic status), which actually confirms this dataset does not contain the requested contrast.",
+            "This dataset is unsuitable for the T2D-vs-non-diabetic islet question; a different dataset with donor diabetes-status annotation is needed. (If donor T2D status exists as separate metadata not shown h"
+          ],
+          "judged_by": "claude-cli"
+        }
+      },
       "n_de_padj05_lfc1": 0,
-      "qc": null
+      "qc": {
+        "n_samples": 40,
+        "n_genes_detected": 15341,
+        "median_library_size": 151948.12392254084,
+        "median_zero_fraction": 0.0,
+        "flags": [
+          "low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps"
+        ]
+      }
     },
     {
       "accession": "GSE307751",
@@ -295,7 +689,7 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set (T2D donors) is empty and control set (non-diabetic donors) is empty; a DE contrast requires both arms to be non-empty.; The 26 samples are all gene-perturbation experiments (shMYT1/shMYT3 knockdowns and Sham knockdown controls across donors 8695, 9201-GG, 9508, 9994) \u2014 the dataset carries a knockdown-vs-Sham design, no; The T2D-vs-non-diabetic contrast is simply not present in these samples: donor diabetic status is not annotated, only perturbation arm. Excluding all 26 is defensible on its face, but it leaves nothin; Note: the Sham samples are perturbation controls, NOT 'non-diabetic donor' controls \u2014 so they correctly should not be repurposed as the control arm for this contrast; doing so would be an off-contrast",
+      "note": "sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping \u2014 Case set is empty (0 samples) and control set is empty (0 samples); a differential-expression contrast requires both arms to be non-empty.; All 26 samples are MYT1/MYT3 shRNA-knockdown vs Sham experiments \u2014 a gene-perturbation design, not donor disease status. The dataset contains no T2D or non-diabetic donor arm, so the requested contras; The per-sample exclusion reasons are individually correct (knockdown/Sham samples genuinely lack a T2D/non-diabetic label), but excluding 100% of samples confirms this dataset is the wrong one for the; Recommendation: do not run this contrast on this dataset; source pancreatic-islet samples that actually carry donor T2D vs non-diabetic status.",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
@@ -311,169 +705,169 @@
             {
               "sample": "1-shMYT1_1_8695",
               "label": "exclude",
-              "reason": "shMYT1 knockdown (donor 8695); a gene-perturbation sample, not a T2D or non-diabetic donor label",
+              "reason": "MYT1 shRNA-knockdown sample; no donor T2D/non-diabetic status \u2014 not a contrast arm",
               "votes": 1
             },
             {
               "sample": "1-shMYT3_1_8695",
               "label": "exclude",
-              "reason": "shMYT3 knockdown (donor 8695); perturbation arm, no donor diabetic status",
+              "reason": "MYT3 shRNA-knockdown sample; knockdown design, not disease status",
               "votes": 1
             },
             {
               "sample": "1-shMYT3_2_8695",
               "label": "exclude",
-              "reason": "shMYT3 knockdown (donor 8695); perturbation arm, no donor diabetic status",
+              "reason": "MYT3 shRNA-knockdown sample; knockdown design, not disease status",
               "votes": 1
             },
             {
               "sample": "1-shMYT1_2_8695",
               "label": "exclude",
-              "reason": "shMYT1 knockdown (donor 8695); perturbation arm, no donor diabetic status",
+              "reason": "MYT1 shRNA-knockdown sample; knockdown design, not disease status",
               "votes": 1
             },
             {
               "sample": "1-Sham_1_8695",
               "label": "exclude",
-              "reason": "Sham knockdown control (donor 8695); not a non-diabetic-donor label, belongs to knockdown design",
+              "reason": "Sham is a knockdown-experiment control, not a non-diabetic donor arm",
               "votes": 1
             },
             {
               "sample": "1-Sham_2_8695",
               "label": "exclude",
-              "reason": "Sham knockdown control (donor 8695); not a non-diabetic-donor label",
+              "reason": "Sham is a knockdown-experiment control, not a non-diabetic donor arm",
               "votes": 1
             },
             {
               "sample": "Sham_1_9201-GG",
               "label": "exclude",
-              "reason": "Sham knockdown control (donor 9201-GG); knockdown design, no diabetic status",
+              "reason": "Sham knockdown control, not a non-diabetic donor arm",
               "votes": 1
             },
             {
               "sample": "Sham_2_9201-GG",
               "label": "exclude",
-              "reason": "Sham knockdown control (donor 9201-GG); knockdown design, no diabetic status",
+              "reason": "Sham knockdown control, not a non-diabetic donor arm",
               "votes": 1
             },
             {
               "sample": "shMYT1_2_9201-GG",
               "label": "exclude",
-              "reason": "shMYT1 knockdown (donor 9201-GG); perturbation arm, not a donor status",
+              "reason": "MYT1 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "shMYT1_1_9201-GG",
               "label": "exclude",
-              "reason": "shMYT1 knockdown (donor 9201-GG); perturbation arm, not a donor status",
+              "reason": "MYT1 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "shMYT3_2_9201-GG",
               "label": "exclude",
-              "reason": "shMYT3 knockdown (donor 9201-GG); perturbation arm, not a donor status",
+              "reason": "MYT3 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "shMYT3_1_9201-GG",
               "label": "exclude",
-              "reason": "shMYT3 knockdown (donor 9201-GG); perturbation arm, not a donor status",
+              "reason": "MYT3 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "3-Sham1_9508",
               "label": "exclude",
-              "reason": "Sham knockdown control (donor 9508); knockdown design, no diabetic status",
+              "reason": "Sham knockdown control, not a non-diabetic donor arm",
               "votes": 1
             },
             {
               "sample": "3-Sham2_9508",
               "label": "exclude",
-              "reason": "Sham knockdown control (donor 9508); knockdown design, no diabetic status",
+              "reason": "Sham knockdown control, not a non-diabetic donor arm",
               "votes": 1
             },
             {
               "sample": "3-Sham3_9508",
               "label": "exclude",
-              "reason": "Sham knockdown control (donor 9508); knockdown design, no diabetic status",
+              "reason": "Sham knockdown control, not a non-diabetic donor arm",
               "votes": 1
             },
             {
               "sample": "3-shMYT1_1_9508",
               "label": "exclude",
-              "reason": "shMYT1 knockdown (donor 9508); perturbation arm, not a donor status",
+              "reason": "MYT1 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "3-shMYT1_2_9508",
               "label": "exclude",
-              "reason": "shMYT1 knockdown (donor 9508); perturbation arm, not a donor status",
+              "reason": "MYT1 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "3-shMYT3_3_9508",
               "label": "exclude",
-              "reason": "shMYT3 knockdown (donor 9508); perturbation arm, not a donor status",
+              "reason": "MYT3 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "3-shMYT3_2_9508",
               "label": "exclude",
-              "reason": "shMYT3 knockdown (donor 9508); perturbation arm, not a donor status",
+              "reason": "MYT3 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "3-shMYT3_1_9508",
               "label": "exclude",
-              "reason": "shMYT3 knockdown (donor 9508); perturbation arm, not a donor status",
+              "reason": "MYT3 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "4-Sham1_9994",
               "label": "exclude",
-              "reason": "Sham knockdown control (donor 9994); knockdown design, no diabetic status",
+              "reason": "Sham knockdown control, not a non-diabetic donor arm",
               "votes": 1
             },
             {
               "sample": "4-Sham2_9994",
               "label": "exclude",
-              "reason": "Sham knockdown control (donor 9994); knockdown design, no diabetic status",
+              "reason": "Sham knockdown control, not a non-diabetic donor arm",
               "votes": 1
             },
             {
               "sample": "4-shMYT1-1_9994",
               "label": "exclude",
-              "reason": "shMYT1 knockdown (donor 9994); perturbation arm, not a donor status",
+              "reason": "MYT1 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "4-shMYT1-2_9994",
               "label": "exclude",
-              "reason": "shMYT1 knockdown (donor 9994); perturbation arm, not a donor status",
+              "reason": "MYT1 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "4-shMYT3-1_9994",
               "label": "exclude",
-              "reason": "shMYT3 knockdown (donor 9994); perturbation arm, not a donor status",
+              "reason": "MYT3 shRNA-knockdown sample; no disease status label",
               "votes": 1
             },
             {
               "sample": "4-shMYT3-2_9994",
               "label": "exclude",
-              "reason": "shMYT3 knockdown (donor 9994); perturbation arm, not a donor status",
+              "reason": "MYT3 shRNA-knockdown sample; no disease status label",
               "votes": 1
             }
           ]
         },
         "verdict": {
           "agree": false,
-          "reason": "Both case and control sets are empty, so the requested T2D-vs-non-diabetic contrast cannot be tested at all \u2014 no differential expression is possible with 0 vs 0 samples.",
+          "reason": "Both case and control sets are empty, so the requested T2D-vs-non-diabetic contrast is not represented at all \u2014 a DE analysis is impossible.",
           "concerns": [
-            "Case set (T2D donors) is empty and control set (non-diabetic donors) is empty; a DE contrast requires both arms to be non-empty.",
-            "The 26 samples are all gene-perturbation experiments (shMYT1/shMYT3 knockdowns and Sham knockdown controls across donors 8695, 9201-GG, 9508, 9994) \u2014 the dataset carries a knockdown-vs-Sham design, no",
-            "The T2D-vs-non-diabetic contrast is simply not present in these samples: donor diabetic status is not annotated, only perturbation arm. Excluding all 26 is defensible on its face, but it leaves nothin",
-            "Note: the Sham samples are perturbation controls, NOT 'non-diabetic donor' controls \u2014 so they correctly should not be repurposed as the control arm for this contrast; doing so would be an off-contrast"
+            "Case set is empty (0 samples) and control set is empty (0 samples); a differential-expression contrast requires both arms to be non-empty.",
+            "All 26 samples are MYT1/MYT3 shRNA-knockdown vs Sham experiments \u2014 a gene-perturbation design, not donor disease status. The dataset contains no T2D or non-diabetic donor arm, so the requested contras",
+            "The per-sample exclusion reasons are individually correct (knockdown/Sham samples genuinely lack a T2D/non-diabetic label), but excluding 100% of samples confirms this dataset is the wrong one for the",
+            "Recommendation: do not run this contrast on this dataset; source pancreatic-islet samples that actually carry donor T2D vs non-diabetic status."
           ],
           "judged_by": "claude-cli"
         }
@@ -493,7 +887,7 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
@@ -507,7 +901,7 @@
       "n_case": 0,
       "n_control": 0,
       "status": "skipped",
-      "note": "no usable per-study counts table for this dataset",
+      "note": "single-cell RNA-seq study \u2014 set aside from bulk DE (single-cell analysis is planned)",
       "source_db": "GEO",
       "tier": "primary",
       "method": "",
@@ -527,21 +921,24 @@
       "Check for rRNA / globin carryover, especially in blood/plasma inputs.",
       "Verify library size and 3' bias; low-input EV/exosome RNA often yields shallow, high-duplication libraries.",
       "Normalization choice (median-of-ratios vs TMM vs CPM) changes DE calls \u2014 fix one and report it.",
-      "Batch/lane confounding with condition is the most common false-signal source; block or randomize."
+      "Batch/lane confounding with condition is the most common false-signal source; block or randomize.",
+      "Observed in GSE310965: low median library size (<1M counts) \u2014 typical of low-input / EV / exosome preps"
     ],
     "power_read": "Planned N per group not specified; specify it for a power read. As a rule of thumb, bulk RNA-seq needs \u22486\u201312 per group to detect moderate effects reliably.",
     "feasibility": "cautionary",
     "caveats": [
-      "No prior study yielded raw counts for DE (6 had no usable per-study counts table; 1 had no assignable case/control grouping); DE-count and effect-size priors are not estimated. Try raising --reanalyze-top to reach studies deeper in the ranking that may deposit raw counts."
+      "No prior study yielded raw counts for DE (1 had no usable per-study counts table; 3 had no assignable case/control grouping); DE-count and effect-size priors are not estimated. Try raising --reanalyze-top to reach studies deeper in the ranking that may deposit raw counts."
     ]
   },
-  "narrative": "Prior public data offers only weak support for this plan as it stands: several human pancreatic-islet RNA-seq studies rank as close matches by keyword, but none could actually be reanalyzed for the requested type 2 diabetes vs non-diabetic contrast. The closest datasets by accession are GSE335464 (n=28), GSE312607 (n=12), GSE285253 (n=12), GSE308718 (n=6), and GSE333721 (n=6), all Homo sapiens RNA-seq. The main caveat is that six of the reanalyzed studies (including GSE285253 and GSE333721) had no usable per-study counts table, so no differential-expression numbers or effect-size priors could be estimated. A further mismatch: GSE307751's 26 samples were all shMYT1/shMYT3 knockdown-vs-Sham perturbation experiments with no donor diabetic status annotated, so the case and control arms came out empty and the contrast could not be run. Note too that no planned N per group was specified, and as a rough guide bulk RNA-seq typically needs about 6\u201312 samples per group to detect moderate effects. Because no prior study yielded raw counts for this contrast, the feasibility read is cautionary rather than confident. It may be worth reaching deeper into the ranking (e.g. raising the reanalysis depth) to find studies that deposit raw counts before committing to this design.",
+  "narrative": "Prior public data offers only weak support for this plan so far: several human pancreatic-islet RNA-seq studies rank as very close matches to the proposed type 2 diabetes vs. non-diabetic donor comparison, but none could actually be reanalyzed into that contrast. The closest datasets by accession are GSE335464 (n=28), GSE308718 (n=6), GSE312607 (n=12), GSE285253 (n=12), and GSE333721 (n=6). The main mismatches are substantive: GSE335464 had no usable per-study counts table; GSE285253 contains only iPSC-derived HNF1A-MODY (monogenic diabetes, not T2D donor islets); GSE310965 is a vehicle-vs-poly(I:C) treatment design; and GSE307751 is a MYT1/MYT3 knockdown experiment \u2014 none carry donor T2D-vs-non-diabetic labels. Additional candidates (GSE333721, GSE305932, GSE332956, GSE301598) are single-cell studies set aside from bulk differential expression. Because no study yielded raw counts for a valid contrast, no differential-expression count or effect-size priors could be estimated, and general QC risks (normalization choice, batch confounding, and the low library sizes flagged in GSE310965) remain unaddressed. Note also that no planned N per group was specified, so no power read is possible beyond the general rule that bulk RNA-seq typically needs roughly 6\u201312 samples per group. Overall feasibility is cautionary: the biological question is well-represented in principle, but the retrieved datasets do not yet provide a directly matching, reanalyzable contrast, so deeper searching for donor-status\u2013annotated islet cohorts is warranted before drawing conclusions.",
   "warnings": [
     "LLM backend: claude-cli (spec parsing + narrative phrasing only; numbers come from data, not the model).",
-    "GSE285253: no supplementary expression table found (files: GSE285253_RAW.tar, filelist.txt)",
-    "GSE333721: no supplementary expression table found (files: GSE333721_stressor_screen_6conditions.rds)",
-    "GSE305932: no supplementary expression table found (files: GSE305932_RAW.tar, filelist.txt)",
-    "GSE332956: no supplementary expression table found (files: GSE332956_RAW.tar, filelist.txt)",
-    "GSE301598: no supplementary expression table found (files: GSE301598_RAW.tar, filelist.txt)"
+    "GSE335464: no supplementary expression table found (files: GSE335464_README.md.txt, GSE335464_processed_data.tar.gz)",
+    "GSE285253: assembled a 26870\u00d712 matrix from 12 per-sample files inside GSE285253_RAW.tar (raw)",
+    "GSE333721: single-cell RNA-seq deposition (.mtx/.h5/.rds) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)",
+    "GSE305932: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)",
+    "GSE310965: supplementary table is normalized (GSE310965_Salmon_Batch-Corrected_Normalized_Counts_PIC_and_Vehicle.xlsx); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)",
+    "GSE332956: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)",
+    "GSE301598: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) \u2014 set aside; bulk DE not applicable (single-cell analysis is planned)"
   ]
 }

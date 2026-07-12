@@ -2,56 +2,66 @@
 
 > _RNA-seq of human colorectal cancer tumor vs adjacent normal tissue, ~10 per group, to find differentially expressed genes_
 
-**Parsed spec** (`llm` parser): organism=**Homo sapiens**, tissue=**colorectal (tumor and adjacent normal)**, omics=**rna-seq**, contrast=**colorectal cancer tumor vs adjacent normal tissue**, platform=**—**, N/group=**10**.
+**Parsed spec** (`llm` parser): organism=**Homo sapiens**, tissue=**colorectal tissue**, omics=**rna-seq**, contrast=**colorectal cancer tumor vs adjacent normal tissue**, platform=**—**, N/group=**10**.
 
-**Warnings:** LLM backend: claude-cli (spec parsing + narrative phrasing only; numbers come from data, not the model).; GSE312260: no supplementary expression table found (files: GSE312260_RAW.tar, filelist.txt); GSE335811: no supplementary expression table found (files: GSE335811_RAW.tar, filelist.txt); GSE324345: no supplementary expression table found (files: GSE324345_RAW.tar, filelist.txt)
+**Warnings:** LLM backend: claude-cli (spec parsing + narrative phrasing only; numbers come from data, not the model).; GSE313035: supplementary table is normalized (GSE313035_TPM_ctrl.txt.gz); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts); GSE312260: single-cell RNA-seq (10x matrix / .h5 / .rds in RAW.tar) — set aside; bulk DE not applicable (single-cell analysis is planned); GSE285319: supplementary table is normalized (GSE285319_TPM.xlsx); DE will use a Welch t-test on log values (not DESeq2, which needs raw counts)
 
 ## Narrative
-Prior public data offers only partial, unconfirmed support for this plan: several human RNA-seq datasets match the colorectal tumor-versus-adjacent-normal design by metadata similarity, but none could be reanalyzed to actually confirm differential-expression yields. The closest datasets by accession are GSE261033 and GSE319664 (highest metadata similarity) and GSE245885, a colon-specimen expression-profiling study whose ~10-sample size mirrors your planned design; GSE333496 is also a near match. The main caveat is that no candidate study produced a usable per-study counts table — five were skipped for lacking raw counts, and one (GSE289055) was dropped because it contained only cultured cell lines from a knockout experiment rather than patient tumor/normal tissue, so no expected DE-gene count or effect-size prior could be estimated. Note too that one top-similarity hit (GSE319664) is a xenograft/drug-treatment study, which does not match a straightforward tumor-versus-normal tissue contrast. On the general RNA-seq caveats, watch for batch/lane confounding with condition, and fix and report a single normalization choice, since these are common sources of false signal. Your planned N of 10 per group is reasonable for detecting moderate effects in bulk RNA-seq. Overall feasibility is cautionary: the design is plausible and metadata-similar studies exist, but because no prior dataset could be reanalyzed into usable DE estimates, this should be treated as unvalidated — consider searching deeper in the ranking for studies that deposit raw counts before relying on any quantitative prior.
+Public data does offer partial support for this plan: several human colorectal RNA-seq studies of tumor versus adjacent normal tissue already exist, the closest by match being GSE261033, GSE313035, GSE333496, and GSE245885, with GSE245885 sitting right at your intended ~10-per-group scale. However, the reanalyses came with important caveats. The datasets that were actually reprocessed (GSE313035 with 36 tumor vs 31 normal, and GSE285319 with 3 vs 3) provided only normalized expression tables rather than raw counts, so differential expression was estimated with a Welch t-test on log2 values instead of DESeq2, which weakens how directly those effect sizes translate to your design. QC also flagged a low median library size (under 1M counts) in GSE313035, consistent with a low-input/EV/exosome-style prep, and group assignments rested on file-arm labels rather than inspected clinical metadata. Notably, no genes came out as differentially expressed in two or more datasets under the concordance criteria, and the projection expects roughly zero significant genes at the stricter threshold. On the positive side, prior studies used as few as 3 per group, so N=10 is a reasonable size for moderate effects if your true effect sizes are comparable. Overall the feasibility read is cautionary rather than a clear green light: the biological question is well-precedented, but the available reanalyzed evidence is thin and method-limited, so I would confirm sample grouping and library quality before drawing strong conclusions.
 
 ## Matched datasets (ranked)
 | Rank | Accession | Sim | Tier | Organism | Omics | N | Blocking? | Judge | Mismatches |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | [GSE261033](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE261033) | 1.0 | none | Homo sapiens | rna-seq | 28 | — | irrelevant | — |
-| 2 | [GSE319664](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE319664) | 1.0 | none | Homo sapiens | rna-seq | 29 | — | irrelevant | — |
+| 2 | [GSE313035](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE313035) | 1.0 | proxy | Homo sapiens | rna-seq | 67 | — | partial | — |
 | 3 | [GSE333496](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE333496) | 0.95 | none | Homo sapiens | rna-seq | 11 | — | irrelevant | n(minor) |
 | 4 | [GSE245885](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE245885) | 0.95 | none | Homo sapiens | rna-seq | 10 | — | irrelevant | n(minor) |
 | 5 | [GSE312260](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE312260) | 0.95 | proxy | Homo sapiens | rna-seq | 2 | — | — | n(minor) |
-| 6 | [GSE289055](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE289055) | 0.95 | proxy | Homo sapiens | rna-seq | 18 | — | — | n(minor) |
-| 7 | [GSE285319](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE285319) | 0.95 | proxy | Homo sapiens | rna-seq | 6 | — | — | n(minor) |
-| 8 | [GSE335811](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE335811) | 0.95 | proxy | Homo sapiens | rna-seq | 12 | — | — | n(minor) |
-| 9 | [GSE337988](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE337988) | 0.8 | proxy | Homo sapiens | rna-seq | 48 | — | — | contrast(major) |
-| 10 | [GSE324345](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE324345) | 0.8 | proxy | Homo sapiens | rna-seq | 66 | — | — | contrast(major) |
+| 6 | [GSE285319](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE285319) | 0.95 | proxy | Homo sapiens | rna-seq | 6 | — | — | n(minor) |
 
 **Relevance verification (LLM judge):**
-- GSE261033: **irrelevant** (conf 0.94) — This dataset studies human Tr1 regulatory CD4+ T-cell differentiation (scMultiome/epigenomic profiling of antigen-induced T cells, focus on IRF4/BATF/MAF). Colorectal cancer is mentioned only in passing as one of several tumor types where a Tr1 signature was detected in tumor-resident CD4+ T cells. There is no tumor-vs-adjacent-normal colorectal tissue contrast, no bulk colorectal tumor/normal RNA
-- GSE319664: **irrelevant** (conf 0.9) — Both are human RNA-seq, but the dataset profiles tumors from a xenograft model treated with KDM5B inhibitors (JB-157/JB-161) — a drug-treatment vs vehicle contrast in a xenograft, not colorectal tumor vs adjacent normal tissue. No indication the tumors are colorectal or that adjacent-normal tissue is included; the biological system and contrast axis do not match the plan.
-- GSE333496: **irrelevant** (conf 0.95) — Despite RNA-seq/Homo sapiens/keyword match, the actual system is human Tr1 regulatory CD4+ T cells and IRF4/BATF/MAF-driven Tr1 differentiation. Colorectal cancer is mentioned only in passing as one tissue where a Tr1 signature was projected onto external scRNA-seq. There is no CRC tumor-vs-adjacent-normal contrast, no colorectal tissue samples, and a different biological system/assay focus, so it
-- GSE245885: **irrelevant** (conf 0.9) — Same organism (human), same assay (RNA-seq), and same organ region (colon), but the biological system and contrast are entirely different: the dataset compares slow transit constipation (STC) vs non-STC colon tissue, with no cancer/tumor component. There is no tumor-vs-adjacent-normal contrast, so it cannot serve as prior evidence for colorectal cancer DEGs. Overlap is limited to tissue keyword on
-
-**Mismatch caveats:**
-- contrast terms 'colorectal cancer tumor adjacent normal tissue' not evident in GSE337988 metadata
-- contrast terms 'colorectal cancer tumor adjacent normal tissue' not evident in GSE324345 metadata
+- GSE261033: **irrelevant** (conf 0.93) — The dataset profiles human Tr1 regulatory CD4+ T cells (scMultiome: transcriptomic/epigenomic/TCR) to study transcription factors driving Tr1 differentiation. Colorectal cancer appears only in passing — as one of three tumor types where a Tr1 signature is checked in tumor-resident CD4+ T cells. There is no colorectal tumor-vs-adjacent-normal tissue contrast, no bulk tissue DEG design; the biologic
+- GSE313035: **partial** (conf 0.6) — Same organism (human), disease (colorectal cancer), and assay (RNA-seq), but the contrast axis differs fundamentally: this is a metastatic CRC (mCRC) clinical trial comparing treatment arms (FLOX vs FLOX+nivolumab) for immune modulation, not tumor vs adjacent normal tissue. Metadata describes no adjacent-normal samples, so the planned tumor-vs-normal DE contrast cannot be constructed; only shared 
+- GSE333496: **irrelevant** (conf 0.95) — Dataset profiles human Tr1 regulatory CD4+ T cells (differentiation/transcription factors), an immunology system with no tumor-vs-adjacent-normal contrast. Colorectal cancer is mentioned only in passing as one setting where a Tr1 signature can be detected in scRNA-seq CD4+ T cells; the biological system, contrast axis, and sample composition do not match colorectal tumor vs adjacent normal tissue.
+- GSE245885: **irrelevant** (conf 0.95) — Same organism (human), tissue (colon), and assay (RNA-seq), but the biological system and contrast differ entirely: the dataset profiles slow transit constipation vs non-STC colon tissue with no cancer component, whereas the plan needs colorectal tumor vs adjacent-normal. No cancer contrast is present, so it cannot serve as prior evidence for a tumor-vs-normal DE experiment.
 
 ## Per-dataset reanalysis
-- **GSE312260** _[primary: GEO]_ — SKIPPED: no usable per-study counts table for this dataset
-- **GSE289055** _[primary: GEO]_ — SKIPPED: sample selection was rejected by the verification judge and dropped rather than run on a questionable grouping — Case set is empty (0 samples) — no colorectal cancer tumor tissue samples exist here.; Control set is empty (0 samples) — no adjacent normal tissue samples exist here.; All 18 samples are cultured cell lines from a gene-knockout experiment (BxPC3 pancreatic, SW480 CRC, KBM7 leukemia), not patient tissue; the tumor-vs-adjacent-normal design does not exist in this data; Individual exclusion reasons are correct, but the net result is a non-runnable DE contrast — this dataset cannot answer the stated research question and should be flagged as no valid samples rather th
-  - QC: 18 samples, median lib size 43,187,570, median zero-fraction 0.639.
-  - Sample selection (dropped): case=0, control=0, excluded=18 — judge ⚠️ disagreed (Case set is empty (0 samples) — no colorectal cancer tumor tissue samples exist here.; Control set is empty (0 samples) — no adjacent normal tissue samples exist here.)
-- **GSE285319** _[primary: GEO]_ — SKIPPED: no usable per-study counts table for this dataset
-- **GSE335811** _[primary: GEO]_ — SKIPPED: no usable per-study counts table for this dataset
-- **GSE337988** _[primary: GEO]_ — SKIPPED: no usable per-study counts table for this dataset
-- **GSE324345** _[primary: GEO]_ — SKIPPED: no usable per-study counts table for this dataset
+- **GSE313035** _[primary: GEO; welch-log2]_ — OK: DE via Welch t-test on log2 normalized values (case vs control) — this table is normalized, not raw counts, so effect sizes are log2 ratios of normalized expression and significance uses a t-test, not DESeq2
+  - QC: 67 samples, median lib size 680,348, median zero-fraction 0.089. Flags: low median library size (<1M counts) — typical of low-input / EV / exosome preps
+  - Sample selection (used): case=36, control=31, excluded=0 — judge ✅ agreed
+  - DE: 0 genes at padj<0.05 & |log2FC|>=1 (case=36, control=31).
+- **GSE312260** _[primary: GEO]_ — SKIPPED: single-cell RNA-seq study — set aside from bulk DE (single-cell analysis is planned)
+- **GSE285319** _[primary: GEO; welch-log2]_ — OK: DE via Welch t-test on log2 normalized values (case vs control) — this table is normalized, not raw counts, so effect sizes are log2 ratios of normalized expression and significance uses a t-test, not DESeq2
+  - QC: 6 samples, median lib size 1,000,000, median zero-fraction 0.598.
+  - Sample selection (used): case=3, control=3, excluded=0 — judge ✅ agreed
+  - DE: 0 genes at padj<0.05 & |log2FC|>=1 (case=3, control=3).
+
+## Cross-experiment concordance
+0 gene(s) differentially expressed in >= 2 datasets (padj<0.1, |log2fc|>=0.5), compared in HGNC-symbol space.
+
+## Cross-dataset comparison (Venn + gene search)
+Reanalyzed studies: GSE313035 [primary] (0 DE), GSE285319 [primary] (0 DE)
+
+**Pairwise DE-gene overlap:**
+- GSE313035 ∩ GSE285319: **0** shared (Jaccard 0.0; 0/0 unique)
+
+**Your gene list (6 genes) overlap:** GSE313035 0 shared (J=0.0); GSE285319 0 shared (J=0.0)
+
+## Concordance heatmap (gene × dataset log2FC)
+Matrix: 6 genes (user_genes) × 2 datasets (GSE313035[proxy] × GSE285319[proxy]). Full data in JSON `heatmap` (UI toggles Top-N / Up-Down over `heatmap.genes`).
+
+## Pathway enrichment (KEGG_2021_Human)
 
 ## Projection
-- **Power / feasibility:** Planned N = 10 per group. Reasonable for moderate effects in bulk RNA-seq.
+- **Expected #DE genes:** ~0–0 (from reanalyzed priors).
+- **Effect-size prior:** no significant genes in reanalyzed studies at padj<0.05, |log2fc|>=1.
+- **Power / feasibility:** Planned N = 10 per group. Reasonable for moderate effects in bulk RNA-seq. Comparable prior studies used as few as 3 per group, so a detectable signal at N=10 is plausible if effect sizes match.
 - **Overall feasibility:** **cautionary**.
 - **Expected QC pitfalls:**
   - Check for rRNA / globin carryover, especially in blood/plasma inputs.
   - Verify library size and 3' bias; low-input EV/exosome RNA often yields shallow, high-duplication libraries.
   - Normalization choice (median-of-ratios vs TMM vs CPM) changes DE calls — fix one and report it.
   - Batch/lane confounding with condition is the most common false-signal source; block or randomize.
-- **Caveats:**
-  - No prior study yielded raw counts for DE (5 had no usable per-study counts table; 1 had no assignable case/control grouping); DE-count and effect-size priors are not estimated. Try raising --reanalyze-top to reach studies deeper in the ranking that may deposit raw counts.
+  - Observed in GSE313035: low median library size (<1M counts) — typical of low-input / EV / exosome preps
 
 <sub>schema 0.1.0 · real data only · projections are cited to the datasets above and are not a substitute for formal power analysis.</sub>
