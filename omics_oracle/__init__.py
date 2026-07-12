@@ -21,6 +21,9 @@ from .reanalyze import reanalyze, compute_qc
 from .aggregate import aggregate
 from .compare import build_comparison
 from .enrich import enrich_across_datasets, run_enrichr
+from .tiers import classify_tiers
+from .heatmap import build_heatmap
+from .validate import validate_narrative
 from .project import project
 from .judge import judge_match, judge_matches, Verdict
 from .data import download_archs4_h5, build_remote_index
@@ -32,6 +35,7 @@ __all__ = [
     "CountMatrix", "DEResult", "Concordance", "GeneConcordance", "Projection", "QCSummary",
     "SCHEMA_VERSION", "parse_spec", "find_datasets", "score_match", "reanalyze",
     "compute_qc", "aggregate", "build_comparison", "enrich_across_datasets", "run_enrichr",
+    "classify_tiers", "build_heatmap", "validate_narrative",
     "project", "judge_match", "judge_matches", "Verdict",
     "download_archs4_h5", "build_remote_index", "__version__",
 ]

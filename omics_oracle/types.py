@@ -73,6 +73,9 @@ class DatasetMatch:
     similarity: float = 0.0                  # 0..1, explainable (see finder.py)
     mismatches: list[Mismatch] = field(default_factory=list)
     judge: Optional[dict] = None             # LLM relevance verdict (see judge.py), or None
+    # match tier (how this study relates to the plan): "direct" | "proxy" | "pathway" | "none"
+    match_tier: str = ""
+    match_tier_reason: str = ""
 
     @property
     def blocking(self) -> bool:
@@ -220,6 +223,7 @@ class OracleReport:
     narrative: str = ""
     comparison: Optional[dict] = None        # cross-dataset Venn/gene-search data (see compare.py)
     enrichment: Optional[dict] = None        # per-dataset + shared pathways (see enrich.py)
+    heatmap: Optional[dict] = None           # gene x dataset log2FC matrix (see heatmap.py)
     schema_version: str = SCHEMA_VERSION
     warnings: list[str] = field(default_factory=list)
 
@@ -232,6 +236,7 @@ class OracleReport:
             "concordance": self.concordance.to_dict() if self.concordance else None,
             "comparison": self.comparison,
             "enrichment": self.enrichment,
+            "heatmap": self.heatmap,
             "projection": self.projection.to_dict(),
             "narrative": self.narrative,
             "warnings": self.warnings,

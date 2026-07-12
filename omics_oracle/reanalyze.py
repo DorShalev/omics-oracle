@@ -36,7 +36,7 @@ def compute_qc(counts: CountMatrix) -> QCSummary:
 
 def reanalyze(counts: CountMatrix, spec: ExperimentSpec,
               groups: Optional[dict[str, str]] = None,
-              min_group: int = 2, llm=None) -> DEResult:
+              min_group: int = 2, llm=None, group_consensus: int = 1) -> DEResult:
     """QC always; DE when a case/control grouping is available.
 
     ``groups`` maps sample id -> "case"|"control". If None, we try to derive it from
@@ -46,14 +46,15 @@ def reanalyze(counts: CountMatrix, spec: ExperimentSpec,
     The DE result inherits the counts' repository labels (source_db / tier) so the report can
     show whether a study's DE came from the GEO per-study table (primary) or ARCHS4 (clinical).
     """
-    res = _reanalyze_impl(counts, spec, groups, min_group, llm)
+    res = _reanalyze_impl(counts, spec, groups, min_group, llm, group_consensus)
     res.source_db = getattr(counts, "source_db", "GEO")
     res.tier = getattr(counts, "tier", "primary")
     return res
 
 
 def _reanalyze_impl(counts: CountMatrix, spec: ExperimentSpec,
-                    groups: Optional[dict[str, str]], min_group: int, llm) -> DEResult:
+                    groups: Optional[dict[str, str]], min_group: int, llm,
+                    group_consensus: int = 1) -> DEResult:
     qc = compute_qc(counts)
 
     # P0 honesty gate: pydeseq2 is only valid on raw counts. Normalized (TPM/FPKM/log) or
@@ -69,7 +70,8 @@ def _reanalyze_impl(counts: CountMatrix, spec: ExperimentSpec,
     if groups is None:
         groups = _derive_groups(counts, spec)
     if not groups and llm is not None and getattr(llm, "available", False):
-        groups = _llm_group_samples(counts, spec, llm)
+        groups = (_llm_group_consensus(counts, spec, llm, group_consensus)
+                  if group_consensus > 1 else _llm_group_samples(counts, spec, llm))
 
     if not groups:
         return DEResult(accession=counts.accession, contrast="(none)", n_case=0, n_control=0,
@@ -182,3 +184,31 @@ def _llm_group_samples(counts: CountMatrix, spec: ExperimentSpec, llm) -> Option
         if v in ("case", "control"):
             groups[s] = v
     return groups or None
+
+
+def _llm_group_consensus(counts: CountMatrix, spec: ExperimentSpec, llm,
+                         n: int = 3) -> Optional[dict[str, str]]:
+    """Run LLM grouping n times and keep a sample's label only when a majority agrees.
+
+    Self-consistency reduces the chance a single bad call corrupts the case/control split (the
+    most result-critical LLM decision). A sample without a majority label is dropped.
+    """
+    from collections import Counter
+    votes: dict[str, Counter] = {}
+    runs = 0
+    for _ in range(max(1, n)):
+        g = _llm_group_samples(counts, spec, llm)
+        if not g:
+            continue
+        runs += 1
+        for s, lab in g.items():
+            votes.setdefault(s, Counter())[lab] += 1
+    if runs == 0:
+        return None
+    need = runs // 2 + 1
+    consensus = {}
+    for s, c in votes.items():
+        lab, cnt = c.most_common(1)[0]
+        if cnt >= need and lab in ("case", "control"):
+            consensus[s] = lab
+    return consensus or None

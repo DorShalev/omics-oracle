@@ -109,6 +109,91 @@ def _query_mygene(ids: list[str], id_type: str, species: str) -> Optional[dict[s
     return out
 
 
+def map_symbols_to(symbols: Iterable[str], target_type: str,
+                   species: str = "human") -> dict[str, str]:
+    """Reverse of :func:`map_to_symbols`: HGNC symbols -> ids of ``target_type``.
+
+    Returns ``{SYMBOL_UPPER: id}`` for symbols that resolve (misses omitted). Bounded by the
+    number of symbols asked for — used by the heatmap to look up only the handful of Y genes in
+    each dataset's id space, instead of forward-mapping the study's whole 60k-row table. Cached
+    per (species, target_type). Returns ``{}`` when mapping is unavailable (offline)."""
+    syms = [str(s).strip() for s in symbols if str(s).strip()]
+    if not syms:
+        return {}
+    if target_type == "symbol":
+        return {s.upper(): s.upper() for s in syms}
+    if target_type not in ("ensembl", "entrez"):
+        return {}
+    cache = _load_rev_cache(species, target_type)
+    want = sorted({s.upper() for s in syms})
+    unknown = [s for s in want if s not in cache]
+    if unknown:
+        fetched = _query_mygene_symbols(unknown, target_type, species)
+        if fetched is None:                                 # offline / mygene missing
+            return {s: cache[s] for s in want if cache.get(s)}
+        cache.update(fetched)
+        _save_rev_cache(species, target_type, cache)
+    return {s: cache[s] for s in want if cache.get(s)}
+
+
+def _query_mygene_symbols(symbols: list[str], target_type: str,
+                          species: str) -> Optional[dict[str, str]]:
+    try:
+        import mygene
+    except Exception:
+        return None
+    field = {"ensembl": "ensembl.gene", "entrez": "entrezgene"}[target_type]
+    try:
+        mg = mygene.MyGeneInfo()
+        res = mg.querymany(symbols, scopes="symbol", fields=field, species=species,
+                           as_dataframe=False, verbose=False)
+    except Exception:
+        return None
+    out: dict[str, str] = {}
+    for r in res:
+        q = str(r.get("query", "")).upper()
+        if not q:
+            continue
+        val = None
+        if target_type == "entrez":
+            v = r.get("entrezgene")
+            val = str(v) if v is not None else None
+        else:
+            ens = r.get("ensembl")
+            if isinstance(ens, dict):
+                val = ens.get("gene")
+            elif isinstance(ens, list) and ens:
+                val = ens[0].get("gene")
+        if val:
+            out[q] = strip_version(str(val)).upper()
+    for s in symbols:                                       # record misses so we don't re-query
+        out.setdefault(s.upper(), "")
+    return out
+
+
+def _rev_cache_path(species: str, target_type: str) -> str:
+    return os.path.join(_CACHE_DIR, f"{species}_to_{target_type}.json")
+
+
+def _load_rev_cache(species: str, target_type: str) -> dict[str, str]:
+    p = _rev_cache_path(species, target_type)
+    if os.path.exists(p):
+        try:
+            with open(p) as fh:
+                return json.load(fh)
+        except Exception:
+            return {}
+    return {}
+
+
+def _save_rev_cache(species: str, target_type: str, cache: dict[str, str]) -> None:
+    os.makedirs(_CACHE_DIR, exist_ok=True)
+    tmp = _rev_cache_path(species, target_type) + ".tmp"
+    with open(tmp, "w") as fh:
+        json.dump(cache, fh)
+    os.replace(tmp, _rev_cache_path(species, target_type))
+
+
 def _cache_path(species: str) -> str:
     return os.path.join(_CACHE_DIR, f"{species}_symbols.json")
 

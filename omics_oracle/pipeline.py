@@ -33,6 +33,7 @@ def project_experiment(prompt: str,
                        judge: bool = True,
                        judge_top: int = 5,
                        enrich: bool = True,
+                       group_consensus: int = 3,
                        user_genes: Optional[list[str]] = None,
                        finder_sources: Optional[Sequence[DatasetSource]] = None,
                        counts_sources: Optional[Sequence[DatasetSource]] = None) -> OracleReport:
@@ -120,7 +121,7 @@ def project_experiment(prompt: str,
                                        n_control=0, status="skipped",
                                        note="no usable per-study counts table for this dataset"))
             continue
-        res = reanalyze(cm, spec, llm=llm)
+        res = reanalyze(cm, spec, llm=llm, group_consensus=group_consensus)
         de_results.append(res)
         if res.status == "ok":
             ok += 1
@@ -147,12 +148,31 @@ def project_experiment(prompt: str,
         except Exception as e:
             warnings.append(f"Enrichment skipped ({type(e).__name__}).")
 
+    # 5d. classify each match into a tier (direct / proxy / pathway-virtual) using judge + enrichment
+    from .tiers import classify_tiers
+    classify_tiers(spec, matches, enrichment)
+
+    # 5e. gene x dataset log2FC matrix for the concordance heatmap
+    from .heatmap import build_heatmap
+    heatmap = build_heatmap(de_results, matches, user_genes=user_genes, species=species)
+
     # 6. projection
     projection = project(spec, matches, de_results, concordance)
 
     # 7. report
-    return build_report(spec, matches, de_results, concordance, projection,
-                        llm=llm, warnings=warnings, comparison=comparison, enrichment=enrichment)
+    report = build_report(spec, matches, de_results, concordance, projection,
+                          llm=llm, warnings=warnings, comparison=comparison,
+                          enrichment=enrichment, heatmap=heatmap)
+
+    # 7b. deterministic anti-hallucination check on the LLM narrative
+    from .validate import collect_allowed_genes, validate_narrative
+    allowed = collect_allowed_genes(comparison, concordance.genes if concordance else None, heatmap)
+    if allowed:
+        flagged = validate_narrative(report.narrative, allowed)
+        if flagged:
+            report.warnings.append("Narrative mentioned gene-like tokens not found in the analyzed "
+                                   f"data — verify: {', '.join(flagged[:12])}")
+    return report
 
 
 def _supports(src: DatasetSource) -> bool:

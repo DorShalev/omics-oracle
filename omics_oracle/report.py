@@ -17,10 +17,12 @@ def build_report(spec: ExperimentSpec, matches: list[DatasetMatch], de_results: 
                  concordance: Optional[Concordance], projection: Projection,
                  llm: Optional[LLM] = None, warnings: Optional[list[str]] = None,
                  comparison: Optional[dict] = None,
-                 enrichment: Optional[dict] = None) -> OracleReport:
+                 enrichment: Optional[dict] = None,
+                 heatmap: Optional[dict] = None) -> OracleReport:
     report = OracleReport(spec=spec, matches=matches, de_results=de_results,
                           concordance=concordance, projection=projection,
-                          comparison=comparison, enrichment=enrichment, warnings=warnings or [])
+                          comparison=comparison, enrichment=enrichment, heatmap=heatmap,
+                          warnings=warnings or [])
     report.narrative = _narrative(report, llm)
     return report
 
@@ -114,17 +116,25 @@ def render_markdown(report: OracleReport) -> str:
         L.append("_No candidate datasets returned by the finder._")
     else:
         judged = any(m.judge for m in report.matches)
-        head = "| Rank | Accession | Sim | Organism | Omics | N | Blocking? |"
-        sep = "|---|---|---|---|---|---|---|"
+        tiered = any(m.match_tier for m in report.matches)
+        head = "| Rank | Accession | Sim |"
+        sep = "|---|---|---|"
+        if tiered:
+            head += " Tier |"; sep += "---|"
+        head += " Organism | Omics | N | Blocking? |"
+        sep += "---|---|---|---|"
         if judged:
             head += " Judge |"; sep += "---|"
         head += " Mismatches |"; sep += "---|"
         L.append(head); L.append(sep)
         for i, m in enumerate(report.matches, 1):
             mm = "; ".join(f"{x.field}({x.severity})" for x in m.mismatches) or "—"
-            row = (f"| {i} | [{m.accession}]({m.url}) | {m.similarity} | {m.organism or '—'} | "
-                   f"{m.omics_type} | {m.n_samples if m.n_samples is not None else '—'} | "
-                   f"{'⛔' if m.blocking else '—'} |")
+            row = f"| {i} | [{m.accession}]({m.url}) | {m.similarity} |"
+            if tiered:
+                row += f" {m.match_tier or '—'} |"
+            row += (f" {m.organism or '—'} | {m.omics_type} | "
+                    f"{m.n_samples if m.n_samples is not None else '—'} | "
+                    f"{'⛔' if m.blocking else '—'} |")
             if judged:
                 jv = (m.judge or {}).get("verdict", "—")
                 row += f" {jv} |"
@@ -200,6 +210,14 @@ def render_markdown(report: OracleReport) -> str:
             L.append("")
             L.append(f"**Your gene list ({u['n_genes']} genes) overlap:** " + "; ".join(
                 f"{v['accession']} {v['shared']} shared (J={v['jaccard']})" for v in u["vs_datasets"]))
+        L.append("")
+
+    if report.heatmap and report.heatmap.get("genes"):
+        h = report.heatmap
+        cols = " × ".join(f"{d['accession']}[{d['match_tier'] or '?'}]" for d in h["datasets"])
+        L.append("## Concordance heatmap (gene × dataset log2FC)")
+        L.append(f"Matrix: {len(h['genes'])} genes ({h['scope']}) × {len(h['datasets'])} datasets "
+                 f"({cols}). Full data in JSON `heatmap` (UI toggles Top-N / Up-Down over `heatmap.genes`).")
         L.append("")
 
     if report.enrichment and report.enrichment.get("sources"):
